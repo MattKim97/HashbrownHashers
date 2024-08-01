@@ -130,3 +130,8 @@ Delete an existing recipe
 **Post-Condition**
 - If the Member does not own Recipe, they can not delete the Recipe
 - If User is Admin, able to delete any Recipe
+
+
+## Database Schema
+
+![alt text](image.png)
