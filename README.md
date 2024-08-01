@@ -48,6 +48,10 @@ Lorenz is an admin and finds a recipe that is full of nonsensical ingredients an
 
 **Tag** : Labels attached to every recipe in order to effectively group and sort recipes.
 
+**Review** : A review left by the user, detailing their experience and their enjoyment of the recipe
+
+**Rating** : A Numerical identifier to portray how much the user enjoyed the recipe
+
 
 ### High Level Requirements
 
@@ -58,18 +62,23 @@ Lorenz is an admin and finds a recipe that is full of nonsensical ingredients an
 - View Recipes by Difficulty : Ability to filter recipes based on difficulty\
 View Recipes by Preparation Time : Ability to filter recipes based on prep-time\
 - View Recipes by Spiciness : Ability to filter recipes based on spiciness
+- View All Reviews by Recipe
 
 **For Members**
 
 - Create a Recipe : Members can add new recipes\
 - Edit own Recipe : Members can modify recipes they have created\
 - Delete own Recipe : Members can remove recipes that they have created
+- Create a Review for a recipe that they have not created for already
+- Delete a Review that they own
 
 **Admin**
 
 - Create a Recipe : Admins can create new recipes\
 - Edit any Recipe : Admins can modify any recipe\
 - Delete any Recipe : Admins can remove any recipe
+- Create a Review for a recipe that they have not created for already
+- Delete any Review
 
 
 ### User Stories
@@ -131,7 +140,40 @@ Delete an existing recipe
 - If the Member does not own Recipe, they can not delete the Recipe
 - If User is Admin, able to delete any Recipe
 
+## View all Reviews by Recipe
+
+Decide on how to display reviews to anyone who uses the application
+- View all Reviews by the Recipe
+
+## Create a Review
+
+Create a review that other users can see
+
+- Title
+- Text
+- Rating
+
+**Precondition**
+
+- User must be logged in with a Member or Admin role
+
+**Post-Condition**
+
+- User must not have already created a review for this recipe
+
+## Delete a Review
+
+Delete an existing recipe
+
+**Precondition**
+
+- User must be logged in with a Member or Admin role
+- User must own the Review or be an Admin
+
+**Post-Condition**
+- If the Member does not own Review, they can not delete the Review
+- If User is Admin, able to delete any Review
 
 ## Database Schema
 
-![alt text](image.png)
+![alt text](SchemaModelRecipesv2.png)
