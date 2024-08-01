@@ -12,24 +12,24 @@ Nandan Gouri
 ### Problem Statement:
 
 
-    Discovering, sharing, and organizing recipes can be a challenge even for professional chefs, let alone home cooks. Current platforms often lack new recipe discovery, effective organization tools, and efficient ingredient management. Users struggle to find new recipes tailored to their preferences, share recipes with ease, keep their favorite recipes organized, interact with other cooks for advice and feedback, and trust the quality of recipes. These challenges make the cooking experience less enjoyable and more cumbersome.	 
+Discovering, sharing, and organizing recipes can be a challenge even for professional chefs, let alone home cooks. Current platforms often lack new recipe discovery, effective organization tools, and efficient ingredient management. Users struggle to find new recipes tailored to their preferences, share recipes with ease, keep their favorite recipes organized, interact with other cooks for advice and feedback, and trust the quality of recipes. These challenges make the cooking experience less enjoyable and more cumbersome.	 
 
 ### Technical Solution
 
 
-    Develop a web-based platform that allows users to share recipes, discover recipes, and organize recipes.
+Develop a web-based platform that allows users to share recipes, discover recipes, and organize recipes.
 
 **Scenario 1**
 
-    Sarah is an avid home cook and wants to share her favorite lasagna recipe with the community. She logs into the platform, fills out the recipe form, uploads a photo, and submits it. The lasagna recipe is successfully shared and is visible to other users.
+Sarah is an avid home cook and wants to share her favorite lasagna recipe with the community. She logs into the platform, fills out the recipe form, uploads a photo, and submits it. The lasagna recipe is successfully shared and is visible to other users.
 
 **Scenario 2**
 
-    John is looking for healthy dinner options. He uses the search functionality to filter recipes by dietary restrictions (e.g., gluten-free) and preparation time (under 30 minutes). The search results provide personalized recommendations based on John's past activity.
+John is looking for healthy dinner options. He uses the search functionality to filter recipes by dietary restrictions (e.g., gluten-free) and preparation time (under 30 minutes). The search results provide personalized recommendations based on John's past activity.
 
 **Scenario 3**
 
-    Lorenz is an admin and finds a recipe that is full of nonsensical ingredients and instructions. They want to delete the recipe from the page.
+Lorenz is an admin and finds a recipe that is full of nonsensical ingredients and instructions. They want to delete the recipe from the page.
 
 ### Glossary
 
