@@ -57,8 +57,8 @@ Lorenz is an admin and finds a recipe that is full of nonsensical ingredients an
 
 **For Anyone**
 
-- View all Recipes : Access to a complete list of all recipes\
-- View Recipes by Tags : Ability to filter recipes based on tags\
+- View all Recipes : Access to a complete list of all recipes
+- View Recipes by Tags : Ability to filter recipes based on tags
 - View Recipes by Difficulty : Ability to filter recipes based on difficulty\
 View Recipes by Preparation Time : Ability to filter recipes based on prep-time\
 - View Recipes by Spiciness : Ability to filter recipes based on spiciness
@@ -66,16 +66,16 @@ View Recipes by Preparation Time : Ability to filter recipes based on prep-time\
 
 **For Members**
 
-- Create a Recipe : Members can add new recipes\
-- Edit own Recipe : Members can modify recipes they have created\
+- Create a Recipe : Members can add new recipes
+- Edit own Recipe : Members can modify recipes they have created
 - Delete own Recipe : Members can remove recipes that they have created
 - Create a Review for a recipe that they have not created for already
 - Delete a Review that they own
 
 **Admin**
 
-- Create a Recipe : Admins can create new recipes\
-- Edit any Recipe : Admins can modify any recipe\
+- Create a Recipe : Admins can create new recipes
+- Edit any Recipe : Admins can modify any recipe
 - Delete any Recipe : Admins can remove any recipe
 - Create a Review for a recipe that they have not created for already
 - Delete any Review
