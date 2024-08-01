@@ -1,2 +1,3 @@
 # HashbrownHashers
-Recipe sharing application
+
+A Recipe sharing application
