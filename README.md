@@ -176,4 +176,48 @@ Delete an existing recipe
 
 ## Database Schema
 
-![alt text](SchemaModelRecipesv2.png)
+![alt text](Images/SchemaModelRecipesv2.png)
+
+
+## WireFrames
+
+### Landing Page
+
+![alt text](Images/Landing.png)
+
+
+### Login Page
+
+![alt text](Images/Login.png)
+
+
+### Sign Up Page
+
+![alt text](Images/Signup.png)
+
+### Member's Landing Page
+
+![alt text](Images/Member%20Landing.png)
+
+### Add Recipe Page
+
+![alt text](Images/add%20Recipe.png)
+
+
+### Browse Recipes Page
+
+![alt text](Images/browse%20recipes.png)
+
+### My Recipes Page
+
+![alt text](Images/my%20recipes.png)
+
+
+### View Recipe Page
+
+![alt text](Images/view%20recipe.png)
+
+
+### Recipe Review Form
+
+![alt text](Images/review%20form.png)
