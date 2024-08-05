@@ -57,6 +57,7 @@ create table recipe_tags (
  constraint fk_recipe_tag
  foreign key (recipe_id)
  references recipes(recipe_id)
+ on delete cascade
 );
 
 create table reviews (
@@ -68,10 +69,12 @@ create table reviews (
     rating tinyint(1) not null,
     constraint fk_review_user_id
         foreign key (user_id)
-        references recipe_users(user_id),
+        references recipe_users(user_id)
+        on delete cascade,
     constraint fk_review_recipe_id
         foreign key (recipe_id)
         references recipes(recipe_id)
+        on delete cascade
 );
 delimiter //
 create procedure set_known_good_state()
