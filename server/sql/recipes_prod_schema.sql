@@ -1,6 +1,6 @@
-drop database if exists hashbrownhash_test;
-create database hashbrownhash_test;
-use hashbrownhash_test;
+drop database if exists hashbrownhash;
+create database hashbrownhash;
+use hashbrownhash;
 
 -- create tables and relationships
 create table user_roles (
