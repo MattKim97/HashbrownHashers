@@ -24,10 +24,11 @@ public class UserTemplateRepositoryTest {
     @Autowired
     private UserTemplateRepository userRepository;
 
+    @Autowired
+    KnownGoodState knownGoodState;
+
     @BeforeEach
-    void setUp() {
-        jdbcTemplate.execute("call set_known_good_state();");
-    }
+    void setup() {knownGoodState.set();}
 
     @Test
     @Transactional
