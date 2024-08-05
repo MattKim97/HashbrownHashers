@@ -39,11 +39,10 @@ public class TagTemplateRepository implements TagRepository{
 
     @Override
     public List<Tag> findByText(String text) {
-        String newText = "%" + text + "%";
         final String sql = "select tag_id, tag_name "
                 + "from tags "
-                + "where tag_name LIKE ?;";
-        return jdbcTemplate.query(sql,new TagMapper(),newText);
+                + "where tag_name LIKE '%?%;";
+        return jdbcTemplate.query(sql,new TagMapper(),text);
     }
 
 
