@@ -1,6 +1,7 @@
 package learn.hashbrown_hashers.data;
 
 import learn.hashbrown_hashers.data.mappers.RecipeMapper;
+import learn.hashbrown_hashers.data.mappers.TagMapper;
 import learn.hashbrown_hashers.models.Recipe;
 
 import java.sql.PreparedStatement;
@@ -12,8 +13,9 @@ import learn.hashbrown_hashers.models.Tag;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.transaction.annotation.Transactional;
 
-public class RecipeJdbcTemplateRepository {
+public class RecipeJdbcTemplateRepository implements RecipeRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -21,12 +23,15 @@ public class RecipeJdbcTemplateRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
     public List<Recipe> findAllRecipes(){
         final String sql = "select * "
                 + "from recipes limit 1000";
         return jdbcTemplate.query(sql,new RecipeMapper());
     }
 
+    @Override
+    @Transactional
     public Recipe findById(int recipeId){
         final String sql = "select * "
                 + "from recipes "
@@ -41,9 +46,11 @@ public class RecipeJdbcTemplateRepository {
         return recipe;
     }
 
+    @Override
+    @Transactional
     public Recipe add(Recipe recipe){
 
-        final String sql = "insert into recipe (recipe_name, difficulty, spiciness, prep_time, image_link, recipe_desc, recipe_text, user_id) "
+        final String sql = "insert into recipes (recipe_name, difficulty, spiciness, prep_time, image_link, recipe_desc, recipe_text, user_id) "
                 + "values(?,?,?,?,?,?,?,?) ;";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -71,6 +78,45 @@ public class RecipeJdbcTemplateRepository {
         return recipe;
     }
 
+    @Override
+    @Transactional
+    public boolean update(Recipe recipe){
+
+        final String sql = "update recipes set "
+                + "recipe_name = ?, "
+                + "difficulty = ?, "
+                + "spiciness = ?, "
+                + "prep_time = ?, "
+                + "image_link = ?, "
+                + "recipe_desc = ?, "
+                + "recipe_text = ? "
+                + "where recipe_id = ? ;";
+
+        boolean updated = jdbcTemplate.update(sql,
+                recipe.getRecipeName(),
+                recipe.getDifficulty(),
+                recipe.getSpicyness(),
+                recipe.getPrepTime(),
+                recipe.getImageUrl(),
+                recipe.getDescription(),
+                recipe.getText(),
+                recipe.getRecipeId()
+                ) > 0;
+
+        if(updated){
+            recipe.setTimeUpdated(LocalDate.now());
+        }
+
+        return updated;
+    }
+
+
+    @Override
+    @Transactional
+    public boolean deleteById(int recipeId) {
+       return jdbcTemplate.update("delete from recipes where recipe_id = ?;",recipeId) > 0;
+    }
+
 
     private void addTags(Recipe recipe) {
         final String sql = "SELECT t.tag_id, t.tag_name " +
@@ -81,6 +127,7 @@ public class RecipeJdbcTemplateRepository {
         List<Tag> recipeTags = jdbcTemplate.query(sql, new TagMapper(), recipe.getRecipeId());
         recipe.setTags(recipeTags);
     }
+
 
 
 }
