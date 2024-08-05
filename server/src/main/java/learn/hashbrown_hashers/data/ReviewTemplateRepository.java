@@ -1,11 +1,12 @@
 package learn.hashbrown_hashers.data;
 
+import learn.hashbrown_hashers.data.mappers.ReviewMapper;
 import learn.hashbrown_hashers.models.Review;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
-public class ReviewTemplateRepository implements ReviewRepository{
+public class ReviewTemplateRepository implements ReviewRepository {
     private final JdbcTemplate jdbcTemplate;
 
     public ReviewTemplateRepository(JdbcTemplate jdbcTemplate) {
