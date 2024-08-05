@@ -6,7 +6,13 @@ import learn.hashbrown_hashers.models.Review;
 import org.springframework.stereotype.Service;
 
 
+import javax.validation.Constraint;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import javax.validation.Validator;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -24,7 +30,7 @@ public class ReviewService {
     public List<Review> findAll() {
         return reviewRepo.findAll();
     }
-
+    
     public List<Review> findByRecipeId(int recipeId) {
         if (recipeId <= 0) {
             return null;
@@ -39,19 +45,20 @@ public class ReviewService {
         return reviewRepo.findByUserId(userId);
     }
 
-    public Review add(Review review) {
-        Result<Review> result = validate(review);
+    public Result<Review> add(Review review) {
+        Result<Review> result = checker(review);
+        return result;
     }
 
-    private Result<Review> validate(Review review) {
-        Result<Review> validation = new Result<Review>();
+    private Result<Review> checker(Review review) {
+        Result<Review> result = new Result<>();
+        try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()){
+            Validator validator = factory.getValidator();
+            Set<ConstraintViolation<Review>> validation = validator.validate(review);
 
-        if(review == null) {
-            validation.addMessage("Review Cannot be null.", ResultType.INVALID);
-        } else {
-
+            validation.forEach(v -> result.addMessage(v.getMessage(), ResultType.INVALID));
         }
-        return validation;
+        return result;
     }
 
 }
