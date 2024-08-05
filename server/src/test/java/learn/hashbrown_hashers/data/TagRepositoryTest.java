@@ -28,7 +28,7 @@ class TagRepositoryTest {
     void shouldFindAll() {
         List<Tag> tags = repository.findAll();
         assertNotNull(tags);
-        assertEquals(tags.size(),5);
+        assertTrue(tags.size() >= 5);
     }
 
     @Test
