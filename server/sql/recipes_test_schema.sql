@@ -53,7 +53,8 @@ create table recipe_tags (
  primary key (recipe_id, tag_id),
  constraint fk_tag_recipe
  foreign key (tag_id)
- references tags(tag_id),
+ references tags(tag_id)
+ on delete cascade,
  constraint fk_recipe_tag
  foreign key (recipe_id)
  references recipes(recipe_id)
