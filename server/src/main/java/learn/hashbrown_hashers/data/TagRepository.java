@@ -13,7 +13,6 @@ public interface TagRepository  {
 
     List<Tag> findByText(String text);
 
-    List<Tag> findByRecipeId(int recipeId);
 
     Tag add(Tag tag);
 
