@@ -1,5 +1,6 @@
 package learn.hashbrown_hashers.data;
 
+import learn.hashbrown_hashers.data.mappers.TagMapper;
 import learn.hashbrown_hashers.models.Tag;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -38,10 +39,11 @@ public class TagTemplateRepository implements TagRepository{
 
     @Override
     public List<Tag> findByText(String text) {
+        String newText = "%" + text + "%";
         final String sql = "select tag_id, tag_name "
                 + "from tags "
-                + "where tag_name LIKE '%?%;";
-        return jdbcTemplate.query(sql,new TagMapper(),text);
+                + "where tag_name LIKE ?;";
+        return jdbcTemplate.query(sql,new TagMapper(),newText);
     }
 
 

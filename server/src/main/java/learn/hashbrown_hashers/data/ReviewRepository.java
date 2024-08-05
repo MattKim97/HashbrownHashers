@@ -14,8 +14,7 @@ public interface ReviewRepository {
     List<Review> findByUserId(int userId);
 
 
+    Review add(Review review);
 
-
-
-
+    boolean deleteById(int reviewId);
 }
