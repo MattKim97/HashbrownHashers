@@ -4,16 +4,35 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.*;
+
+
 
 public class Recipe {
     private int recipeId;
+
+    @NotBlank(message = "Recipe name is required.")
     private String recipeName;
+
+    @Min(value = 1, message = "Minimum difficulty must be 1")
+    @Max(value = 5, message = "Maximum difficulty must be 5")
     private int difficulty;
+
+    @Min(value = 1, message = "Minimum spiciness must be 1")
+    @Max(value = 5, message = "Maximum spiciness must be 5")
     private int spicyness;
+
+    @Min(value = 1, message = "Minimum prep-time must be atleast 1 minute")
     private int prepTime;
+
     private String imageUrl;
+
+    @NotBlank(message = "Recipe description is required.")
     private String description;
+
+    @NotBlank(message = "Recipe text is required.")
     private String text;
+
     private int userId;
     private LocalDate timePosted;
     private LocalDate timeUpdated;
@@ -123,6 +142,14 @@ public class Recipe {
 
     public void setTimeUpdated(LocalDate timeUpdated) {
         this.timeUpdated = timeUpdated;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
     @Override
