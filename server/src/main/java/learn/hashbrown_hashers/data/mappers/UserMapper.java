@@ -1,4 +1,4 @@
-package learn.hashbrown_hashers.data;
+package learn.hashbrown_hashers.data.mappers;
 
 import learn.hashbrown_hashers.models.User;
 import org.springframework.jdbc.core.RowMapper;
