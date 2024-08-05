@@ -24,6 +24,7 @@ create table recipe_users (
     constraint fk_user_role
     foreign key (role_id)
     references user_roles(role_id)
+    on delete cascade
 );
 
 create table recipes (
@@ -44,6 +45,7 @@ create table recipes (
     constraint fk_user_recipe
     foreign key (user_id)
     references recipe_users(user_id)
+    on delete cascade
 );
 
 create table recipe_tags (
