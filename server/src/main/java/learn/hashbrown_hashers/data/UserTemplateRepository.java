@@ -1,5 +1,6 @@
 package learn.hashbrown_hashers.data;
 
+import learn.hashbrown_hashers.data.mappers.UserMapper;
 import learn.hashbrown_hashers.models.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
