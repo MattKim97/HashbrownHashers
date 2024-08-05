@@ -12,8 +12,10 @@ import java.sql.Statement;
 import java.util.List;
 
 
+
 @Repository
 public class ReviewTemplateRepository implements ReviewRepository{
+
     private final JdbcTemplate jdbcTemplate;
 
     public ReviewTemplateRepository(JdbcTemplate jdbcTemplate) {
