@@ -4,6 +4,7 @@ import learn.hashbrown_hashers.data.mappers.RecipeMapper;
 import learn.hashbrown_hashers.data.mappers.TagMapper;
 import learn.hashbrown_hashers.models.Recipe;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -65,7 +66,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     @Transactional
     public List<Recipe> findByText(String text){
         final String sql = "select * from recipes where recipe_name LIKE ?";
-        String queryText = "%" + text + "%";  // Proper concatenation
+        String queryText = "%" + text + "%";
         List<Recipe> recipes = jdbcTemplate.query(sql, new RecipeMapper(), queryText);
 
         if (!recipes.isEmpty()){
@@ -80,8 +81,8 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     @Transactional
     public Recipe add(Recipe recipe){
 
-        final String sql = "insert into recipes (recipe_name, difficulty, spiciness, prep_time, image_link, recipe_desc, recipe_text, user_id) "
-                + "values(?,?,?,?,?,?,?,?) ;";
+        final String sql = "insert into recipes (recipe_name, difficulty, spiciness, prep_time, image_link, recipe_desc, recipe_text, user_id, time_posted, time_updated) "
+                + "values(?,?,?,?,?,?,?,?,?,?) ;";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -94,6 +95,8 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
             ps.setString(6,recipe.getDescription());
             ps.setString(7,recipe.getText());
             ps.setInt(8,recipe.getUserId());
+            ps.setDate(9, Date.valueOf(LocalDate.now()));
+            ps.setDate(10, Date.valueOf(LocalDate.now()));
 
             return ps;
         }, keyHolder);
@@ -102,8 +105,6 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
         }
 
         recipe.setRecipeId(keyHolder.getKey().intValue());
-        recipe.setTimePosted(LocalDate.now());
-        recipe.setTimeUpdated(LocalDate.now());
 
         return recipe;
     }
