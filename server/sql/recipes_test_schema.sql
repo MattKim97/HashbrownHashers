@@ -130,7 +130,7 @@ begin
     Add the Meatballs. Just nestle the meatballs in. If you have a 6-quart pot, they should fit in one layer. If not, just add more on top, but be sure not to smash them.
     Add Pasta. Add your spaghetti, which you will need to break in half so the noodles fit in the pot. Do not stir. You do not want the noodles to end up on the bottom of the pot – they could stick to the pot and burn. Then, pour in your broth or water.
     Pressure Cook. Cook on high pressure for 8 minutes (it takes about 10 minutes to come up to pressure). Then, do a quick release by turning the valve and uncover. You don’t want to do a natural 
-    release because your noodles could end up being overcooked. Stir everything at this point. If it looks too watery, don’t worry – it will thicken as you stir.', 2, '2023-10-11 10:07:55', null),
+    release because your noodles could end up being overcooked. Stir everything at this point. If it looks too watery, don’t worry – it will thicken as you stir.', 2, '2023-10-11 10:07:55', '2023-10-11 10:07:55'),
     ('No Waste Carnitas', 3, 2, 40, 'https://www.seriouseats.com/thmb/NGEENXeiy0of0H5q5ufL-3Gl0rw=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/20220209-no-waste-tacos-de-carnitas-with-salsa-verde-Hero-6109a35fdb2d4dd3a4c27fb32193807d.jpg',
     'Carnitas. The undisputed king of the taco cart. The Mexican answer to American pulled pork, they should be, at their best, moist, juicy, and ultra-porky with the rich, 
     tender texture of a French confit, with plenty of well-browned crisp edges. The most famous version of the dish comes from Michoacán, in central Mexico. Delicately flavored with a hint of orange, 
@@ -183,7 +183,7 @@ tap here
     When the chicken has cooked through, add 2 ladles of the cooking liquid to the bowl, combining with the sauces, spices, brown sugar and tomato paste. 
     Once the liquids and seasonings are combined, remove chicken, slice it, and transfer to the medium bowl. Using 2 forks, shred the chicken and combine with the liquids. 
     Add the shredded chicken to the onions and garlic and combine well. Simmer together 5 to 10 minutes, using extra cooking liquids to make your chicken as saucy as you like. 
-    Combine sour and sweet pickles in a small bowl. Split rolls and fill with scoops of shredded chicken. Top with pickle relish and serve.',5, '2024-04-06 00:59:02', null);
+    Combine sour and sweet pickles in a small bowl. Split rolls and fill with scoops of shredded chicken. Top with pickle relish and serve.',5, '2024-04-06 00:59:02', '2024-04-06 00:59:02');
 	
     insert into recipe_tags 
 		(recipe_id, tag_id) 
