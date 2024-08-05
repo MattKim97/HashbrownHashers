@@ -22,7 +22,7 @@ public class Recipe {
     @Max(value = 5, message = "Maximum spiciness must be 5")
     private int spicyness;
 
-    @Min(value = 1, message = "Minimum prep-time must be atleast 1 minute")
+    @Min(value = 1, message = "Minimum prep-time must be at least 1 minute")
     private int prepTime;
 
     private String imageUrl;
