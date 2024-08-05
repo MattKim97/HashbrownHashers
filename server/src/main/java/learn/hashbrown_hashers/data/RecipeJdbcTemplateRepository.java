@@ -49,6 +49,33 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
         return recipe;
     }
 
+    @Transactional
+    public List<Recipe> findByUserId(int userId){
+        final String sql = "select * from recipes where user_id = ?;";
+        List<Recipe> recipes = jdbcTemplate.query(sql, new RecipeMapper(), userId);
+
+        if (!recipes.isEmpty()){
+            for (Recipe recipe : recipes){
+                addTags(recipe);
+            }
+        }
+        return recipes;
+    }
+
+    @Transactional
+    public List<Recipe> findByText(String text){
+        final String sql = "select * from recipes where recipe_name LIKE ?";
+        String queryText = "%" + text + "%";  // Proper concatenation
+        List<Recipe> recipes = jdbcTemplate.query(sql, new RecipeMapper(), queryText);
+
+        if (!recipes.isEmpty()){
+            for (Recipe recipe : recipes){
+                addTags(recipe);
+            }
+        }
+        return recipes;
+    }
+
     @Override
     @Transactional
     public Recipe add(Recipe recipe){
