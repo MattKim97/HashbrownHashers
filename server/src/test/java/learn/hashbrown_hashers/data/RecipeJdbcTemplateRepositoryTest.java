@@ -88,8 +88,8 @@ class RecipeJdbcTemplateRepositoryTest {
         recipe.setPrepTime(30);
         recipe.setDescription("Test Test Test");
         recipe.setText("Something about a recipe");
-        recipe.setUserId(1);
-        recipe.setRecipeId(1);
+        recipe.setUserId(3);
+        recipe.setRecipeId(2);
         assertTrue(repository.update(recipe));
         recipe.setRecipeId(99);
         assertFalse(repository.update(recipe));
@@ -97,7 +97,7 @@ class RecipeJdbcTemplateRepositoryTest {
 
     @Test
     void shouldDelete(){
-        assertTrue(repository.deleteById(2));
+        assertTrue(repository.deleteById(3));
         assertFalse(repository.deleteById(99));
     }
 }
