@@ -53,8 +53,8 @@ public class ReviewService {
     /**
      * adds a review to the database. checks duplicates and validates
      * the review, seeing if all the required fields are there.
-     * @param review
-     * @return
+     * @param review - review to be added.
+     * @return - returns result of adding a review
      */
     public Result<Review> add(Review review) {
         Result<Review> result = checker(review);
