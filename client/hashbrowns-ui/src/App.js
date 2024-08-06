@@ -14,6 +14,7 @@ function App() {
         <Route path="/recipe" element={<AllRecipesList/>}/>
         <Route path="/recipe/:id" element={<ViewRecipe/>}/>
         <Route path="/recipe/new" element={<AddRecipeForm/>}/>
+        <Route path="/recipes" element={<AllRecipesList/>}/>
       </Routes>
     </Router>
   );
