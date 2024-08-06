@@ -1,9 +1,17 @@
 package learn.hashbrown_hashers.models;
 
+import javax.validation.constraints.*;
+
+
 import java.util.Objects;
 
 public class Tag {
+
     private int tagId;
+
+
+    @NotBlank(message = "Tag name must not be blank")
+    @Size(min = 1, max=100, message= "Tag name may not exceed 100 characters")
     private String tagName;
 
     public Tag(int tagId, String tagName) {
