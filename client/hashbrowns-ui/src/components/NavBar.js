@@ -29,7 +29,7 @@ function NavBar(){
             </form>
             <Link to={'/'}>Chef's Choice</Link>
             <Link to={'/'}>View Recipes</Link>
-            <Link to={'/'}>Create New</Link>
+            <Link to={'/recipe/new'}>Create New</Link>
             <Link to={'/'}>My Recipes</Link>
             <Link to={'/'}>Log In/Log Out</Link>
 
