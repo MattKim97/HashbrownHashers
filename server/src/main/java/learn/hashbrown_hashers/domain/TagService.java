@@ -35,6 +35,7 @@ public class TagService {
     }
 
     public Result<Tag> add(Tag tag){
+
         Result<Tag> result = checker(tag);
         isUnique(result, tag);
         if(!result.isSuccess()){
@@ -57,7 +58,12 @@ public class TagService {
 
 
     private Result<Tag> checker(Tag tag) {
+
         Result<Tag> result = new Result<>();
+        if(tag == null){
+            result.addMessage("Tag cannot be null", ResultType.INVALID);
+            return result;
+        }
         try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()){
             Validator validator = factory.getValidator();
             Set<ConstraintViolation<Tag>> validation = validator.validate(tag);
