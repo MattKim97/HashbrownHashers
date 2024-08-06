@@ -2,9 +2,7 @@
 
 function App() {
   return (
-    <h1>
-      Hashbrowns
-    </h1>
+    <></>
   );
 }
 
