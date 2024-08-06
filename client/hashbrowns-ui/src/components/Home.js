@@ -5,7 +5,7 @@ function Home(){
     return(
         <>
         <header>
-            <h1>Welcome to Has#Browns!</h1>
+            <h1 className="text-center">Welcome to Has#Browns!</h1>
         </header>
        
         </>
