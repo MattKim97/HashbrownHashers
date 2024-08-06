@@ -1,13 +1,24 @@
 package learn.hashbrown_hashers.models;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 public class Review {
     private int reviewId;
+
+    @NotBlank(message = "Reviews must have a userId.")
     private int userId;
+
+    @NotBlank(message = "Reviews must have a recipeId.")
     private int recipeId;
     private String title;
     private String description;
+
+    @NotBlank(message = "Reviews must have a rating.")
+    @Min(value = 1, message = "Reviews must have at least 1 star.")
+    @Max(value = 5, message = "Reviews can only have 5 stars maximum.")
     private int rating;
 
     public Review(int userId, int reviewId, int recipeId, String title, String description, int rating) {

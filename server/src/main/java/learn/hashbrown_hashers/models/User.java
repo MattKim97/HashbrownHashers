@@ -1,15 +1,28 @@
 package learn.hashbrown_hashers.models;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 public class User {
 
+    @NotBlank(message = "Users must have a userId.")
     private int userId;
+
+    @NotBlank(message = "Users must have a first name")
     private String firstName;
+
+    @NotBlank(message = "Users must have a last name.")
     private String lastName;
+
+    @NotBlank(message = "Users must have a username.")
     private String userName;
+
+    @NotBlank(message = "Users must have a password.")
     private String passwordHash;
+
     private String email;
+
+    @NotBlank(message = "Users must have a role.")
     private int roleId;
 
     public User(String lastName, String firstName, String userName, String passwordHash, String email, int roleId) {
