@@ -50,6 +50,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
         return recipe;
     }
 
+    @Override
     @Transactional
     public List<Recipe> findByUserId(int userId){
         final String sql = "select * from recipes where user_id = ?;";
@@ -63,6 +64,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
         return recipes;
     }
 
+    @Override
     @Transactional
     public List<Recipe> findByText(String text){
         final String sql = "select * from recipes where recipe_name LIKE ?";
