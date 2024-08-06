@@ -1,3 +1,23 @@
+import AWS from 'aws-sdk';
+
+
+
+
+const RECIPE_DEFAULT = {
+    recipeName: '',
+    difficulty: 1,
+    spicyness: 1,
+    prepTime: 0,
+    imageUrl: '',
+    description: '',
+    text: ''
+}
+
+const S3_BUCKET_IMAGE = process.env.REACT_APP_S3_BUCKET_IMAGE;
+const REGION = process.env.REACT_APP_REGION;
+const S3_KEY = process.env.REACT_APP_S3_KEY;
+const S3_SECRET = process.env.REACT_APP_S3_SECRET;
+
 function addRecipeForm(){
 
     const [file, setFile] = useState(null);
