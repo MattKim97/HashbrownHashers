@@ -86,7 +86,6 @@ class UserServiceTest {
         when(repository.update(user)).thenReturn(false);
         Result<User> result = service.update(user);
         assertEquals(ResultType.NOT_FOUND, result.getType());
-        System.out.println(result.getMessages());
         assertTrue(result.getMessages().contains("userId: 1 not found"));
     }
 
