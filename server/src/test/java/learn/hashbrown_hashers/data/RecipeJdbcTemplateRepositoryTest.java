@@ -1,7 +1,6 @@
 package learn.hashbrown_hashers.data;
 
 import learn.hashbrown_hashers.models.Recipe;
-import learn.hashbrown_hashers.models.Tag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RecipeJdbcTemplateRepositoryTest {
 
     @Autowired
-    RecipeJdbcTemplateRepository repository;
+    RecipeRepository repository;
 
     @Autowired
     KnownGoodState knownGoodState;
