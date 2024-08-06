@@ -1,7 +1,6 @@
 package learn.hashbrown_hashers.domain;
 
 import learn.hashbrown_hashers.data.ReviewRepository;
-import learn.hashbrown_hashers.data.ReviewTemplateRepository;
 import learn.hashbrown_hashers.models.Review;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,7 @@ import java.util.Set;
 public class ReviewService {
     private final ReviewRepository reviewRepo;
 
-    public ReviewService(ReviewTemplateRepository reviewRepository) {
+    public ReviewService(ReviewRepository reviewRepository) {
         reviewRepo = reviewRepository;
     }
 
