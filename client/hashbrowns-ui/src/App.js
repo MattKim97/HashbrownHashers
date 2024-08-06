@@ -1,10 +1,13 @@
-
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Home from "./Home"
 
 function App() {
   return (
-    <h1>
-      Hashbrowns
-    </h1>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+      </Routes>
+    </Router>
   );
 }
 
