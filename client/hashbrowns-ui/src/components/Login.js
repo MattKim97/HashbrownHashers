@@ -2,11 +2,19 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
+
+const CREDENTIALS_DEFAULT = {
+    username: '',
+    password: ''
+}
+
+
 const Login = (props) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [credentials,setCredentials] = useState(CREDENTIALS_DEFAULT);
   const [userError, setUserError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  const url = "http://localhost:8080/authenticate"
 
   const navigate = useNavigate();
 
@@ -15,19 +23,57 @@ const Login = (props) => {
     setPasswordError("");
 
     // Check if the user has entered both fields correctly
-    if ("" === username) {
+    if ("" === credentials.username) {
       setUserError("Please enter your email");
       return;
     }
-    if ("" === password) {
+    if ("" === credentials.password) {
       setPasswordError("Please enter a password");
       return;
     }
-    if (password.length < 8) {
+    if (credentials.password.length < 8) {
       setPasswordError("The password must be 8 characters or longer");
       return;
     }
+
+    //Check username password. If database contains user/pass, login.
+    //else passworderror.set(invalid username/password. please try again.)
+
+    const init = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+    };
+    fetch(url,init)
+    .then((response)=> response.json())
+    .then((data)=>{
+        if('success' === data.message){
+            localStorage.setItem('user', JSON.stringify({credentials, token: data.token}))
+            props.setLoggedIn(true)
+            props.setUser(credentials.username)
+            navigate('/')
+        }else{
+            setPasswordError("Incorrect username/password.")
+            return;
+        }
+    })
+    
+
+ 
+
+
+
   };
+
+  const handleChange = (event) =>{
+    const newCredentials = {...credentials}
+
+    newCredentials[event.target.name] = event.target.value;
+    
+    setCredentials(newCredentials);
+}
 
   return (
     <div className="mainContainer">
@@ -36,20 +82,21 @@ const Login = (props) => {
         <br />
         <div className="inputContainer">
           <input
-            value={username}
+            value={credentials.username}
             placeholder="Enter Username"
-            onChange={(event) => setUsername(event.target.value)}
+            name="username"
+            onChange={handleChange}
             className="inputHolder"
           />
           <label className="error">{userError}</label>
         </div>
         <div className="inputContainer">
           <input
-            value={password}
+            value={credentials.password}
             type="password"
             name="password"
             placeholder="Enter Password"
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={handleChange}
             className="inputHolder"
           />
           <label className="error">{passwordError}</label>

@@ -6,8 +6,14 @@ import ViewRecipe from "./components/ViewRecipe";
 import AddRecipeForm from "./components/AddRecipeForm";
 import SearchRecipesList from "./components/SearchRecipeList";
 import Login from "./components/Login";
+import { useState } from "react";
 
 function App() {
+  const [loggedIn,setLoggedIn] = useState(false);
+  const [user, setUser] = useState('');
+
+
+
   return (
     <Router>
       <NavBar/>
@@ -17,7 +23,8 @@ function App() {
         <Route path="/recipe/:id" element={<ViewRecipe/>}/>
         <Route path="/recipe/new" element={<AddRecipeForm/>}/>
         <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
-        <Route path="/login" element={<Login/>}/>
+        <Route path="/recipe/user/:id" element={<Home/>}/>
+        <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setUser={setUser}/>}/>
       </Routes>
     </Router>
   );
