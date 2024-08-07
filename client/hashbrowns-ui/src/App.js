@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar";
 import AllRecipesList from "./components/AllRecipesList";
 import ViewRecipe from "./components/ViewRecipe";
 import AddRecipeForm from "./components/AddRecipeForm";
+import SearchRecipesList from "./components/SearchRecipeList";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
         <Route path="/recipe" element={<AllRecipesList/>}/>
         <Route path="/recipe/:id" element={<ViewRecipe/>}/>
         <Route path="/recipe/new" element={<AddRecipeForm/>}/>
-        <Route path="/recipes" element={<AllRecipesList/>}/>
+        <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
       </Routes>
     </Router>
   );
