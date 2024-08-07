@@ -2,14 +2,15 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import {Link, useParams} from "react-router-dom"
 
-export default function AllRecipesList() {
+export default function SearchRecipesList() {
 
     const [recipes, setRecipes] = useState([]);
-    const url = "http://localhost:8080/recipe"
+    const url = "http://localhost:8080/recipe/search"
+    const {text} = useParams();
     
     useEffect(()=>{
         
-        fetch(url)
+        fetch(`${url}/${text}`)
         .then(response => {
             if(response.status === 200){
                 return response.json()
@@ -19,12 +20,12 @@ export default function AllRecipesList() {
         })
         .then(data => setRecipes(data))
         .catch(console.log)
-    },[])
+    },[text])
 
   return (
     <>
       <section className="container recipesList">
-        <h2>All Recipes</h2>
+        <h2>Recipe Results</h2>
         <ul>
             {recipes.map((recipe, index) => (
                 <li key={index}>
