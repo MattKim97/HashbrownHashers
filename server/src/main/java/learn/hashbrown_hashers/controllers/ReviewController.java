@@ -1,8 +1,6 @@
-package learn.hashbrown_hashers.data.controllers;
+package learn.hashbrown_hashers.controllers;
 
 
-import learn.hashbrown_hashers.controllers.ErrorResponse;
-import learn.hashbrown_hashers.data.ReviewRepository;
 import learn.hashbrown_hashers.domain.Result;
 import learn.hashbrown_hashers.domain.ReviewService;
 import learn.hashbrown_hashers.models.Review;

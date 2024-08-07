@@ -1,0 +1,15 @@
+.searchBtn {
+    color: #fff;
+    background-color: #335ad1;
+    border-radius: 5px;
+    width: 50px;   
+    
+    border: black; 
+    font-size: 1.5rem;
+}    
+
+
+.searchForm {
+    border-radius: 50px;
+}
+

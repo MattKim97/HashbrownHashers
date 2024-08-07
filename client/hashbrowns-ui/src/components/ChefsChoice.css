@@ -1,0 +1,59 @@
+
+  .buttonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50rem;
+  }
+
+  .chefsButton {
+    border: none;
+    background: rgb(60, 109, 201);
+    color: white;
+    padding: 12px 24px;
+    margin: 8px;
+    font-size: 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: #ADCFFF 0 -12px 6px inset;
+    transition: all 1s;
+  }
+  
+  .chefsButton:hover {
+    animation: shake 0.8s ease-in-out;
+    box-shadow: #cd70ef 0 -6px 8px inset;
+  }
+
+  @keyframes shake {
+    0% {
+        transform: skewX(-10deg);
+    }
+
+    25% {
+        transform: skewX(10deg);
+    }
+
+    50% {
+        transform: skewX(-10deg);
+    }
+
+    75% {
+        transform: skewX(10deg);
+    }
+
+    100% {
+        transform: skewX(-10deg);
+    }
+}
+
+
+
+  .chefsButton:active {
+    transform: scale(1.525);
+  }
+
+
+
+
+

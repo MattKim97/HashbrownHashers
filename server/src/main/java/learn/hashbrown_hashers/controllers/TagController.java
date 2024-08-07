@@ -1,11 +1,9 @@
-package learn.hashbrown_hashers.data.controllers;
+package learn.hashbrown_hashers.controllers;
 
 
-import learn.hashbrown_hashers.controllers.ErrorResponse;
 import learn.hashbrown_hashers.domain.Result;
 import learn.hashbrown_hashers.domain.TagService;
 import learn.hashbrown_hashers.models.Tag;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
