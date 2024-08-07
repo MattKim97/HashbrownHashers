@@ -2,6 +2,7 @@ import AWS from 'aws-sdk';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
+/// REMEMBER TO CHANGE USERID FROM BEING HARD CODED TO BEING DYNAMIC
 
 
 const RECIPE_DEFAULT = {
@@ -174,7 +175,7 @@ function AddRecipeForm(){
                     <textarea className="form-control" id="text" name="text" placeholder="Text" value={recipe.text} onChange={handleChange}/>
                 </fieldset>
                 <button type="submit" className="btn btn-primary">Submit</button>
-                <button className="btn btn-secondary">cancel</button>
+                <button className="btn btn-secondary" onClick={navigate("/")}>cancel</button>
             </form>
         </section>
         </>
