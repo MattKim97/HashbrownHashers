@@ -36,7 +36,7 @@ function NavBar(){
             <Link to={'/recipe'}>View Recipes</Link>
             <Link to={'/recipe/new'}>Create New</Link>
             <Link to={'/'}>My Recipes</Link>
-            <Link to={'/'}>Log In/Log Out</Link>
+            <Link to={'/login'}>Log In/Log Out</Link>
 
             
 
