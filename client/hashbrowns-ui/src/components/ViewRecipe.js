@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import './ViewRecipe.css'
 
 export default function ViewRecipe() {
 
@@ -30,7 +31,7 @@ export default function ViewRecipe() {
   return (
     <>
         <section className="container viewRecipe">
-            <h2>{recipe.recipeName}</h2>
+            <h1>{recipe.recipeName}</h1>
             <img src={recipe.imageUrl} alt={recipe.recipeName} />
             <p>{recipe.description}</p>
             <p>Prep Time: {recipe.prepTime} minutes</p>

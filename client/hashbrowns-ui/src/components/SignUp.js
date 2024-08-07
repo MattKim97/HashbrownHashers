@@ -24,7 +24,7 @@ const SignUp = (props) => {
   const navigate = useNavigate();
 
 
-  const url = "http://localhost:8080/register"
+  const url = "http://localhost:8080/api/user/register"
 
   const handleSubmit = (event) => {
     setUserError("");

@@ -8,6 +8,7 @@ import SearchRecipesList from "./components/SearchRecipeList";
 import Login from "./components/Login";
 import { useState } from "react";
 import ChefsChoice from "./components/ChefsChoice";
+import EditRecipeForm from "./components/EditRecipeForm";
 import SignUp from "./components/SignUp";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/recipe/:id" element={<ViewRecipe/>}/>
         <Route path="/recipe/new" element={<AddRecipeForm/>}/>
         <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
+        <Route path="/recipe/:id/edit" element={<EditRecipeForm/>}/>
         <Route path="/recipe/user/:id" element={<Home/>}/>
         <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setUser={setUser} setToken={setToken}/>}/>
         <Route path="/chefschoice" element={<ChefsChoice/>}/>

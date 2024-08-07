@@ -25,66 +25,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-
-        http.csrf().disable();
-
-        http.cors();
-
-
-        http.authorizeRequests()
-                // TODO add antMatchers here to configure access to specific API endpoints
-                .antMatchers(HttpMethod.GET, "/**").permitAll()
-                .antMatchers("/api/user/authenticate").permitAll()
-                .antMatchers("/api/user/register").permitAll()
-                .antMatchers("/api/admin/**").hasRole("ADMIN")
-                // require authentication for any request...
-                .anyRequest().authenticated()
+        http
+                .cors() // Enable CORS before other configurations
                 .and()
-                .addFilter(new JwtRequestFilter(authenticationManager(), converter))
+                .csrf().disable() // Disable CSRF protection
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/**").permitAll() // Allow GET requests to all endpoints
+                .antMatchers("/api/user/authenticate").permitAll() // Allow unauthenticated access to authenticate endpoint
+                .antMatchers("/api/user/register").permitAll() // Allow unauthenticated access to register endpoint
+                .antMatchers("/api/admin/**").hasRole("ADMIN") // Require ADMIN role for /api/admin/**
+                .anyRequest().authenticated() // Require authentication for all other requests
+                .and()
+                .addFilter(new JwtRequestFilter(authenticationManager(), converter)) // Add custom JWT filter
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS); // Use stateless sessions
     }
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable();
-//
-//        http.cors();
-//
-//        http.authorizeRequests()
-//                // TODO add antMatchers here to configure access to specific API endpoints
-//                .antMatchers("/api/user/authenticate").permitAll()
-//                .antMatchers("/api/user/register").permitAll()
-//                // require authentication for any request...
-//                .anyRequest().authenticated()
-//                .and()
-//                .addFilter(new JwtRequestFilter(authenticationManager(), converter))
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//    }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable();
-//
-//        http.cors();
-//
-//        http.authorizeRequests()
-//                // TODO add antMatchers here to configure access to specific API endpoints
-//                .antMatchers("/api/user/authenticate").permitAll()
-//                .antMatchers("/api/user/register").permitAll()
-//                // require authentication for any request...
-//                .anyRequest().authenticated()
-//                .and()
-//                .addFilter(new JwtRequestFilter(authenticationManager(), converter))
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//    }
-
-    @Override
     @Bean
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Bean
