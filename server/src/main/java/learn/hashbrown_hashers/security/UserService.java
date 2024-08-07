@@ -2,17 +2,21 @@ package learn.hashbrown_hashers.security;
 
 import learn.hashbrown_hashers.data.UserRepository;
 import learn.hashbrown_hashers.models.AppUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.User;
 
 import javax.validation.ValidationException;
 
 @Service
 public class UserService implements UserDetailsService {
+    @Autowired
     private final UserRepository repository;
+
     private final PasswordEncoder encoder;
 
     public UserService(UserRepository repository, PasswordEncoder encoder) {
@@ -24,11 +28,18 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser appUser = repository.findByUsername(username);
 
-        if (appUser == null || !appUser.isEnabled()) {
+        if (appUser == null) {
             throw new UsernameNotFoundException("User with username " + username + " not found or not enabled.");
         }
 
-        return appUser;
+        return User.withUsername(appUser.getUsername())
+                .password(appUser.getPassword())
+                .authorities("ROLE_USER")
+                .accountExpired(false)
+                .accountLocked(false)
+                .credentialsExpired(false)
+                .disabled(false)
+                .build();
     }
 
     public AppUser create(String firstName, String lastName, String username, String password, String email) {

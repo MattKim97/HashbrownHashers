@@ -49,12 +49,13 @@ const Login = (props) => {
     fetch(url,init)
     .then((response)=> response.json())
     .then((data)=>{
-        if(data.message === "success"){
+        if(data){
             props.setToken(data.jwt_token)
             props.setLoggedIn(true)
             props.setUser(credentials.username)
             navigate('/')
         }else{
+            console.log(data);
             setPasswordError("Incorrect username/password.")
             return;
         }
