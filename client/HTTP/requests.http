@@ -1,0 +1,24 @@
+@url = http://localhost:8080/recipe
+
+###
+GET {{url}} HTTP/1.1
+
+###
+GET {{url}}/333 HTTP/1.1
+
+###
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "recipeName": "Spicy Chicken Curry",
+    "difficulty": 3,
+    "spicyness": 4,
+    "prepTime": 45,
+    "imageUrl": "http://example.com/image.jpg",
+    "description": "A delicious and spicy chicken curry perfect for any meal.",
+    "text": "1. Heat oil in a large pot over medium heat. Add onions and cook until golden brown. 2. Add garlic, ginger, and spices, and cook for another 2 minutes. 3. Add chicken pieces and cook until browned. 4. Add tomatoes, chicken broth, and coconut milk. Bring to a simmer and cook for 30 minutes. 5. Serve hot with rice or naan.",
+    "userId": 1,
+    "timePosted": "2024-08-06",
+    "timeUpdated": "2024-08-06"
+}
