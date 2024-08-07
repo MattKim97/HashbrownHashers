@@ -60,7 +60,7 @@ function Reviews() {
         })
     };
 
-    const handleDelete = (deleteUserId) => {
+    const handleDeleteReview = (deleteUserId) => {
         const reviewhand = reviews.find(review => {review.userId === deleteUserId && review.recipeId === id});
         if(window.confirm(`Delete This Review: ${reviewhand.title}?`)) {
             const reviewid = reviewhand.reviewId;
@@ -81,12 +81,12 @@ function Reviews() {
     };
 
     const handleChange = (event) => {
-        //create new Agent by copying agent
+        //create new review by copying review
         const newReview = {...review};
         //sets value based on name of event target
-        newAgent[event.target.name] = event.target.value;
-        //sets state agent to newAgent
-        setAgent(newReview);
+        newReview[event.target.name] = event.target.value;
+        //sets state review to newReview
+        setReview(newReview);
     }
 
     const handleSubmit = (event)  => {
@@ -145,7 +145,7 @@ function Reviews() {
                             <span>{rev.rating}/5   {rev.title}</span>
                             <p>{rev.description}</p>
                             {rev.userId === userId && (
-                                <button className="btn btn-danger" onClick={() => handleDelete(rev.userId)}>Delete Review</button>
+                                <button className="btn btn-danger" onClick={() => handleDeleteReview(rev.userId)}>Delete Review</button>
                             )}
                     </div>
                     </div>
