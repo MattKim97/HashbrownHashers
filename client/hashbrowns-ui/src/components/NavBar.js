@@ -9,7 +9,7 @@ function NavBar(){
 
     const handleSubmit = (event) =>{
         event.preventDefault();        
-        navigate(`/recipes/${search}`)
+        navigate(`/recipe/${search}`)
         setSearch(''); 
     }
     const handleChange = (event) =>{

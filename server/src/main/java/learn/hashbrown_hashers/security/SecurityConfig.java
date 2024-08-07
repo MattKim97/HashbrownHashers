@@ -21,23 +21,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.converter = converter;
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-
-        http.cors();
-
-        http.authorizeRequests()
-                // TODO add antMatchers here to configure access to specific API endpoints
-                .antMatchers("/api/user/authenticate").permitAll()
-                .antMatchers("/api/user/register").permitAll()
-                // require authentication for any request...
-                .anyRequest().authenticated()
-                .and()
-                .addFilter(new JwtRequestFilter(authenticationManager(), converter))
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.authorizeRequests().antMatchers("/**").permitAll();
     }
+
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.csrf().disable();
+//
+//        http.cors();
+//
+//        http.authorizeRequests()
+//                // TODO add antMatchers here to configure access to specific API endpoints
+//                .antMatchers("/api/user/authenticate").permitAll()
+//                .antMatchers("/api/user/register").permitAll()
+//                // require authentication for any request...
+//                .anyRequest().authenticated()
+//                .and()
+//                .addFilter(new JwtRequestFilter(authenticationManager(), converter))
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//    }
 
     @Override
     @Bean
