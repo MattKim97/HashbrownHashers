@@ -13,6 +13,7 @@ import EditRecipeForm from "./components/EditRecipeForm";
 function App() {
   const [loggedIn,setLoggedIn] = useState(false);
   const [user, setUser] = useState('');
+  const [token,setToken] = useState('');
 
 
 
@@ -27,8 +28,9 @@ function App() {
         <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
         <Route path="/recipe/:id/edit" element={<EditRecipeForm/>}/>
         <Route path="/recipe/user/:id" element={<Home/>}/>
-        <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setUser={setUser}/>}/>
+        <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setUser={setUser} setToken={setToken}/>}/>
         <Route path="/chefschoice" element={<ChefsChoice/>}/>
+        <Route path="/signup" element={<SignUp/>}/>
       </Routes>
     </Router>
   );

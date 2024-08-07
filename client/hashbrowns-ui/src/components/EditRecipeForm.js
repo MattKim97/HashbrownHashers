@@ -19,6 +19,9 @@ export default function EditRecipeForm() {
 
     }
 
+    const handleSubmit = (e) => {
+    }
+
   return (
     <div>
              {currentUser ? <section className="container">
