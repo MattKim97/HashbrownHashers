@@ -8,10 +8,12 @@ import SearchRecipesList from "./components/SearchRecipeList";
 import Login from "./components/Login";
 import { useState } from "react";
 import ChefsChoice from "./components/ChefsChoice";
+import SignUp from "./components/SignUp";
 
 function App() {
   const [loggedIn,setLoggedIn] = useState(false);
   const [user, setUser] = useState('');
+  const [token,setToken] = useState('');
 
 
 
@@ -25,8 +27,9 @@ function App() {
         <Route path="/recipe/new" element={<AddRecipeForm/>}/>
         <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
         <Route path="/recipe/user/:id" element={<Home/>}/>
-        <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setUser={setUser}/>}/>
+        <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setUser={setUser} setToken={setToken}/>}/>
         <Route path="/chefschoice" element={<ChefsChoice/>}/>
+        <Route path="/signup" element={<SignUp/>}/>
       </Routes>
     </Router>
   );
