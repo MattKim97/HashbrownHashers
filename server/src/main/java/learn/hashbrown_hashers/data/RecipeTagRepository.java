@@ -9,6 +9,8 @@ public interface RecipeTagRepository {
 
     List<RecipeTag> findbyRecipeId(int recipeId);
 
+    List<RecipeTag> findbyTagId(int tagId);
+
 
     RecipeTag add(RecipeTag recipeTag);
 }

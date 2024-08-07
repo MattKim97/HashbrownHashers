@@ -29,6 +29,15 @@ public class RecipeTagTemplateRepository implements RecipeTagRepository {
     }
 
     @Override
+    public List<RecipeTag> findbyTagId(int tagId) {
+        final String sql = "select rt.recipe_id, rt.tag_id, t.tag_name " +
+                "from recipe_tags rt inner join tags t on t.tag_id=rt.tag_id " +
+                "where rt.tag_id=?;";
+        return jdbcTemplate.query(sql,new RecipeTagMapper(), tagId);
+    }
+
+
+    @Override
     @Transactional
     public RecipeTag add(RecipeTag recipeTag) {
         final String sql = "insert into recipe_tags " +

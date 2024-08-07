@@ -16,9 +16,16 @@ public class RecipeTagService {
 
     public List<RecipeTag> findbyRecipeId(int recipeId) {
         if(recipeId <= 0) {
-            return Collections.emptyList();
+            return null;
         }
         return recipeTagRepo.findbyRecipeId(recipeId);
+    }
+
+    public List<RecipeTag> findbyTagId(int tagId) {
+        if(tagId <= 0) {
+            return null;
+        }
+        return recipeTagRepo.findbyRecipeId(tagId);
     }
 
     public Result<RecipeTag> add(RecipeTag recipeTag) {
