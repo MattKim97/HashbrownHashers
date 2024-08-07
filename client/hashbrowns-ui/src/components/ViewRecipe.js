@@ -5,7 +5,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 export default function ViewRecipe() {
 
     const [recipe, setRecipe] = useState([]);
-    const url = "http://localhost:8080/recipe"
+    const [tags, setTags] = useState([]);
+    const tagurl = "http://localhost:8080/api/tags"
+    const recipeurl = "http://localhost:8080/recipe"
     const { id } = useParams();
 
     useEffect(()=>{
