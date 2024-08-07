@@ -5,6 +5,7 @@ import AllRecipesList from "./components/AllRecipesList";
 import ViewRecipe from "./components/ViewRecipe";
 import AddRecipeForm from "./components/AddRecipeForm";
 import SearchRecipesList from "./components/SearchRecipeList";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/recipe/:id" element={<ViewRecipe/>}/>
         <Route path="/recipe/new" element={<AddRecipeForm/>}/>
         <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
+        <Route path="/login" element={<Login/>}/>
       </Routes>
     </Router>
   );
