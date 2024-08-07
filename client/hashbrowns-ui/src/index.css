@@ -8,11 +8,15 @@ body{
   font-family: "Oswald", sans-serif;
   font-size:1.8rem;
   line-height:1.5;
+  background-image: url('./components/backgroundimage/background.png');
+  background-repeat: no-repeat;
+  background-size:  100vw 100vh;
 }
 h1, h2, h3{
   font-family: "Anton", sans-serif;
   font-size:2.4rem;
   letter-spacing:3px;
+  background-color: transparent;
 }
 h1{
   font-size:4.5rem;
@@ -20,4 +24,8 @@ h1{
 }
 html{
   font-size:55.5%;
+}
+
+.container {
+  max-width: 70vw;
 }
