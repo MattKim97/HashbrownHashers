@@ -1,6 +1,6 @@
 package learn.hashbrown_hashers.data;
 
-import learn.hashbrown_hashers.models.Recipe;
+
 import learn.hashbrown_hashers.models.RecipeTag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
