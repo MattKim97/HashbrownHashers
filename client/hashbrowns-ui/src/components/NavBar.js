@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import './NavBar.css';
 import { useState } from "react";
 
@@ -6,11 +6,16 @@ function NavBar(){
 
     const navigate = useNavigate();
     const [search, setSearch] = useState("");
+    const location = useLocation();
 
     const handleSubmit = (event) =>{
-        event.preventDefault();        
-        navigate(`/recipe/${search}`)
-        setSearch(''); 
+        event.preventDefault();
+        //console.log(location.pathname)
+        if(search.length > 0){
+            navigate(`/recipe/search/${search}`)
+            setSearch(''); 
+            
+        }
     }
     const handleChange = (event) =>{
         setSearch(event.target.value);
@@ -28,7 +33,7 @@ function NavBar(){
                 <button className="searchBtn" >Search</button>
             </form>
             <Link to={'/'}>Chef's Choice</Link>
-            <Link to={'/'}>View Recipes</Link>
+            <Link to={'/recipe'}>View Recipes</Link>
             <Link to={'/recipe/new'}>Create New</Link>
             <Link to={'/'}>My Recipes</Link>
             <Link to={'/'}>Log In/Log Out</Link>
