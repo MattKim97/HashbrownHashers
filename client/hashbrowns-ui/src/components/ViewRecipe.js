@@ -9,6 +9,7 @@ export default function ViewRecipe() {
     const tagurl = "http://localhost:8080/api/tags"
     const recipeurl = "http://localhost:8080/recipe"
     const { id } = useParams();
+    const url = "http://localhost:8080/recipe"
 
     useEffect(()=>{
         fetch(`${recipeurl}/${id}`)
