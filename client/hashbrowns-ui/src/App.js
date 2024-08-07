@@ -19,6 +19,7 @@ function App() {
 
 
   return (
+
     <Router>
       <NavBar loggedIn={loggedIn}/>
       <Routes>
