@@ -1,8 +1,7 @@
 import AWS from 'aws-sdk';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-
-/// REMEMBER TO CHANGE USERID FROM BEING HARD CODED TO BEING DYNAMIC
+import './AddRecipeForm.css';
 
 
 const RECIPE_DEFAULT = {
@@ -31,9 +30,23 @@ function AddRecipeForm(){
     const [errors, setErrors] = useState([]);
     const [recipe, setRecipe] = useState(RECIPE_DEFAULT);
     const [recipes, setRecipes] = useState([]);
-    const userId = 1;
+    const [currentUser, setCurrentUser] = useState(null);
     const url = "http://localhost:8080/recipe"
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        fetch(`http://localhost:8080//current-user`)
+        .then(response => {
+            if(response.status === 200){
+                return response.json()
+            } else {
+                return Promise.reject(`Unexpected status code: ${response.status}`);
+            }
+        }
+        )
+        .then(data => setCurrentUser(data))
+        .catch(console.log)
+    },[])
 
 
     const handleFileChange = (e) => {
@@ -88,7 +101,7 @@ function AddRecipeForm(){
         await uploadFile();
     }
 
-    const updatedRecipe = { ...recipe, imageUrl: fileUrl, userId: userId };
+    const updatedRecipe = { ...recipe, imageUrl: fileUrl, userId: currentUser.userId };
 
     const init = {
         method: 'POST',
@@ -133,7 +146,7 @@ function AddRecipeForm(){
 
     return(
         <>
-        <section className="container">
+        {currentUser ? <section className="container">
             <h2>Add a Recipe</h2>
             {errors.length > 0 && (
                 <div className="alert alert-danger">
@@ -174,10 +187,18 @@ function AddRecipeForm(){
                     <label>Text</label>
                     <textarea className="form-control" id="text" name="text" placeholder="Text" value={recipe.text} onChange={handleChange}/>
                 </fieldset>
-                <button type="submit" className="btn btn-primary">Submit</button>
-                <button className="btn btn-secondary" onClick={navigate("/")}>cancel</button>
+                <button type="submit" className="btn btn-outline-primary">Submit</button>
+                <button className="btn btn-outline-secondary" onClick={() => navigate("/")}>cancel</button>
             </form>
+        </section> : 
+        <section className="container loginForm">
+            <h2>Log in to add a recipe</h2>
+            <div className="mt-3">
+                    <p>You need to be logged in to add a recipe.</p>
+                    <button className="btn btn-outline-info loginBtn" onClick={() => navigate('/login')}>Log In</button>
+            </div>
         </section>
+        }
         </>
     )
 }
