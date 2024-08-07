@@ -11,7 +11,7 @@ export default function ViewRecipe() {
     const { id } = useParams();
 
     useEffect(()=>{
-        fetch(`${url}/${id}`)
+        fetch(`${recipeurl}/${id}`)
         .then(response => {
             if(response.status === 200){
                 return response.json()
