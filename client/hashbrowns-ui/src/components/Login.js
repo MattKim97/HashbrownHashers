@@ -49,8 +49,8 @@ const Login = (props) => {
     fetch(url,init)
     .then((response)=> response.json())
     .then((data)=>{
-        if('success' === data.message){
-            localStorage.setItem('user', JSON.stringify({credentials, token: data.token}))
+        if(data.message === "success"){
+            props.setToken(data.jwt_token)
             props.setLoggedIn(true)
             props.setUser(credentials.username)
             navigate('/')
