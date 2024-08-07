@@ -1,102 +1,84 @@
 package learn.hashbrown_hashers.data;
 
-import learn.hashbrown_hashers.models.User;
+import learn.hashbrown_hashers.models.AppUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class UserTemplateRepositoryTest {
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     private UserTemplateRepository userRepository;
 
     @Autowired
-    KnownGoodState knownGoodState;
+    private JdbcTemplate jdbcTemplate;
 
     @BeforeEach
-    void setup() {knownGoodState.set();}
-
-    @Test
     @Transactional
-    void testFindAll() {
-        List<User> users = userRepository.findAll();
-        assertEquals(10, users.size(), "The number of users should be 10.");
+    public void setUp() {
+        jdbcTemplate.execute("CALL set_known_good_state();"); // Reset database to a known state
     }
 
     @Test
-    @Transactional
-    void testAddUser() {
-        User newUser = new User();
-        newUser.setFirstName("John");
-        newUser.setLastName("Doe");
-        newUser.setUserName("johndoe");
-        newUser.setPasswordHash("hash");
-        newUser.setEmail("john.doe@example.com");
-        newUser.setRoleId(1);
-
-        User addedUser = userRepository.add(newUser);
-        assertNotNull(addedUser, "The added user should not be null.");
-        assertNotNull(addedUser.getUserId(), "The added user should have a generated ID.");
-
-        User fetchedUser = userRepository.findById(addedUser.getUserId());
-        assertNotNull(fetchedUser, "The fetched user should not be null.");
-        assertEquals(newUser.getUserName(), fetchedUser.getUserName(), "The user names should match.");
+    public void testCreateUser() {
+        AppUser user = new AppUser(null, "John", "Doe", "john_doe", "password_hash", "john.doe@example.com", 1);
+        AppUser createdUser = userRepository.create(user);
+        assertNotNull(createdUser);
+        assertNotNull(createdUser.getUserId());
+        assertEquals("John", createdUser.getFirstName());
+        assertEquals("Doe", createdUser.getLastName());
+        assertEquals("john_doe", createdUser.getUserName());
+        assertEquals("john.doe@example.com", createdUser.getEmail());
     }
 
     @Test
-    @Transactional
-    void testUpdateUser() {
-        User existingUser = userRepository.findById(1);
-        assertNotNull(existingUser, "The existing user should not be null.");
-
-        existingUser.setFirstName("UpdatedName");
-        boolean updated = userRepository.update(existingUser);
-        assertTrue(updated, "The user should be updated successfully.");
-
-        User updatedUser = userRepository.findById(1);
-        assertEquals("UpdatedName", updatedUser.getFirstName(), "The user's first name should be updated.");
+    public void testFindByUsername() {
+        AppUser user = userRepository.findByUsername("vickerstaff0");
+        assertNotNull(user);
+        assertEquals("vickerstaff0", user.getUserName());
+        assertEquals("Leelah", user.getFirstName());
+        assertEquals("Vickerstaff", user.getLastName());
     }
 
     @Test
-    @Transactional
-    void testDeleteUser() {
-        User userToDelete = userRepository.findById(3);
-        assertNotNull(userToDelete, "The user to delete should not be null.");
-
-        boolean deleted = userRepository.deleteById(3);
-        assertTrue(deleted, "The user should be deleted successfully.");
-
-        User deletedUser = userRepository.findById(3);
-        assertNull(deletedUser, "The user should be null after deletion.");
+    public void testFindById() {
+        AppUser user = userRepository.findById(1);
+        assertNotNull(user);
+        assertEquals(1, user.getUserId());
+        assertEquals("Leelah", user.getFirstName());
     }
 
     @Test
-    @Transactional
-    void testFindByUsername() {
-        User user = userRepository.findByUsername("vickerstaff0");
-        assertNotNull(user, "The user with the given username should not be null.");
-        assertEquals("Leelah", user.getFirstName(), "The user's first name should match.");
+    public void testFindByEmail() {
+        AppUser user = userRepository.findByEmail("vickerstaff0@desdev.cn");
+        assertNotNull(user);
+        assertEquals("vickerstaff0@desdev.cn", user.getEmail());
+        assertEquals("Leelah", user.getFirstName());
     }
 
     @Test
-    @Transactional
-    void testFindByEmail() {
-        User user = userRepository.findByEmail("vickerstaff0@desdev.cn");
-        assertNotNull(user, "The user with the given email should not be null.");
-        assertEquals("Leelah", user.getFirstName(), "The user's first name should match.");
+    public void testUpdateUser() {
+        AppUser user = userRepository.findById(1);
+        assertNotNull(user);
+        user.setLastName("UpdatedName");
+        AppUser updatedUser = userRepository.update(user);
+        assertNotNull(updatedUser);
+        assertEquals("UpdatedName", updatedUser.getLastName());
+    }
+
+    @Test
+    public void testDeleteUser() {
+        boolean isDeleted = userRepository.deleteById(1);
+        assertTrue(isDeleted);
+        AppUser user = userRepository.findById(1);
+        assertNull(user);
     }
 }
