@@ -22,6 +22,8 @@ const Login = (props) => {
     setUserError("");
     setPasswordError("");
 
+    console.log(credentials)
+
     // Check if the user has entered both fields correctly
     if ("" === credentials.username) {
       setUserError("Please enter your email");

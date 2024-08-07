@@ -22,11 +22,14 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println("Attempting to load user by username: " + username);
+
         AppUser appUser = repository.findByUsername(username);
 
         if (appUser == null || !appUser.isEnabled()) {
             throw new UsernameNotFoundException("User with username " + username + " not found or not enabled.");
         }
+        System.out.println("User found: " + appUser.getUsername());
 
         return appUser;
     }

@@ -1,13 +1,36 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function EditRecipeForm() {
 
-    const [currentUser, setCurrentUser] = useState(null);
+    // STILL NEED TO IMPLEMENT CURRENT USER TO RESTRICT EDIT/DELETE
+
+    // hardcoded user for now
+    const [currentUser, setCurrentUser] = useState({
+        username: "admin",
+        userId : 2
+    });
     const [errors, setErrors] = useState([]);
     const [recipe, setRecipe] = useState(null);
     const navigate = useNavigate();
+    const { recipeId } = useParams();
+
+
+    useEffect(()=>{
+        if(recipeId){
+            fetch(`http://localhost:8080/recipe/${recipeId}`)
+            .then(response => {
+                if(response.status === 200){
+                    return response.json()
+                } else {
+                    return Promise.reject(`Unexpected status code: ${response.status}`);
+                }
+            })
+            .then(data => setRecipe(data))
+            .catch(console.log)
+        }
+    },[recipeId])
 
 
     const handleChange = (e) => {
@@ -19,13 +42,54 @@ export default function EditRecipeForm() {
 
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+
+        if(currentUser.userId !== recipe.userId){
+            window.alert("You can only edit your own recipes")
+            navigate(`/recipe/${recipeId}`)
+            return
+        }
+
+        e.preventDefault();
+
+        const errors = [];
+
+        const init = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(recipe)
+        };
+        fetch(`http://localhost:8080/recipe/${recipeId}`, init)
+        .then(response => {
+            if(response.status === 204){
+                return null
+            } else if(response.status === 400){
+                return response.json()
+            } else {
+                return Promise.reject(`Unexpected Status Code: ${response.status}`);
+            }
+        })
+        .then(data => {
+            if(data){
+                setErrors(data);
+            } else {
+                navigate(`/recipe/${recipeId}`)
+            }
+        })
+        .catch(console.log)
+    }
+
+    if (!recipe) {
+        // Optionally render a loading state or placeholder
+        return <div>Loading...</div>;
     }
 
   return (
     <div>
              {currentUser ? <section className="container">
-            <h2>Add a Recipe</h2>
+            <h2>Edit a Recipe</h2>
             {errors.length > 0 && (
                 <div className="alert alert-danger">
                     <p>The Following Errors were found: </p>
@@ -62,13 +126,13 @@ export default function EditRecipeForm() {
                     <textarea className="form-control" id="text" name="text" placeholder="Text" value={recipe.text} onChange={handleChange}/>
                 </fieldset>
                 <button type="submit" className="btn btn-outline-primary">Submit</button>
-                <button className="btn btn-outline-secondary" onClick={() => navigate("/")}>cancel</button>
+                <button className="btn btn-outline-secondary" onClick={() => navigate(`/recipe/${recipeId}`)}>Cancel</button>
             </form>
         </section> : 
         <section className="container loginForm">
-            <h2>Log in to add a recipe</h2>
+            <h2>Log in to edit your recipe</h2>
             <div className="mt-3">
-                    <p>You need to be logged in to add a recipe.</p>
+                    <p>You need to be logged in to edit your recipe.</p>
                     <button className="btn btn-outline-info loginBtn" onClick={() => navigate('/login')}>Log In</button>
             </div>
         </section>

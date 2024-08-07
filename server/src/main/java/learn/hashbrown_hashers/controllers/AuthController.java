@@ -43,25 +43,32 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<Map<String, String>> authenticate(@RequestBody Map<String, String> credentials) {
+        System.out.println("Authenticating user: " + credentials.get("username"));
+
 
         UsernamePasswordAuthenticationToken authToken =
                 new UsernamePasswordAuthenticationToken(credentials.get("username"), credentials.get("password"));
 
         try {
             Authentication authentication = authenticationManager.authenticate(authToken);
+            System.out.println("Authentication successful: " + authentication.isAuthenticated());
 
             if (authentication.isAuthenticated()) {
                 String jwtToken = jwtConverter.getTokenFromUser((User) authentication.getPrincipal());
 
                 Map<String, String> response = new HashMap<>();
                 response.put("jwt_token", jwtToken);
+                System.out.println("JWT Token generated: " + jwtToken);
 
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
 
         } catch (AuthenticationException ex) {
+            System.out.println("Authentication failed: " + ex.getMessage());
+
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+        System.out.println("Authentication failed: User not authenticated");
 
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
