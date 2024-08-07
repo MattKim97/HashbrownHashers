@@ -14,7 +14,7 @@ const Login = (props) => {
   const [userError, setUserError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const url = "http://localhost:8080/authenticate"
+  const url = "http://localhost:8080/api/user/authenticate"
 
   const navigate = useNavigate();
 
@@ -58,8 +58,7 @@ const Login = (props) => {
             setPasswordError("Incorrect username/password.")
             return;
         }
-    })
-    
+    })    
 
  
 

@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import { useState } from "react";
 import ChefsChoice from "./components/ChefsChoice";
 import EditRecipeForm from "./components/EditRecipeForm";
+import SignUp from "./components/SignUp";
 
 function App() {
   const [loggedIn,setLoggedIn] = useState(false);
