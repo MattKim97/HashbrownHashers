@@ -1,102 +1,126 @@
 package learn.hashbrown_hashers.data;
 
 import learn.hashbrown_hashers.models.User;
+import learn.hashbrown_hashers.data.mappers.UserMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class UserTemplateRepositoryTest {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private UserTemplateRepository userRepository;
+    private UserTemplateRepository repository;
 
     @Autowired
-    KnownGoodState knownGoodState;
+    private KnownGoodState knownGoodState;
 
     @BeforeEach
-    void setup() {knownGoodState.set();}
+    void setup() {
+        knownGoodState.set();
+    }
+
+
 
     @Test
-    @Transactional
+
     void testFindAll() {
-        List<User> users = userRepository.findAll();
-        assertEquals(10, users.size(), "The number of users should be 10.");
+        List<User> users = repository.findAll();
+        System.out.println("Number of users in database: " + users.size());
+        users.forEach(user -> System.out.println("User: " + user.getUserName()));
+        assertThat(users).hasSize(11);
+    }
+    @Test
+    void testFindById() {
+        User user = repository.findById(1);
+        assertThat(user).isNotNull();
+        assertThat(user.getUserName()).isEqualTo("vickerstaff0");
     }
 
     @Test
-    @Transactional
-    void testAddUser() {
+    void testAdd() {
         User newUser = new User();
         newUser.setFirstName("John");
         newUser.setLastName("Doe");
-        newUser.setUserName("johndoe");
-        newUser.setPasswordHash("hash");
+        newUser.setUserName("john_doe");
+        newUser.setPasswordHash("password");
         newUser.setEmail("john.doe@example.com");
         newUser.setRoleId(1);
 
-        User addedUser = userRepository.add(newUser);
-        assertNotNull(addedUser, "The added user should not be null.");
-        assertNotNull(addedUser.getUserId(), "The added user should have a generated ID.");
+        User addedUser = repository.add(newUser);
 
-        User fetchedUser = userRepository.findById(addedUser.getUserId());
-        assertNotNull(fetchedUser, "The fetched user should not be null.");
-        assertEquals(newUser.getUserName(), fetchedUser.getUserName(), "The user names should match.");
+        assertThat(addedUser).isNotNull();
+        assertThat(addedUser.getUserId()).isGreaterThan(0);
+
+        User foundUser = repository.findById(addedUser.getUserId());
+        assertThat(foundUser).isNotNull();
+        assertThat(foundUser.getUserName()).isEqualTo("john_doe");
+    }
+
+    @Test
+    void testUpdate() {
+        User user = repository.findById(1);
+        assertThat(user).isNotNull();
+
+        user.setEmail("new.email@example.com");
+        boolean updated = repository.update(user);
+
+        assertThat(updated).isTrue();
+
+        User updatedUser = repository.findById(1);
+        assertThat(updatedUser).isNotNull();
+        assertThat(updatedUser.getEmail()).isEqualTo("new.email@example.com");
     }
 
     @Test
     @Transactional
-    void testUpdateUser() {
-        User existingUser = userRepository.findById(1);
-        assertNotNull(existingUser, "The existing user should not be null.");
+    void testDeleteById() {
+        boolean deleted = repository.deleteById(10);
+        assertThat(deleted).isTrue();
 
-        existingUser.setFirstName("UpdatedName");
-        boolean updated = userRepository.update(existingUser);
-        assertTrue(updated, "The user should be updated successfully.");
-
-        User updatedUser = userRepository.findById(1);
-        assertEquals("UpdatedName", updatedUser.getFirstName(), "The user's first name should be updated.");
+        User user = repository.findById(10);
+        assertThat(user).isNull();
     }
 
     @Test
-    @Transactional
-    void testDeleteUser() {
-        User userToDelete = userRepository.findById(3);
-        assertNotNull(userToDelete, "The user to delete should not be null.");
-
-        boolean deleted = userRepository.deleteById(3);
-        assertTrue(deleted, "The user should be deleted successfully.");
-
-        User deletedUser = userRepository.findById(3);
-        assertNull(deletedUser, "The user should be null after deletion.");
-    }
-
-    @Test
-    @Transactional
     void testFindByUsername() {
-        User user = userRepository.findByUsername("vickerstaff0");
-        assertNotNull(user, "The user with the given username should not be null.");
-        assertEquals("Leelah", user.getFirstName(), "The user's first name should match.");
+        User user = repository.findByUsername("admin");
+        assertThat(user).isNotNull();
+        assertThat(user.getUserName()).isEqualTo("admin");
     }
 
     @Test
-    @Transactional
     void testFindByEmail() {
-        User user = userRepository.findByEmail("vickerstaff0@desdev.cn");
-        assertNotNull(user, "The user with the given email should not be null.");
-        assertEquals("Leelah", user.getFirstName(), "The user's first name should match.");
+        User user = repository.findByEmail("admin@cam.ac.uk");
+        assertThat(user).isNotNull();
+        assertThat(user.getEmail()).isEqualTo("admin@cam.ac.uk");
+    }
+
+    @Test
+    void testDeleteUser() {
+        User adminUser = repository.findByUsername("admin");
+        assertThat(adminUser).isNotNull();
+
+        User userToDelete = repository.findById(2); // Example ID
+        boolean deleted = repository.deleteUser(adminUser, userToDelete.getUserId());
+
+        assertThat(deleted).isTrue();
+        User deletedUser = repository.findById(userToDelete.getUserId());
+        assertThat(deletedUser).isNull();
     }
 }

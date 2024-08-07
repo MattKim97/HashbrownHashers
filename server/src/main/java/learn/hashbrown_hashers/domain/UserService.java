@@ -2,7 +2,10 @@ package learn.hashbrown_hashers.domain;
 
 import learn.hashbrown_hashers.data.UserRepository;
 import learn.hashbrown_hashers.models.User;
+import learn.hashbrown_hashers.security.JwtConverter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -11,16 +14,20 @@ import java.util.regex.Pattern;
 public class UserService {
 
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtConverter jwtConverter;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, JwtConverter jwtConverter) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtConverter = jwtConverter;
     }
 
     public List<User> findAll() {
         return repository.findAll();
     }
 
-    public User findById(int userId) {
+    public User findById(Integer userId) {
         return repository.findById(userId);
     }
 
@@ -30,7 +37,7 @@ public class UserService {
             return result;
         }
 
-        if (user.getUserId() != 0) {
+        if (user.getUserId() != null) {
             result.addMessage("userId cannot be set for `add` operation", ResultType.INVALID);
             return result;
         }
@@ -45,97 +52,126 @@ public class UserService {
             return result;
         }
 
-        user = repository.add(user);
-        if (user == null) {
+        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+        User addedUser = repository.add(user);
+        if (addedUser == null) {
             result.addMessage("Failed to add user", ResultType.INVALID);
         } else {
-            result.setPayload(user);
+            result.setPayload(addedUser);
         }
         return result;
     }
 
     public Result<User> update(User user) {
-        Result<User> result = validate(user);
-        if (!result.isSuccess()) {
-            return result;
+        Result<User> result = new Result<>();
+
+        // Validate user object
+        Result<User> validationResult = validate(user);
+        if (!validationResult.isSuccess()) {
+            return validationResult;
         }
 
-        if (user.getUserId() <= 0) {
+        // Check if user ID is set
+        if (user.getUserId() == null) {
             result.addMessage("userId must be set for `update` operation", ResultType.INVALID);
             return result;
         }
 
-        User existingUserByUsername = repository.findByUsername(user.getUserName());
-        if (existingUserByUsername != null && existingUserByUsername.getUserId() != user.getUserId()) {
+        // Find existing user
+        User existingUser = repository.findById(user.getUserId());
+        if (existingUser == null) {
+            result.addMessage("User not found", ResultType.NOT_FOUND);
+            return result;
+        }
+
+        // Check for duplicate username and email
+        if (!user.getUserName().equals(existingUser.getUserName()) && isDuplicateUsername(user.getUserName())) {
             result.addMessage("username is already in use", ResultType.INVALID);
             return result;
         }
 
-        User existingUserByEmail = repository.findByEmail(user.getEmail());
-        if (existingUserByEmail != null && existingUserByEmail.getUserId() != user.getUserId()) {
+        if (!user.getEmail().equals(existingUser.getEmail()) && isDuplicateEmail(user.getEmail())) {
             result.addMessage("email is already in use", ResultType.INVALID);
             return result;
         }
 
-        boolean updateSuccessful = repository.update(user);
-        if (!updateSuccessful) {
-            String msg = String.format("userId: %d not found", user.getUserId());
-            result.addMessage(msg, ResultType.NOT_FOUND);
+        // Update user
+        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+        boolean success = repository.update(user);
+        if (!success) {
+            result.addMessage("Failed to update user", ResultType.INVALID);
         } else {
             result.setPayload(user);
+        }
+        return result;
+    }
+
+    @Transactional
+    public Result<Void> deleteById(Integer userId, User currentUser) {
+        Result<Void> result = new Result<>();
+
+        if (currentUser == null) {
+            result.addMessage("Current user cannot be null", ResultType.INVALID);
+            return result;
+        }
+
+        if (!repository.deleteUser(currentUser, userId)) {
+            result.addMessage("Failed to delete user or unauthorized", ResultType.INVALID);
+            return result;
         }
 
         return result;
     }
 
-    public boolean deleteById(int userId) {
-        return repository.deleteById(userId);
+    public Result<User> updateUser(User currentUser, User userToUpdate) {
+        Result<User> result = new Result<>();
+        if (currentUser == null) {
+            result.addMessage("Current user cannot be null", ResultType.NOT_FOUND);
+            return result;
+        }
+
+
+        result.setPayload(userToUpdate);
+        return result;
     }
 
     private Result<User> validate(User user) {
         Result<User> result = new Result<>();
+
         if (user == null) {
-            result.addMessage("user cannot be null", ResultType.INVALID);
+            result.addMessage("User cannot be null", ResultType.INVALID);
             return result;
         }
 
-        if (Validations.isNullOrBlank(user.getFirstName())) {
-            result.addMessage("firstName is required", ResultType.INVALID);
-        } else if (user.getFirstName().length() < 2 || user.getFirstName().length() > 50) {
-            result.addMessage("firstName must be between 2 and 50 characters", ResultType.INVALID);
+        if (user.getFirstName() == null || user.getFirstName().isBlank()) {
+            result.addMessage("First name is required", ResultType.INVALID);
         }
 
-        if (Validations.isNullOrBlank(user.getLastName())) {
-            result.addMessage("lastName is required", ResultType.INVALID);
-        } else if (user.getLastName().length() < 2 || user.getLastName().length() > 50) {
-            result.addMessage("lastName must be between 2 and 50 characters", ResultType.INVALID);
+        if (user.getLastName() == null || user.getLastName().isBlank()) {
+            result.addMessage("Last name is required", ResultType.INVALID);
         }
 
-        if (Validations.isNullOrBlank(user.getUserName())) {
-            result.addMessage("username is required", ResultType.INVALID);
-        } else if (user.getUserName().length() < 3 || user.getUserName().length() > 20) {
-            result.addMessage("username must be between 3 and 20 characters", ResultType.INVALID);
+        if (user.getUserName() == null || user.getUserName().isBlank()) {
+            result.addMessage("Username is required", ResultType.INVALID);
         }
 
-        if (Validations.isNullOrBlank(user.getEmail())) {
-            result.addMessage("email is required", ResultType.INVALID);
-        } else if (!isValidEmail(user.getEmail())) {
-            result.addMessage("email format is invalid", ResultType.INVALID);
+        if (user.getPasswordHash() == null || user.getPasswordHash().isBlank()) {
+            result.addMessage("Password hash is required", ResultType.INVALID);
         }
 
-        if (Validations.isNullOrBlank(user.getPasswordHash())) {
-            result.addMessage("passwordHash is required", ResultType.INVALID);
+        if (user.getEmail() == null || user.getEmail().isBlank() || !isValidEmail(user.getEmail())) {
+            result.addMessage("Invalid email address", ResultType.INVALID);
         }
 
-        if (user.getRoleId() <= 0) {
-            result.addMessage("roleId must be greater than 0", ResultType.INVALID);
+        if (user.getRoleId() == null) {
+            result.addMessage("Role ID is required", ResultType.INVALID);
         }
 
         return result;
     }
 
     private boolean isValidEmail(String email) {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(emailRegex);
         return pattern.matcher(email).matches();
     }

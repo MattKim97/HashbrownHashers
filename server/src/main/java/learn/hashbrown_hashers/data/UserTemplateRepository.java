@@ -5,6 +5,7 @@ import learn.hashbrown_hashers.models.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +17,11 @@ import java.util.List;
 public class UserTemplateRepository implements UserRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserTemplateRepository(JdbcTemplate jdbcTemplate) {
+    public UserTemplateRepository(JdbcTemplate jdbcTemplate, PasswordEncoder passwordEncoder) {
         this.jdbcTemplate = jdbcTemplate;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -29,7 +32,7 @@ public class UserTemplateRepository implements UserRepository {
 
     @Override
     @Transactional
-    public User findById(int userId) {
+    public User findById(Integer userId) {
         final String sql = "SELECT user_id, first_name, last_name, username, password_hash, email, role_id FROM recipe_users WHERE user_id = ?;";
         return jdbcTemplate.query(sql, new UserMapper(), userId).stream()
                 .findFirst().orElse(null);
@@ -45,7 +48,7 @@ public class UserTemplateRepository implements UserRepository {
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setString(3, user.getUserName());
-            ps.setString(4, user.getPasswordHash());
+            ps.setString(4, passwordEncoder.encode(user.getPasswordHash())); // Encode password
             ps.setString(5, user.getEmail());
             ps.setInt(6, user.getRoleId());
             return ps;
@@ -67,7 +70,7 @@ public class UserTemplateRepository implements UserRepository {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getUserName(),
-                user.getPasswordHash(),
+                passwordEncoder.encode(user.getPasswordHash()), // Encode password
                 user.getEmail(),
                 user.getRoleId(),
                 user.getUserId()) > 0;
@@ -75,19 +78,31 @@ public class UserTemplateRepository implements UserRepository {
 
     @Override
     @Transactional
-    public boolean deleteById(int userId) {
+    public boolean deleteById(Integer userId) {
         return jdbcTemplate.update("DELETE FROM recipe_users WHERE user_id = ?;", userId) > 0;
     }
 
+    @Override
     public User findByUsername(String username) {
         final String sql = "SELECT user_id, first_name, last_name, username, password_hash, email, role_id FROM recipe_users WHERE username = ?;";
         return jdbcTemplate.query(sql, new UserMapper(), username).stream()
                 .findFirst().orElse(null);
     }
 
+    @Override
     public User findByEmail(String email) {
         final String sql = "SELECT user_id, first_name, last_name, username, password_hash, email, role_id FROM recipe_users WHERE email = ?;";
         return jdbcTemplate.query(sql, new UserMapper(), email).stream()
                 .findFirst().orElse(null);
     }
+
+    // New methods to handle authorization
+    @Transactional
+    public boolean deleteUser(User currentUser, Integer userIdToDelete) {
+        if (currentUser.isAdmin() || currentUser.getUserId().equals(userIdToDelete)) {
+            return deleteById(userIdToDelete);
+        }
+        return false; // Unauthorized
+    }
+
 }
