@@ -1,25 +1,12 @@
 package learn.hashbrown_hashers.data;
 
-import learn.hashbrown_hashers.models.User;
-import java.util.List;
+import learn.hashbrown_hashers.models.AppUser;
 
 public interface UserRepository {
-
-    List<User> findAll();
-
-    User findById(Integer userId);
-
-    User add(User user);
-
-    boolean update(User user);
-
+    AppUser findByUsername(String username);
+    AppUser findById(Integer userId);
+    AppUser findByEmail(String email);
+    AppUser create(AppUser user);
+    AppUser update(AppUser user);
     boolean deleteById(Integer userId);
-
-    User findByUsername(String username);
-
-    User findByEmail(String email);
-
-    // New methods to handle authorization
-    boolean deleteUser(User currentUser, Integer userIdToDelete);
-
 }
