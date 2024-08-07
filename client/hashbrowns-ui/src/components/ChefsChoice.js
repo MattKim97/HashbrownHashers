@@ -24,11 +24,14 @@ export default function ChefsChoice(){
         .then(data => setRecipes(data))
         .catch(console.log)
     },[])
+
+
+    const recipeIds = recipes.map(recipe => recipe.recipeId)
     
-    
-    const randomNum = Math.floor(Math.random()*recipes.length) + 1;
+    const randomIndex = recipeIds[Math.floor(Math.random() * recipeIds.length)];
+
     const handleClick = (event) =>{
-        navigate(`/recipe/${randomNum}`)
+        navigate(`/recipe/${randomIndex}`)
     }
   
 

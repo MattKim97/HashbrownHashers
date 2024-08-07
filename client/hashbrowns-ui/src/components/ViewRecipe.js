@@ -5,12 +5,20 @@ import './ViewRecipe.css'
 
 export default function ViewRecipe() {
 
+    // STILL NEED TO IMPLEMENT CURRENT USER TO RESTRICT EDIT/DELETE
+
+    // hardcoded user for now
+    const [currentUser, setCurrentUser] = useState({
+        username: "admin",
+        userId : 2
+    });
     const [recipe, setRecipe] = useState([]);
     const [tags, setTags] = useState([]);
     const tagurl = "http://localhost:8080/api/tags"
     const recipeurl = "http://localhost:8080/recipe"
     const { id } = useParams();
     const url = "http://localhost:8080/recipe"
+    const navigate = useNavigate();
 
     useEffect(()=>{
         fetch(`${recipeurl}/${id}`)
@@ -25,6 +33,29 @@ export default function ViewRecipe() {
         .catch(console.log)
     }
     ,[id])
+
+    console.log("userid" ,currentUser.userId)
+    console.log("recipeid", recipe.userId)
+
+    const handleDelete = () => {
+        if(window.confirm("Are you sure you want to delete this recipe?")){
+            const init = {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            fetch(`${url}/${id}`, init)
+            .then(response => {
+                if(response.status === 204){
+                    navigate('/')
+                } else {
+                    return Promise.reject(`Unexpected Status Code: ${response.status}`);
+                }
+            })
+            .catch(console.log)
+        }
+    }
 
 
 
@@ -43,6 +74,13 @@ export default function ViewRecipe() {
                     <li key={index}>{tag}</li>
                 ))}
             </ul>
+            {recipe.userId === currentUser.userId &&     
+            <div>
+                <button onClick={() => navigate(`/recipe/${id}/edit`)}>Edit</button>
+                <button onClick={() => handleDelete()}>Delete</button>
+            </div> 
+            }
+
         </section> 
     </>
   )
