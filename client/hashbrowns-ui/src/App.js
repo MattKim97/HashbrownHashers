@@ -7,6 +7,7 @@ import AddRecipeForm from "./components/AddRecipeForm";
 import SearchRecipesList from "./components/SearchRecipeList";
 import Login from "./components/Login";
 import { useState } from "react";
+import ChefsChoice from "./components/ChefsChoice";
 
 function App() {
   const [loggedIn,setLoggedIn] = useState(false);
@@ -16,7 +17,7 @@ function App() {
 
   return (
     <Router>
-      <NavBar/>
+      <NavBar loggedIn={loggedIn}/>
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/recipe" element={<AllRecipesList/>}/>
@@ -25,6 +26,7 @@ function App() {
         <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
         <Route path="/recipe/user/:id" element={<Home/>}/>
         <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setUser={setUser}/>}/>
+        <Route path="/chefschoice" element={<ChefsChoice/>}/>
       </Routes>
     </Router>
   );

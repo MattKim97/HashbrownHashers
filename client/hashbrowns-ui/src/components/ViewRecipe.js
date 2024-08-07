@@ -12,7 +12,7 @@ export default function ViewRecipe() {
     const url = "http://localhost:8080/recipe"
 
     useEffect(()=>{
-        fetch(`${url}/${id}`)
+        fetch(`${recipeurl}/${id}`)
         .then(response => {
             if(response.status === 200){
                 return response.json()
