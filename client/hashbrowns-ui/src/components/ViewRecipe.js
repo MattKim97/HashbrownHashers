@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import './ViewRecipe.css'
+import Reviews from './Reviews';
 
 export default function ViewRecipe({user}) {
 
@@ -83,7 +84,6 @@ export default function ViewRecipe({user}) {
     </div> 
     : null
 }
-
         </section> 
     </>
   )

@@ -1,4 +1,3 @@
-import { init } from 'create-react-app/createReactApp';
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -61,7 +60,7 @@ function Reviews() {
     };
 
     const handleDeleteReview = (deleteUserId) => {
-        const reviewhand = reviews.find(review => {review.userId === deleteUserId && review.recipeId === id});
+        const reviewhand = reviews.find(review => { return review.userId === deleteUserId && review.recipeId === id});
         if(window.confirm(`Delete This Review: ${reviewhand.title}?`)) {
             const reviewid = reviewhand.reviewId;
             const init = {
@@ -72,6 +71,7 @@ function Reviews() {
                 if(response.status === 204) {
                     const newReviews = reviews.filter(a => a.reviewId !== reviewid)
                     setReviews(newReviews);
+                    return response.json();
                 } else {
                     return Promise.reject(`Unexpected Status Code: ${response.status}`);
                 }

@@ -37,8 +37,8 @@ export default function ChefsChoice(){
 
 
     return(
-        <div className='buttonContainer'>
-        <button className='chefsButton shaky-btn' onClick={handleClick}>See what the Chef is cookin</button>
+        <div className='chefButtonContainer'>
+        <button className='chefsButton shaky-btn' onClick={handleClick}>See what the chef is cookin'</button>
         </div>
     )
 }
