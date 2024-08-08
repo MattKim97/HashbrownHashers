@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-function Reviews() {
+function Reviews(props) {
     const [reviews, setReviews] = useState([]);
     const [review, setReview] = useState([]);
     const [errors, setErrors] = useState([]);
@@ -100,7 +100,7 @@ function Reviews() {
     return(<>
         <section className="container">
         <h2 className='mb-4'>Reviews</h2>
-            {!(hasReviewed > 0) &&
+            {(props.user != null && !(hasReviewed > 0)) &&
             (<form onSubmit={handleSubmit}>
             <fieldset className="form-group">
         <label htmlFor="title">Review Title</label>
