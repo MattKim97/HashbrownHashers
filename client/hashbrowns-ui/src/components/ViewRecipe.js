@@ -69,7 +69,7 @@ export default function ViewRecipe({user}) {
     if(!recipe){
         return <p>Loading...</p>
     }
-    console.log("tags", recipe.tag)
+    console.log("tags", tags)
  
 
 
