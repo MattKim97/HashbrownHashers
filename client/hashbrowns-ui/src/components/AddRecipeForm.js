@@ -11,7 +11,8 @@ const RECIPE_DEFAULT = {
     prepTime: 1,
     imageUrl: '',
     description: '',
-    text: ''
+    text: '',
+    tags: []
 }
 
 const S3_BUCKET_IMAGE = process.env.REACT_APP_S3_BUCKET_IMAGE;
@@ -33,8 +34,26 @@ function AddRecipeForm({user, token }){
     const [errors, setErrors] = useState([]);
     const [recipe, setRecipe] = useState(RECIPE_DEFAULT);
     const [recipes, setRecipes] = useState([]);
+    const [tags, setTags] = useState([]);
     const url = "http://localhost:8080/recipe"
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        fetch("http://localhost:8080/api/tags")
+        .then(response => {
+            if(response.status === 200){
+                return response.json()
+            } else {
+                return Promise.reject(`Unexpected status code: ${response.status}`);
+            }
+        })
+        .then(data => setTags(data))
+        .catch(console.log)
+    }
+    ,[])
+
+    console.log(tags)
+
 
 
     const handleFileChange = (e) => {
@@ -90,6 +109,8 @@ function AddRecipeForm({user, token }){
     let imageUrl = '';
 
 
+
+
     if (file) {
         imageUrl = await uploadFile(); // Capture the returned URL
     }
@@ -123,6 +144,7 @@ function AddRecipeForm({user, token }){
                 const newRecipes = [...recipes];
                 newRecipes.push(data);
                 setRecipes(newRecipes);
+                handleTags(data.recipeId);
                 navigate(`/recipe/${data.recipeId}`);
             } else {
                 setErrors(data);
@@ -131,6 +153,29 @@ function AddRecipeForm({user, token }){
         .catch(console.log);
 };
 
+console.log("tag", recipe.tag)
+
+const handleTags = (recipeId) => {
+    const tagName = recipe.tag;
+    const tagId = tags.find(tag => tag.tagName === tagName).tagId;
+    const init = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ recipeId, tagId })
+    };
+
+    fetch(`http://localhost:8080/api/recipe-tag/${recipeId}`, init)
+        .then(response => {
+            if (response.status === 201) {
+                return response.json();
+            } else {
+                return Promise.reject(`Unexpected status code: ${response.status}`);
+            }
+        })
+        .catch(console.log);
+}
 
 
     const handleChange = (e) => {
@@ -184,6 +229,15 @@ function AddRecipeForm({user, token }){
                 <fieldset className="form-group">
                     <label>Description</label>
                     <textarea className="form-control" id="description" name="description" placeholder="Description" value={recipe.description} onChange={handleChange}/>
+                </fieldset>
+                <fieldset className="form-group">
+                    <label>Tags</label>
+                    <select className="form-control" id="tag" name="tag" value={recipe.tag} onChange={handleChange}>
+                        <option value="">Select a Tag</option>
+                        {tags.map((tag, index) => (
+                            <option key={index} value={tag.tagName}>{tag.tagName}</option>
+                        ))}
+                    </select>
                 </fieldset>
                 <fieldset className="form-group">
                     <label>Text</label>
