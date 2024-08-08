@@ -10,6 +10,7 @@ body{
   line-height:1.5;
   background-image: url('./components/backgroundimage/background.png');
   background-repeat: no-repeat;
+  background-attachment: scroll;
   background-size:  100vw 100vh;
 }
 h1, h2, h3{
@@ -29,3 +30,11 @@ html{
 .container {
   max-width: 70vw;
 }
+
+a {
+  color: #80461B
+}
+a:hover{
+  color: #542F12
+}
+
