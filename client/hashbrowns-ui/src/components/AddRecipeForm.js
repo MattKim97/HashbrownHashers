@@ -28,7 +28,7 @@ function AddRecipeForm({user, token }){
   
        // hardcoded user for now
     const [currentUser, setCurrentUser] = useState(user);
-    
+    const tagurl = "http://localhost:8080/api/recipe_tags"
     const [file, setFile] = useState(null);
     const [fileUrl, setFileUrl] = useState('');
     const [errors, setErrors] = useState([]);
@@ -51,8 +51,6 @@ function AddRecipeForm({user, token }){
         .catch(console.log)
     }
     ,[])
-
-    console.log(tags)
 
 
 
@@ -156,18 +154,17 @@ function AddRecipeForm({user, token }){
 console.log("tag", recipe.tag)
 
 const handleTags = (recipeId) => {
-    const tagName = recipe.tag;
-    const tagId = tags.find(tag => tag.tagName === tagName).tagId;
+    const tagId = recipe.tag
     const init = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ recipeId, tagId })
+        body: tagId
     };
 
-    fetch(`http://localhost:8080/api/recipe-tag/${recipeId}`, init)
-        .then(response => {
+    fetch(`${tagurl}/${recipeId}`, init)
+            .then(response => {
             if (response.status === 201) {
                 return response.json();
             } else {
@@ -235,7 +232,7 @@ const handleTags = (recipeId) => {
                     <select className="form-control" id="tag" name="tag" value={recipe.tag} onChange={handleChange}>
                         <option value="">Select a Tag</option>
                         {tags.map((tag, index) => (
-                            <option key={index} value={tag.tagName}>{tag.tagName}</option>
+                            <option key={index} value={tag.tagId}>{tag.tagName}</option>
                         ))}
                     </select>
                 </fieldset>
