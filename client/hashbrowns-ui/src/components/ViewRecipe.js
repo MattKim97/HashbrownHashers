@@ -12,7 +12,7 @@ export default function ViewRecipe({user}) {
     const [currentUser, setCurrentUser] = useState(user);
     const [recipe, setRecipe] = useState(null);
     const [tags, setTags] = useState([]);
-    const tagurl = "http://localhost:8080/api/tags"
+    const tagurl = "http://localhost:8080/api/recipe_tags"
     const recipeurl = "http://localhost:8080/recipe"
     const { id } = useParams();
     const url = "http://localhost:8080/recipe"
@@ -28,6 +28,20 @@ export default function ViewRecipe({user}) {
             }
         })
         .then(data => setRecipe(data))
+        .catch(console.log)
+    }
+    ,[id])
+
+    useEffect(()=>{
+        fetch(`${tagurl}/${id}`)
+        .then(response => {
+            if(response.status === 200){
+                return response.json()
+            } else {
+                return Promise.reject(`Unexpected status code: ${response.status}`);
+            }
+        })
+        .then(data => setTags(data))
         .catch(console.log)
     }
     ,[id])
@@ -55,9 +69,7 @@ export default function ViewRecipe({user}) {
     if(!recipe){
         return <p>Loading...</p>
     }
-
-    console.log(currentUser)
-    console.log(recipe.userId)
+    console.log("tags", recipe.tag)
  
 
 
