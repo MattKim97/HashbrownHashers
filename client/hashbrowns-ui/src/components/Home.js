@@ -45,7 +45,7 @@ function Home(){
             <h3 className="homeHeaderSm">Recipes for You!</h3>
         </div>
         <div className="recipes">
-                {recipes.map((recipe, index) => (
+                {recipes.slice(0,3).map((recipe, index) => (
                     <div key={index} className='recipe-item'>
                         <Link to={`/recipe/${recipe.recipeId}`}>
                         <img src={recipe.imageUrl} alt={recipe.recipeName} />
@@ -59,7 +59,7 @@ function Home(){
             <h3 className="homeHeaderSm">Newest Recipes</h3>
         </div>
         <div className="recipes">
-                {sorted.map((recipe, index) => (
+                {sorted.slice(0,3).map((recipe, index) => (
                     <div key={index} className='recipe-item'>
                         <Link to={`/recipe/${recipe.recipeId}`}>
                         <img src={recipe.imageUrl} alt={recipe.recipeName} />

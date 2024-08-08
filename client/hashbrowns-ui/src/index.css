@@ -28,6 +28,7 @@ html{
 }
 
 .container {
+  margin-top: 60px;
   max-width: 70vw;
 }
 
