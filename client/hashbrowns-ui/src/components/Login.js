@@ -61,7 +61,7 @@ const Login = (props) => {
             console.log(data);
             props.setToken(data.jwt_token)
             props.setLoggedIn(true)
-            props.setUser(credentials.username)
+            props.setUser(data.user_id)
             navigate('/')
     
     })    

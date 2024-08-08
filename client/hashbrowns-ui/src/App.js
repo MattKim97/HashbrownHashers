@@ -13,7 +13,7 @@ import SignUp from "./components/SignUp";
 
 function App() {
   const [loggedIn,setLoggedIn] = useState(false);
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(null);
   const [token,setToken] = useState('');
 
 
@@ -26,7 +26,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/recipe" element={<AllRecipesList/>}/>
         <Route path="/recipe/:id" element={<ViewRecipe/>}/>
-        <Route path="/recipe/new" element={<AddRecipeForm username={user}/> }/>
+        <Route path="/recipe/new" element={<AddRecipeForm user={user} token={token}/> }/>
         <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
         <Route path="/recipe/:recipeId/edit" element={<EditRecipeForm/>}/>
         <Route path="/recipe/user/:id" element={<Home/>}/>
