@@ -4,16 +4,13 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import './ViewRecipe.css'
 import Reviews from './Reviews';
 
-export default function ViewRecipe() {
+export default function ViewRecipe({user}) {
 
     // STILL NEED TO IMPLEMENT CURRENT USER TO RESTRICT EDIT/DELETE
 
     // hardcoded user for now
-    const [currentUser, setCurrentUser] = useState({
-        username: "admin",
-        userId : 2
-    });
-    const [recipe, setRecipe] = useState([]);
+    const [currentUser, setCurrentUser] = useState(user);
+    const [recipe, setRecipe] = useState(null);
     const [tags, setTags] = useState([]);
     const tagurl = "http://localhost:8080/api/tags"
     const recipeurl = "http://localhost:8080/recipe"
@@ -35,9 +32,6 @@ export default function ViewRecipe() {
     }
     ,[id])
 
-    console.log("userid" ,currentUser.userId)
-    console.log("recipeid", recipe.userId)
-
     const handleDelete = () => {
         if(window.confirm("Are you sure you want to delete this recipe?")){
             const init = {
@@ -58,6 +52,14 @@ export default function ViewRecipe() {
         }
     }
 
+    if(!recipe){
+        return <p>Loading...</p>
+    }
+
+    console.log(currentUser)
+    console.log(recipe.userId)
+ 
+
 
 
   return (
@@ -75,13 +77,13 @@ export default function ViewRecipe() {
                     <li key={index}>{tag}</li>
                 ))}
             </ul>
-            {recipe.userId === currentUser.userId &&     
-            <div>
-                <button onClick={() => navigate(`/recipe/${id}/edit`)}>Edit</button>
-                <button onClick={() => handleDelete()}>Delete</button>
-            </div> 
-            }
-            <Reviews/>
+            {currentUser != null && recipe.userId == currentUser ?     
+    <div>
+        <button onClick={() => navigate(`/recipe/${id}/edit`)}>Edit</button>
+        <button onClick={() => handleDelete()}>Delete</button>
+    </div> 
+    : null
+}
         </section> 
     </>
   )

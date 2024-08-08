@@ -43,53 +43,64 @@ function AddRecipeForm({user, token }){
     };
 
     const uploadFile = async () => {
-      const S3_BUCKET = S3_BUCKET_IMAGE;
-
-      if (!file) {
-        alert("Please select a file first.");
-        return;
-    }
-  
-      AWS.config.update({
-          accessKeyId: S3_KEY,
-          secretAccessKey: S3_SECRET,
-      });
-      const s3 = new AWS.S3({
-          params: { Bucket: S3_BUCKET },
-          region: REGION,
-      });
-  
-      const params = {
-          Bucket: S3_BUCKET,
-          Key: file.name,
-          Body: file,
-      };
-  
-      try {
-          await s3.putObject(params)
-              .on("httpUploadProgress", (evt) => {
-                  console.log(
-                      "Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%"
-                  );
-              })
-              .promise();
-  
-          const url = getFileUrl(file.name);
-          setFileUrl(url);
-      } catch (err) {
-          console.error("Error uploading file:", err);
-          alert("Error uploading file.");
-      }
-  };
+        const S3_BUCKET = S3_BUCKET_IMAGE;
+    
+        if (!file) {
+            alert("Please select a file first.");
+            return null;
+        }
+    
+        AWS.config.update({
+            accessKeyId: S3_KEY,
+            secretAccessKey: S3_SECRET,
+        });
+    
+        const s3 = new AWS.S3({
+            params: { Bucket: S3_BUCKET },
+            region: REGION,
+        });
+    
+        const params = {
+            Bucket: S3_BUCKET,
+            Key: file.name,
+            Body: file,
+        };
+    
+        try {
+            await s3.putObject(params)
+                .on("httpUploadProgress", (evt) => {
+                    console.log(
+                        "Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%"
+                    );
+                })
+                .promise();
+    
+            const url = getFileUrl(file.name);
+            return url; // Return the file URL directly
+        } catch (err) {
+            console.error("Error uploading file:", err);
+            alert("Error uploading file.");
+            return null;
+        }
+    };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let imageUrl = '';
+
+
     if (file) {
-        await uploadFile();
+        imageUrl = await uploadFile(); // Capture the returned URL
     }
 
-    const updatedRecipe = { ...recipe, imageUrl: fileUrl, userId: currentUser.userId };
+    const updatedRecipe = { 
+        ...recipe, 
+        imageUrl: imageUrl || recipe.imageUrl, // Use the returned URL directly
+        userId: currentUser 
+    };
+
+    console.log(recipe.imageUrl)
 
     const init = {
         method: 'POST',
@@ -130,6 +141,9 @@ function AddRecipeForm({user, token }){
         setRecipe(newRecipe);
 
     }
+
+    console.log(recipe.imageUrl)
+
 
 
     return(
