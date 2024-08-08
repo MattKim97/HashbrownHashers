@@ -14,12 +14,13 @@ import MyRecipesPage from "./components/MyRecipesPage";
 
 function App() {
   const [loggedIn,setLoggedIn] = useState(false);
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(null);
   const [token,setToken] = useState('');
 
   useEffect(() => {
     if(localStorage.getItem('token')) {
       setLoggedIn(true);
+      setUser(localStorage.getItem('user_id'));
     }
   }, []);
  
@@ -33,8 +34,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/recipe" element={<AllRecipesList/>}/>
-        <Route path="/recipe/:id" element={<ViewRecipe/>}/>
-        <Route path="/recipe/new" element={<AddRecipeForm/>}/>
+        <Route path="/recipe/:id" element={<ViewRecipe user={user}/>}/>
+        <Route path="/recipe/new" element={<AddRecipeForm user={user} token={token}/>}/>
         <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
         <Route path="/recipe/:recipeId/edit" element={<EditRecipeForm/>}/>
         <Route path="/recipe/user/:id" element={<Home/>}/>
