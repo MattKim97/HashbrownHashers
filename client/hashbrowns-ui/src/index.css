@@ -10,7 +10,7 @@ body{
   line-height:1.5;
   background-image: url('./components/backgroundimage/background.png');
   background-repeat: no-repeat;
-  background-attachment: scroll;
+  background-attachment: fixed;
   background-size:  100vw 100vh;
 }
 h1, h2, h3{
