@@ -23,10 +23,10 @@ const getFileUrl = (fileName) => {
   return `https://${S3_BUCKET_IMAGE}.s3.${REGION}.amazonaws.com/${fileName}`;
 };
 
-function AddRecipeForm({username}){
+function AddRecipeForm({user, token }){
   
        // hardcoded user for now
-    const [currentUser, setCurrentUser] = useState();
+    const [currentUser, setCurrentUser] = useState(user);
     
     const [file, setFile] = useState(null);
     const [fileUrl, setFileUrl] = useState('');
@@ -35,33 +35,6 @@ function AddRecipeForm({username}){
     const [recipes, setRecipes] = useState([]);
     const url = "http://localhost:8080/recipe"
     const navigate = useNavigate();
-
-    console.log(username)
-
-    useEffect(() => {
-        if (username) {
-            const init = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username }),
-            };
-
-            fetch("http://localhost:8080/api/user/current-user", init)
-                .then(response => {
-                    if (response.status === 200) {
-                        return response.json();
-                    } else {
-                        return Promise.reject(`Unexpected status code: ${response.status}`);
-                    }
-                })
-                .then(data => setCurrentUser(data))
-                .catch(console.log);
-        }
-    }, [username]);
-
-    console.log(currentUser)
 
 
     const handleFileChange = (e) => {
