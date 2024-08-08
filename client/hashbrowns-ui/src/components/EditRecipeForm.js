@@ -98,29 +98,29 @@ export default function EditRecipeForm({user}) {
                 </div>
             )}
             <form onSubmit={handleSubmit}>
-                <fieldset className="form-group">
+                <fieldset className="form-group inputForm">
                     <label>Recipe Name</label>
-                    <input type="text" className="form-control" id="recipeName"  name="recipeName" placeholder="Recipe Name" value={recipe.recipeName} onChange={handleChange}/>
+                    <input type="text" className="form-control inputForm" id="recipeName"  name="recipeName" placeholder="Recipe Name" value={recipe.recipeName} onChange={handleChange}/>
                 </fieldset>
-                <fieldset className="form-group">
+                <fieldset className="form-group inputForm">
                     <label>Difficulty</label>
                     <input type="number" className="form-control" id="difficulty" name="difficulty" placeholder="Difficulty" min="1" max="5" value={recipe.difficulty} onChange={handleChange}/>
                 </fieldset>
-                <fieldset className="form-group">
+                <fieldset className="form-group inputForm">
                     <label>Spiciness</label>
                     <input type="number" className="form-control" id="spicyness" name="spicyness" placeholder="Spiciness" min="1" max="5" value={recipe.spicyness} onChange={handleChange}/>
                 </fieldset>
-                <fieldset className="form-group">
+                <fieldset className="form-group inputForm">
                     <label>Prep Time</label>
                     <input type="number" className="form-control" id="prepTime" name="prepTime" placeholder="Prep Time" value={recipe.prepTime} min="1" onChange={handleChange}/>
                 </fieldset>
                 <fieldset className="form-group">
                     <label>Description</label>
-                    <textarea className="form-control" id="description" name="description" placeholder="Description" value={recipe.description} onChange={handleChange}/>
+                    <textarea className="form-control descriptionRecipe" id="description" name="description" placeholder="Description" value={recipe.description} onChange={handleChange}/>
                 </fieldset>
                 <fieldset className="form-group">
                     <label>Text</label>
-                    <textarea className="form-control" id="text" name="text" placeholder="Text" value={recipe.text} onChange={handleChange}/>
+                    <textarea className="form-control textRecipe" id="text" name="text" placeholder="Text" value={recipe.text} onChange={handleChange}/>
                 </fieldset>
                 <button type="submit" className="btn btn-outline-primary">Submit</button>
                 <button className="btn btn-outline-secondary" onClick={() => navigate(`/recipe/${recipeId}`)}>Cancel</button>
