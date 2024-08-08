@@ -36,15 +36,53 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @GetMapping("/current-user")
-    public ResponseEntity<UserDetails> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(userDetails);
+    @PostMapping("/current-user")
+    public ResponseEntity<AppUser> getCurrentUser(@RequestBody String username) {
+        AppUser user = userService.findByUserName(username);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.ok(user);
     }
+
+//    @PostMapping("/authenticate")
+//    public ResponseEntity<Map<String, String>> authenticate(@RequestBody Map<String, String> credentials) {
+//        System.out.println("Authenticating user: " + credentials.get("username"));
+//
+//
+//        UsernamePasswordAuthenticationToken authToken =
+//                new UsernamePasswordAuthenticationToken(credentials.get("username"), credentials.get("password"));
+//
+//        try {
+//            Authentication authentication = authenticationManager.authenticate(authToken);
+//            System.out.println("Authentication successful: " + authentication.isAuthenticated());
+//
+//            if (authentication.isAuthenticated()) {
+//                String jwtToken = jwtConverter.getTokenFromUser((User) authentication.getPrincipal());
+//
+//
+//                Map<String, String> response = new HashMap<>();
+//                response.put("jwt_token", jwtToken);
+//                System.out.println("JWT Token generated: " + jwtToken);
+//
+//                return new ResponseEntity<>(response, HttpStatus.OK);
+//            }
+//
+//        } catch (AuthenticationException ex) {
+//            System.out.println("Authentication failed: " + ex.getMessage());
+//
+//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//        }
+//        System.out.println("Authentication failed: User not authenticated");
+//
+//        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//    }
 
     @PostMapping("/authenticate")
     public ResponseEntity<Map<String, String>> authenticate(@RequestBody Map<String, String> credentials) {
         System.out.println("Authenticating user: " + credentials.get("username"));
-
 
         UsernamePasswordAuthenticationToken authToken =
                 new UsernamePasswordAuthenticationToken(credentials.get("username"), credentials.get("password"));
@@ -56,9 +94,19 @@ public class AuthController {
             if (authentication.isAuthenticated()) {
                 String jwtToken = jwtConverter.getTokenFromUser((User) authentication.getPrincipal());
 
+                // Fetch user details
+                AppUser user = userService.findByUserName(credentials.get("username"));
+                if (user == null) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+                }
 
+                System.out.println(user.getUserId());
+
+                // Create response map
                 Map<String, String> response = new HashMap<>();
                 response.put("jwt_token", jwtToken);
+                response.put("user_id", String.valueOf(user.getUserId()));
+
                 System.out.println("JWT Token generated: " + jwtToken);
 
                 return new ResponseEntity<>(response, HttpStatus.OK);
@@ -66,11 +114,10 @@ public class AuthController {
 
         } catch (AuthenticationException ex) {
             System.out.println("Authentication failed: " + ex.getMessage());
-
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        System.out.println("Authentication failed: User not authenticated");
 
+        System.out.println("Authentication failed: User not authenticated");
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 

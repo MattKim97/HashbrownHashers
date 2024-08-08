@@ -32,7 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable() // Disable CSRF protection
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/**").permitAll() // Allow GET requests to all endpoints
+                .antMatchers(HttpMethod.POST, "/**").permitAll() // Allow GET requests to all endpoints
+                .antMatchers(HttpMethod.DELETE, "/**").permitAll() // Allow GET requests to all endpoints
+                .antMatchers(HttpMethod.PUT, "/**").permitAll() // Allow GET requests to all endpoints
                 .antMatchers("/api/user/authenticate").permitAll() // Allow unauthenticated access to authenticate endpoint
+                .antMatchers("/api/user/current-user").permitAll() // Allow unauthenticated access to authenticate endpoint
                 .antMatchers("/api/user/register").permitAll() // Allow unauthenticated access to register endpoint
                 .antMatchers("/api/admin/**").hasRole("ADMIN") // Require ADMIN role for /api/admin/**
                 .anyRequest().authenticated() // Require authentication for all other requests

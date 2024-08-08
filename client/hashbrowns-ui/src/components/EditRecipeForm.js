@@ -2,15 +2,12 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 
-export default function EditRecipeForm() {
+export default function EditRecipeForm({user}) {
 
     // STILL NEED TO IMPLEMENT CURRENT USER TO RESTRICT EDIT/DELETE
 
     // hardcoded user for now
-    const [currentUser, setCurrentUser] = useState({
-        username: "admin",
-        userId : 2
-    });
+    const [currentUser, setCurrentUser] = useState(user);
     const [errors, setErrors] = useState([]);
     const [recipe, setRecipe] = useState(null);
     const navigate = useNavigate();
@@ -44,7 +41,7 @@ export default function EditRecipeForm() {
 
     const handleSubmit = async (e) => {
 
-        if(currentUser.userId !== recipe.userId){
+        if(currentUser != recipe.userId){
             window.alert("You can only edit your own recipes")
             navigate(`/recipe/${recipeId}`)
             return

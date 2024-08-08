@@ -23,30 +23,18 @@ const getFileUrl = (fileName) => {
   return `https://${S3_BUCKET_IMAGE}.s3.${REGION}.amazonaws.com/${fileName}`;
 };
 
-function AddRecipeForm(){
+function AddRecipeForm({user, token }){
   
+       // hardcoded user for now
+    const [currentUser, setCurrentUser] = useState(user);
+    
     const [file, setFile] = useState(null);
     const [fileUrl, setFileUrl] = useState('');
     const [errors, setErrors] = useState([]);
     const [recipe, setRecipe] = useState(RECIPE_DEFAULT);
     const [recipes, setRecipes] = useState([]);
-    const [currentUser, setCurrentUser] = useState(null);
     const url = "http://localhost:8080/recipe"
     const navigate = useNavigate();
-
-    useEffect(()=>{
-        fetch(`http://localhost:8080/current-user`)
-        .then(response => {
-            if(response.status === 200){
-                return response.json()
-            } else {
-                return Promise.reject(`Unexpected status code: ${response.status}`);
-            }
-        }
-        )
-        .then(data => setCurrentUser(data))
-        .catch(console.log)
-    },[])
 
 
     const handleFileChange = (e) => {
@@ -55,53 +43,64 @@ function AddRecipeForm(){
     };
 
     const uploadFile = async () => {
-      const S3_BUCKET = S3_BUCKET_IMAGE;
-
-      if (!file) {
-        alert("Please select a file first.");
-        return;
-    }
-  
-      AWS.config.update({
-          accessKeyId: S3_KEY,
-          secretAccessKey: S3_SECRET,
-      });
-      const s3 = new AWS.S3({
-          params: { Bucket: S3_BUCKET },
-          region: REGION,
-      });
-  
-      const params = {
-          Bucket: S3_BUCKET,
-          Key: file.name,
-          Body: file,
-      };
-  
-      try {
-          await s3.putObject(params)
-              .on("httpUploadProgress", (evt) => {
-                  console.log(
-                      "Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%"
-                  );
-              })
-              .promise();
-  
-          const url = getFileUrl(file.name);
-          setFileUrl(url);
-      } catch (err) {
-          console.error("Error uploading file:", err);
-          alert("Error uploading file.");
-      }
-  };
+        const S3_BUCKET = S3_BUCKET_IMAGE;
+    
+        if (!file) {
+            alert("Please select a file first.");
+            return null;
+        }
+    
+        AWS.config.update({
+            accessKeyId: S3_KEY,
+            secretAccessKey: S3_SECRET,
+        });
+    
+        const s3 = new AWS.S3({
+            params: { Bucket: S3_BUCKET },
+            region: REGION,
+        });
+    
+        const params = {
+            Bucket: S3_BUCKET,
+            Key: file.name,
+            Body: file,
+        };
+    
+        try {
+            await s3.putObject(params)
+                .on("httpUploadProgress", (evt) => {
+                    console.log(
+                        "Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%"
+                    );
+                })
+                .promise();
+    
+            const url = getFileUrl(file.name);
+            return url; // Return the file URL directly
+        } catch (err) {
+            console.error("Error uploading file:", err);
+            alert("Error uploading file.");
+            return null;
+        }
+    };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let imageUrl = '';
+
+
     if (file) {
-        await uploadFile();
+        imageUrl = await uploadFile(); // Capture the returned URL
     }
 
-    const updatedRecipe = { ...recipe, imageUrl: fileUrl, userId: currentUser.userId };
+    const updatedRecipe = { 
+        ...recipe, 
+        imageUrl: imageUrl || recipe.imageUrl, // Use the returned URL directly
+        userId: currentUser 
+    };
+
+    console.log(recipe.imageUrl)
 
     const init = {
         method: 'POST',
@@ -142,6 +141,9 @@ function AddRecipeForm(){
         setRecipe(newRecipe);
 
     }
+
+    console.log(recipe.imageUrl)
+
 
 
     return(
