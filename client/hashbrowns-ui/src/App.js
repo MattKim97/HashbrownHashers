@@ -26,7 +26,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/recipe" element={<AllRecipesList/>}/>
         <Route path="/recipe/:id" element={<ViewRecipe/>}/>
-        <Route path="/recipe/new" element={<AddRecipeForm/>}/>
+        <Route path="/recipe/new" element={<AddRecipeForm token={token}/> }/>
         <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
         <Route path="/recipe/:recipeId/edit" element={<EditRecipeForm/>}/>
         <Route path="/recipe/user/:id" element={<Home/>}/>
