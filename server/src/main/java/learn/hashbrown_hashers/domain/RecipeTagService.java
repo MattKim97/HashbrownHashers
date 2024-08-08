@@ -2,10 +2,12 @@ package learn.hashbrown_hashers.domain;
 
 import learn.hashbrown_hashers.data.RecipeTagRepository;
 import learn.hashbrown_hashers.models.RecipeTag;
+import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 
+@Service
 public class RecipeTagService {
 
     private final RecipeTagRepository recipeTagRepo;
