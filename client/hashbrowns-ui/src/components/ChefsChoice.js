@@ -2,10 +2,14 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import {Link, useNavigate} from "react-router-dom"
 import './ChefsChoice.css'
-
+import { useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 
 export default function ChefsChoice(){
+
+    
 
     const [recipes, setRecipes] = useState([]);
     const [recipe, setRecipe] = useState([]);
@@ -24,6 +28,20 @@ export default function ChefsChoice(){
         .then(data => setRecipes(data))
         .catch(console.log)
     },[])
+    
+    gsap.registerPlugin(useGSAP);
+
+    const container = useRef();
+
+    useGSAP(() => {
+        
+        gsap.to(".box", { rotation: "+=360", duration: 3 });
+  
+        
+      },
+      { scope: container }
+    );
+
 
 
     const recipeIds = recipes.map(recipe => recipe.recipeId)
@@ -37,8 +55,8 @@ export default function ChefsChoice(){
 
 
     return(
-        <div className='chefButtonContainer'>
-        <button className='chefsButton shaky-btn' onClick={handleClick}>See what the chef is cookin'</button>
+        <div ref={container} className='chefButtonContainer '>
+        <button className='chefsButton box' onClick={handleClick}>See what the chef is cookin'</button>
         </div>
     )
 }
