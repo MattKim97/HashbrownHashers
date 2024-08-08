@@ -7,8 +7,6 @@ const MyRecipesPage = ({user}) => {
   const [currentUser, setCurrentUser] = useState(user);
   const navigate = useNavigate();
 
-  console.log(currentUser);
-
 
   useEffect(() => {
     if (currentUser) {

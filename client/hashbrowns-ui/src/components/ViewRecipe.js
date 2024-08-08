@@ -42,9 +42,7 @@ export default function ViewRecipe({user}) {
             }
         })
         .then(data => {
-            setTags(data)
-            console.log(data);
-        
+            setTags(data)        
         
         })
         .catch(console.log)
@@ -75,9 +73,6 @@ export default function ViewRecipe({user}) {
     if(!recipe){
         return <p>Loading...</p>
     }
-    console.log("tags", tags)
-    console.log("recipe tags", recipe.tags)
- 
 
 
 
