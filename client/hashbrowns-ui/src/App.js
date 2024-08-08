@@ -8,8 +8,7 @@ import SearchRecipesList from "./components/SearchRecipeList";
 import Login from "./components/Login";
 import { useState } from "react";
 import ChefsChoice from "./components/ChefsChoice";
-import EditRecipeForm from "./components/EditRecipeForm";
-import SignUp from "./components/SignUp";
+import MyRecipesPage from "./components/MyRecipesPage";
 
 function App() {
   const [loggedIn,setLoggedIn] = useState(false);
@@ -18,8 +17,8 @@ function App() {
 
 
 
-  return (
 
+  return (
     <Router>
       <NavBar loggedIn={loggedIn}/>
       <Routes>
@@ -30,9 +29,9 @@ function App() {
         <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
         <Route path="/recipe/:recipeId/edit" element={<EditRecipeForm user={user} />}/>
         <Route path="/recipe/user/:id" element={<Home/>}/>
-        <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setUser={setUser} setToken={setToken}/>}/>
+        <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setUser={setUser}/>}/>
         <Route path="/chefschoice" element={<ChefsChoice/>}/>
-        <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/my-recipes" element={<MyRecipesPage />}/>
       </Routes>
     </Router>
   );
