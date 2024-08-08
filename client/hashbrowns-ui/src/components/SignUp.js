@@ -96,7 +96,8 @@ const SignUp = (props) => {
   return (
     <div className="mainSignContainer">
       <div className="titleSignContainer">
-        <h1>Sign Up</h1>
+      <h1>Welcome to Has#Browns</h1>
+      <h2>Sign Up</h2>
         <br />
         <div className="inputContainer">
           <input

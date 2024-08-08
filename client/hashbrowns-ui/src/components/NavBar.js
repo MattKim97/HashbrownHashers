@@ -37,9 +37,7 @@ function NavBar({loggedIn}){
             <Link to={'/recipe/new'}>Create New</Link>
             <Link to={'/my-recipes'}>My Recipes</Link>
             <Link to={'/login'}>{loggedIn ? `Log Out` : `Log In`}</Link>
-
-            
-
+            <Link to={'/signup'}>Sign Up</Link>
         </nav>
         
     )
