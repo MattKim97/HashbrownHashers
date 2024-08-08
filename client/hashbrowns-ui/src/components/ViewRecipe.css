@@ -11,3 +11,15 @@
 .container{
     padding: 0%;
 }
+
+.recipeButton{
+    font-size: large;
+    width: 30%;
+    height: 50px;
+}
+
+.recipeButtonContainer{
+    display: flex;
+    justify-content: center;
+    gap: 5%;
+}
