@@ -6,15 +6,22 @@ import ViewRecipe from "./components/ViewRecipe";
 import AddRecipeForm from "./components/AddRecipeForm";
 import SearchRecipesList from "./components/SearchRecipeList";
 import Login from "./components/Login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChefsChoice from "./components/ChefsChoice";
 import EditRecipeForm from "./components/EditRecipeForm";
 import SignUp from "./components/SignUp";
 
 function App() {
   const [loggedIn,setLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('');
   const [token,setToken] = useState('');
+
+  useEffect(() => {
+    if(localStorage.getItem('token')) {
+      setLoggedIn(true);
+    }
+  }, []);
+ 
 
 
 
@@ -25,8 +32,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/recipe" element={<AllRecipesList/>}/>
-        <Route path="/recipe/:id" element={<ViewRecipe user={user}/>}/>
-        <Route path="/recipe/new" element={<AddRecipeForm user={user} token={token}/> }/>
+        <Route path="/recipe/:id" element={<ViewRecipe/>}/>
+        <Route path="/recipe/new" element={<AddRecipeForm/>}/>
         <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
         <Route path="/recipe/:recipeId/edit" element={<EditRecipeForm/>}/>
         <Route path="/recipe/user/:id" element={<Home/>}/>
