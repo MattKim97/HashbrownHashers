@@ -26,9 +26,9 @@ public class RecipeTagController {
         return service.findbyRecipeId(recipeId);
     }
 
-    @PostMapping("(/{recipeId}")
-    public Result<RecipeTag> addTag(@PathVariable int recipeId, @RequestBody int tagId, String tagName){
-        RecipeTag recipeTag = new RecipeTag(recipeId,tagId,tagName);
+    @PostMapping("/{recipeId}")
+    public Result<RecipeTag> addTag(@PathVariable int recipeId , @RequestBody int tagId){
+        RecipeTag recipeTag = new RecipeTag(recipeId, tagId, null);
         return service.add(recipeTag);
     }
 }
