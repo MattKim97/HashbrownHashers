@@ -36,12 +36,12 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @GetMapping("/current-user")
+    @PostMapping("/current-user")
     public ResponseEntity<AppUser> getCurrentUser(@RequestBody String username) {
         AppUser user = userService.findByUserName(username);
 
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         return ResponseEntity.ok(user);
