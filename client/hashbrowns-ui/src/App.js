@@ -20,6 +20,7 @@ function App() {
   useEffect(() => {
     if(localStorage.getItem('token')) {
       setLoggedIn(true);
+      setUser(localStorage.getItem('user_id'));
     }
   }, []);
  
