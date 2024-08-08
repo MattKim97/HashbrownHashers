@@ -7,7 +7,7 @@ function Home(){
 
 
     const [recipes, setRecipes] = useState([]);
-    const [popularRecipes, setPopularRecipes] = useState([])
+    const [popularRecipes, setPopularRecipes] = useState([]);
     const url = "http://localhost:8080/recipe"
     
     useEffect(()=>{
@@ -21,24 +21,20 @@ function Home(){
             }
         })
         .then(data => {
-            setRecipes(data.slice(0,3))
-            setPopularRecipes(data.slice(0,3))
+            setRecipes(data)
+            
+            console.log(data);
         
         })
         .catch(console.log)
     },[])
 
+    const sorted = [...recipes].sort((a, b) => {
+        return Date.parse(b.timePosted) - Date.parse(a.timePosted);
+      });
+
     
-    
-/* <ul>
-            {recipes.map((recipe, index) => (
-                <li key={index}>
-                    <Link to={`/recipe/${recipe.recipeId}`}>{recipe.recipeName}</Link>
-                    <p>{recipe.description}</p>
-                    <img src={recipe.imageUrl} alt={recipe.recipeName} />
-                </li>
-            ))}
-        </ul> */
+
     return(
     
         <section className="landingPage">
@@ -60,10 +56,10 @@ function Home(){
         </div>
         <br/>
         <div className='centeredHeader'>
-            <h3 className="homeHeaderSm">Popular Recipes</h3>
+            <h3 className="homeHeaderSm">Newest Recipes</h3>
         </div>
         <div className="recipes">
-                {recipes.map((recipe, index) => (
+                {sorted.map((recipe, index) => (
                     <div key={index} className='recipe-item'>
                         <Link to={`/recipe/${recipe.recipeId}`}>
                         <img src={recipe.imageUrl} alt={recipe.recipeName} />
