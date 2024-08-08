@@ -95,6 +95,11 @@ function Reviews(props) {
 
     }
 
+    const getStars = (rating) => {
+        const stars = Math.max(1, Math.min(rating, 5));
+        return '⭐'.repeat(stars);
+    };
+
 
 
     return(<>
@@ -142,7 +147,8 @@ function Reviews(props) {
                     <div className="col-md">
                          <div className="card" id={rev.reviewId}>
                          <div className="card-body">
-                            <span>{rev.rating}/5   {rev.title}</span>
+                            <h3>{rev.title}</h3>
+                            <div>{getStars(rev.rating)}</div>
                             <p>{rev.description}</p>
                             {(props.currentUser != null && rev.userId == props.currentUser) ?
                             (
