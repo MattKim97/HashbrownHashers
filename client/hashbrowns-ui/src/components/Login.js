@@ -2,19 +2,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-
 const CREDENTIALS_DEFAULT = {
-    username: '',
-    password: ''
-}
-
+  username: "",
+  password: "",
+};
 
 const Login = (props) => {
-  const [credentials,setCredentials] = useState(CREDENTIALS_DEFAULT);
+  const [credentials, setCredentials] = useState(CREDENTIALS_DEFAULT);
   const [userError, setUserError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const url = "http://localhost:8080/api/user/authenticate"
+  const url = "http://localhost:8080/api/user/authenticate";
 
   const navigate = useNavigate();
 
@@ -22,7 +20,7 @@ const Login = (props) => {
     setUserError("");
     setPasswordError("");
 
-    console.log(credentials)
+    console.log(credentials);
 
     // Check if the user has entered both fields correctly
     if ("" === credentials.username) {
@@ -42,46 +40,37 @@ const Login = (props) => {
     //else passworderror.set(invalid username/password. please try again.)
 
     const init = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
     };
-    fetch(url,init)
-    .then((response)=> {
-        if(response.status === 403){
-            console.log(response);
-            setPasswordError("Incorrect username/password.")
-            return;
-        }
-        else{
-        response.json()
-        .then((data)=>{
-            console.log(data);
-            props.setToken(data.jwt_token)
-            props.setLoggedIn(true)
-            props.setUser(data.user_id)
-            navigate('/')
-    
-    })    
-        }
-    })
-    
-
- 
-
-
-
+    fetch(url, init).then((response) => {
+      if (response.status === 403) {
+        console.log(response);
+        setPasswordError("Incorrect username/password.");
+        return;
+      } else {
+        response.json().then((data) => {
+          console.log(data);
+          props.setToken(data.jwt_token);
+          localStorage.setItem('token',data.jwt_token);
+          props.setLoggedIn(true);
+          props.setUser(credentials.username);
+          navigate("/");
+        });
+      }
+    });
   };
 
-  const handleChange = (event) =>{
-    const newCredentials = {...credentials}
+  const handleChange = (event) => {
+    const newCredentials = { ...credentials };
 
     newCredentials[event.target.name] = event.target.value;
-    
+
     setCredentials(newCredentials);
-}
+  };
 
   return (
     <div className="mainContainer">
