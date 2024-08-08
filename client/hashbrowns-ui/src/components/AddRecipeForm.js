@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import './AddRecipeForm.css';
 
 
 const RECIPE_DEFAULT = {
@@ -11,7 +11,8 @@ const RECIPE_DEFAULT = {
     prepTime: 1,
     imageUrl: '',
     description: '',
-    text: ''
+    text: '',
+    tags: []
 }
 
 const S3_BUCKET_IMAGE = process.env.REACT_APP_S3_BUCKET_IMAGE;
@@ -23,16 +24,34 @@ const getFileUrl = (fileName) => {
   return `https://${S3_BUCKET_IMAGE}.s3.${REGION}.amazonaws.com/${fileName}`;
 };
 
-function AddRecipeForm(){
+function AddRecipeForm({user, token }){
   
+       // hardcoded user for now
+    const [currentUser, setCurrentUser] = useState(user);
+    const tagurl = "http://localhost:8080/api/recipe_tags"
     const [file, setFile] = useState(null);
     const [fileUrl, setFileUrl] = useState('');
     const [errors, setErrors] = useState([]);
     const [recipe, setRecipe] = useState(RECIPE_DEFAULT);
     const [recipes, setRecipes] = useState([]);
-    const userId = 1;
+    const [tags, setTags] = useState([]);
     const url = "http://localhost:8080/recipe"
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        fetch("http://localhost:8080/api/tags")
+        .then(response => {
+            if(response.status === 200){
+                return response.json()
+            } else {
+                return Promise.reject(`Unexpected status code: ${response.status}`);
+            }
+        })
+        .then(data => setTags(data))
+        .catch(console.log)
+    }
+    ,[])
+
 
 
     const handleFileChange = (e) => {
@@ -41,53 +60,66 @@ function AddRecipeForm(){
     };
 
     const uploadFile = async () => {
-      const S3_BUCKET = S3_BUCKET_IMAGE;
-
-      if (!file) {
-        alert("Please select a file first.");
-        return;
-    }
-  
-      AWS.config.update({
-          accessKeyId: S3_KEY,
-          secretAccessKey: S3_SECRET,
-      });
-      const s3 = new AWS.S3({
-          params: { Bucket: S3_BUCKET },
-          region: REGION,
-      });
-  
-      const params = {
-          Bucket: S3_BUCKET,
-          Key: file.name,
-          Body: file,
-      };
-  
-      try {
-          await s3.putObject(params)
-              .on("httpUploadProgress", (evt) => {
-                  console.log(
-                      "Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%"
-                  );
-              })
-              .promise();
-  
-          const url = getFileUrl(file.name);
-          setFileUrl(url);
-      } catch (err) {
-          console.error("Error uploading file:", err);
-          alert("Error uploading file.");
-      }
-  };
+        const S3_BUCKET = S3_BUCKET_IMAGE;
+    
+        if (!file) {
+            alert("Please select a file first.");
+            return null;
+        }
+    
+        AWS.config.update({
+            accessKeyId: S3_KEY,
+            secretAccessKey: S3_SECRET,
+        });
+    
+        const s3 = new AWS.S3({
+            params: { Bucket: S3_BUCKET },
+            region: REGION,
+        });
+    
+        const params = {
+            Bucket: S3_BUCKET,
+            Key: file.name,
+            Body: file,
+        };
+    
+        try {
+            await s3.putObject(params)
+                .on("httpUploadProgress", (evt) => {
+                    console.log(
+                        "Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%"
+                    );
+                })
+                .promise();
+    
+            const url = getFileUrl(file.name);
+            return url; // Return the file URL directly
+        } catch (err) {
+            console.error("Error uploading file:", err);
+            alert("Error uploading file.");
+            return null;
+        }
+    };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let imageUrl = '';
+
+
+
+
     if (file) {
-        await uploadFile();
+        imageUrl = await uploadFile(); // Capture the returned URL
     }
 
-    const updatedRecipe = { ...recipe, imageUrl: fileUrl, userId: userId };
+    const updatedRecipe = { 
+        ...recipe, 
+        imageUrl: imageUrl || recipe.imageUrl, // Use the returned URL directly
+        userId: currentUser 
+    };
+
+    console.log(recipe.imageUrl)
 
     const init = {
         method: 'POST',
@@ -110,6 +142,7 @@ function AddRecipeForm(){
                 const newRecipes = [...recipes];
                 newRecipes.push(data);
                 setRecipes(newRecipes);
+                handleTags(data.recipeId);
                 navigate(`/recipe/${data.recipeId}`);
             } else {
                 setErrors(data);
@@ -118,6 +151,28 @@ function AddRecipeForm(){
         .catch(console.log);
 };
 
+console.log("tag", recipe.tag)
+
+const handleTags = (recipeId) => {
+    const tagId = recipe.tag
+    const init = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: tagId
+    };
+
+    fetch(`${tagurl}/${recipeId}`, init)
+            .then(response => {
+            if (response.status === 201) {
+                return response.json();
+            } else {
+                return Promise.reject(`Unexpected status code: ${response.status}`);
+            }
+        })
+        .catch(console.log);
+}
 
 
     const handleChange = (e) => {
@@ -129,10 +184,13 @@ function AddRecipeForm(){
 
     }
 
+    console.log(recipe.imageUrl)
+
+
 
     return(
         <>
-        <section className="container">
+        {currentUser ? <section className="container">
             <h2>Add a Recipe</h2>
             {errors.length > 0 && (
                 <div className="alert alert-danger">
@@ -170,13 +228,30 @@ function AddRecipeForm(){
                     <textarea className="form-control" id="description" name="description" placeholder="Description" value={recipe.description} onChange={handleChange}/>
                 </fieldset>
                 <fieldset className="form-group">
+                    <label>Tags</label>
+                    <select className="form-control" id="tag" name="tag" value={recipe.tag} onChange={handleChange}>
+                        <option value="">Select a Tag</option>
+                        {tags.map((tag, index) => (
+                            <option key={index} value={tag.tagId}>{tag.tagName}</option>
+                        ))}
+                    </select>
+                </fieldset>
+                <fieldset className="form-group">
                     <label>Text</label>
                     <textarea className="form-control" id="text" name="text" placeholder="Text" value={recipe.text} onChange={handleChange}/>
                 </fieldset>
-                <button type="submit" className="btn btn-primary">Submit</button>
-                <button className="btn btn-secondary">cancel</button>
+                <button type="submit" className="btn btn-outline-primary">Submit</button>
+                <button className="btn btn-outline-secondary" onClick={() => navigate("/")}>cancel</button>
             </form>
+        </section> : 
+        <section className="container loginForm">
+            <h2>Log in to add a recipe</h2>
+            <div className="mt-3">
+                    <p>You need to be logged in to add a recipe.</p>
+                    <button className="btn btn-outline-info loginBtn" onClick={() => navigate('/login')}>Log In</button>
+            </div>
         </section>
+        }
         </>
     )
 }

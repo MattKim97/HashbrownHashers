@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import './NavBar.css';
 import { useState } from "react";
 
-function NavBar(){
+function NavBar({loggedIn}){
 
     const navigate = useNavigate();
     const [search, setSearch] = useState("");
@@ -20,7 +20,7 @@ function NavBar(){
     const handleChange = (event) =>{
         setSearch(event.target.value);
     }
-
+   
 
 
 
@@ -32,14 +32,12 @@ function NavBar(){
                 <input value={search} onChange={handleChange} className="form-control mr-sm-2  searchForm" type="search" placeholder="Search Recipes" aria-label="Search"/>
                 <button className="searchBtn" >Search</button>
             </form>
-            <Link to={'/'}>Chef's Choice</Link>
+            <Link to={'/chefschoice'}>Chef's Choice</Link>
             <Link to={'/recipe'}>View Recipes</Link>
             <Link to={'/recipe/new'}>Create New</Link>
-            <Link to={'/'}>My Recipes</Link>
-            <Link to={'/'}>Log In/Log Out</Link>
-
-            
-
+            <Link to={'/my-recipes'}>My Recipes</Link>
+            <Link to={'/login'}>{loggedIn ? `Log Out` : `Log In`}</Link>
+            <Link to={'/signup'}>Sign Up</Link>
         </nav>
         
     )

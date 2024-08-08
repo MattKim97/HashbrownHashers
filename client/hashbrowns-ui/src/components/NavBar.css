@@ -1,15 +1,35 @@
 .searchBtn {
-    color: #fff;
-    background-color: #335ad1;
+    color: #FBF4EE;
+    /* old color : rgb(60, 109, 201); */
+    background-color: #653815;
     border-radius: 5px;
-    width: 50px;   
+    width: 50px;
+    height: 30px;
     
     border: black; 
-    font-size: 1.5rem;
+    font-size: 1.6rem;
 }    
 
 
 .searchForm {
     border-radius: 50px;
+    width: 45vw !important;
+    font-size: 1.6rem;
+
 }
 
+.navbar {
+    position: fixed;
+    width: 100vw;
+    top: 0px;
+    background-color: #80461B !important;
+    min-height: 5vh;
+}
+
+.navbar a {
+    color: #F7EADE;
+}
+
+.navbar a:hover {
+    color: #ffffff;
+}

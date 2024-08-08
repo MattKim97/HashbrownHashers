@@ -2,6 +2,7 @@ package learn.hashbrown_hashers.security;
 
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -24,34 +26,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.csrf().disable();
-
-        http.authorizeRequests().antMatchers("/**").permitAll();
+        http
+                .cors() // Enable CORS before other configurations
+                .and()
+                .csrf().disable() // Disable CSRF protection
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/**").permitAll() // Allow GET requests to all endpoints
+                .antMatchers(HttpMethod.POST, "/**").permitAll() // Allow GET requests to all endpoints
+                .antMatchers(HttpMethod.DELETE, "/**").permitAll() // Allow GET requests to all endpoints
+                .antMatchers(HttpMethod.PUT, "/**").permitAll() // Allow GET requests to all endpoints
+                .antMatchers("/api/user/authenticate").permitAll() // Allow unauthenticated access to authenticate endpoint
+                .antMatchers("/api/user/current-user").permitAll() // Allow unauthenticated access to authenticate endpoint
+                .antMatchers("/api/user/register").permitAll() // Allow unauthenticated access to register endpoint
+                .antMatchers("/api/admin/**").hasRole("ADMIN") // Require ADMIN role for /api/admin/**
+                .anyRequest().authenticated() // Require authentication for all other requests
+                .and()
+                .addFilter(new JwtRequestFilter(authenticationManager(), converter)) // Add custom JWT filter
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS); // Use stateless sessions
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable();
-//
-//        http.cors();
-//
-//        http.authorizeRequests()
-//                // TODO add antMatchers here to configure access to specific API endpoints
-//                .antMatchers("/api/user/authenticate").permitAll()
-//                .antMatchers("/api/user/register").permitAll()
-//                // require authentication for any request...
-//                .anyRequest().authenticated()
-//                .and()
-//                .addFilter(new JwtRequestFilter(authenticationManager(), converter))
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//    }
-
-    @Override
     @Bean
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Bean
@@ -70,4 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             }
         };
     }
+
+    @Bean
+    public HandlerMappingIntrospector handlerMappingIntrospector() {
+        return new HandlerMappingIntrospector();
+    }
+
 }

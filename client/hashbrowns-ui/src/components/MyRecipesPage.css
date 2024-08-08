@@ -1,0 +1,69 @@
+.loginForm {
+width: 100%;
+height: 100%;
+margin-top: 20vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+        
+.loginBtn {
+width: 100%;
+height: 50px;
+background-color: #f5f5f5;
+border: none;
+border-radius: 5px;
+margin-top: 10px;
+cursor: pointer;
+font-size: large;
+}
+        
+.container {
+max-width: 800px;
+margin: 0 auto;
+padding: 20px;
+}
+        
+.my-recipes {
+text-align: center;
+}
+        
+.recipe-item {
+ margin-bottom: 20px;
+ cursor: pointer;
+}
+        
+.recipe-item img {
+max-width: 100%;
+
+}
+        
+.login-prompt {
+ display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+height: 300px;
+}
+        
+.login-prompt h2 {
+margin-bottom: 20px;
+}
+        
+.login-prompt p {
+margin-bottom: 20px;
+}
+        
+        
+.login-prompt .btn {
+width: 100%;
+height: 50px;
+background-color: #f5f5f5;
+border: none;
+border-radius: 5px;
+margin-top: 10px;
+cursor: pointer;
+font-size: large;
+}
+        

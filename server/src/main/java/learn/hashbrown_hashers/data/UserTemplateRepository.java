@@ -1,16 +1,18 @@
 package learn.hashbrown_hashers.data;
 
-import learn.hashbrown_hashers.data.mappers.UserMapper;
-import learn.hashbrown_hashers.models.User;
+import learn.hashbrown_hashers.models.AppUser;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserTemplateRepository implements UserRepository {
@@ -22,24 +24,75 @@ public class UserTemplateRepository implements UserRepository {
     }
 
     @Override
-    public List<User> findAll() {
-        final String sql = "SELECT user_id, first_name, last_name, username, password_hash, email, role_id FROM recipe_users;";
-        return jdbcTemplate.query(sql, new UserMapper());
-    }
-
-    @Override
     @Transactional
-    public User findById(int userId) {
-        final String sql = "SELECT user_id, first_name, last_name, username, password_hash, email, role_id FROM recipe_users WHERE user_id = ?;";
-        return jdbcTemplate.query(sql, new UserMapper(), userId).stream()
+    public AppUser findByUsername(String username) {
+        final String sql = "SELECT user_id, first_name, last_name, username, password_hash, email, role_id "
+                + "FROM recipe_users "
+                + "WHERE username = ?;";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) ->
+                        new AppUser(
+                                rs.getInt("user_id"),
+                                rs.getString("first_name"),
+                                rs.getString("last_name"),
+                                rs.getString("username"),
+                                rs.getString("password_hash"),
+                                rs.getString("email"),
+                                rs.getInt("role_id")
+                        ), username)
+                .stream()
                 .findFirst().orElse(null);
     }
 
     @Override
-    public User add(User user) {
-        final String sql = "INSERT INTO recipe_users (first_name, last_name, username, password_hash, email, role_id) VALUES (?, ?, ?, ?, ?, ?);";
+    @Transactional
+    public AppUser findById(Integer userId) {
+        final String sql = "SELECT user_id, first_name, last_name, username, password_hash, email, role_id "
+                + "FROM recipe_users "
+                + "WHERE user_id = ?;";
 
-        KeyHolder keyHolder = new GeneratedKeyHolder();
+        return jdbcTemplate.query(sql, (rs, rowNum) ->
+                        new AppUser(
+                                rs.getInt("user_id"),
+                                rs.getString("first_name"),
+                                rs.getString("last_name"),
+                                rs.getString("username"),
+                                rs.getString("password_hash"),
+                                rs.getString("email"),
+                                rs.getInt("role_id")
+                        ), userId)
+                .stream()
+                .findFirst().orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public AppUser findByEmail(String email) {
+        final String sql = "SELECT user_id, first_name, last_name, username, password_hash, email, role_id "
+                + "FROM recipe_users "
+                + "WHERE email = ?;";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) ->
+                        new AppUser(
+                                rs.getInt("user_id"),
+                                rs.getString("first_name"),
+                                rs.getString("last_name"),
+                                rs.getString("username"),
+                                rs.getString("password_hash"),
+                                rs.getString("email"),
+                                rs.getInt("role_id")
+                        ), email)
+                .stream()
+                .findFirst().orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public AppUser create(AppUser user) {
+        final String sql = "INSERT INTO recipe_users (first_name, last_name, username, password_hash, email, role_id) "
+                + "VALUES (?, ?, ?, ?, ?, ?);";
+
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getFirstName());
@@ -60,34 +113,48 @@ public class UserTemplateRepository implements UserRepository {
     }
 
     @Override
-    public boolean update(User user) {
-        final String sql = "UPDATE recipe_users SET first_name = ?, last_name = ?, username = ?, password_hash = ?, email = ?, role_id = ? WHERE user_id = ?;";
+    @Transactional
+    public AppUser update(AppUser user) {
+        final String sql = "UPDATE recipe_users SET "
+                + "first_name = ?, "
+                + "last_name = ?, "
+                + "username = ?, "
+                + "password_hash = ?, "
+                + "email = ?, "
+                + "role_id = ? "
+                + "WHERE user_id = ?;";
 
-        return jdbcTemplate.update(sql,
+        jdbcTemplate.update(sql,
                 user.getFirstName(),
                 user.getLastName(),
                 user.getUserName(),
                 user.getPasswordHash(),
                 user.getEmail(),
                 user.getRoleId(),
-                user.getUserId()) > 0;
+                user.getUserId());
+        return user;
     }
 
     @Override
     @Transactional
-    public boolean deleteById(int userId) {
-        return jdbcTemplate.update("DELETE FROM recipe_users WHERE user_id = ?;", userId) > 0;
+    public boolean deleteById(Integer userId) {
+        final String sql = "DELETE FROM recipe_users WHERE user_id = ?;";
+        return jdbcTemplate.update(sql, userId) > 0;
     }
 
-    public User findByUsername(String username) {
-        final String sql = "SELECT user_id, first_name, last_name, username, password_hash, email, role_id FROM recipe_users WHERE username = ?;";
-        return jdbcTemplate.query(sql, new UserMapper(), username).stream()
-                .findFirst().orElse(null);
-    }
+    // Additional methods for security management
 
-    public User findByEmail(String email) {
-        final String sql = "SELECT user_id, first_name, last_name, username, password_hash, email, role_id FROM recipe_users WHERE email = ?;";
-        return jdbcTemplate.query(sql, new UserMapper(), email).stream()
-                .findFirst().orElse(null);
+    @Transactional
+    public Collection<GrantedAuthority> getAuthoritiesByUsername(String username) {
+        final String sql = "SELECT r.role_title "
+                + "FROM recipe_users ru "
+                + "JOIN user_roles r ON ru.role_id = r.role_id "
+                + "WHERE ru.username = ?";
+
+        List<String> roles = jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("role_title"), username);
+
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role))
+                .collect(Collectors.toList());
     }
 }

@@ -19,7 +19,7 @@ public class JwtConverter {
     // 1. Signing key
     private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     // 2. "Configurable" constants
-    private final String ISSUER = "field-agent";
+    private final String ISSUER = "hashbrown";
     private final int EXPIRATION_MINUTES = 15;
     private final int EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 1000;
 
@@ -40,26 +40,29 @@ public class JwtConverter {
     }
 
     public User getUserFromToken(String token) {
-
-        if (token == null || !token.startsWith("Bearer ")) {
-            return null;
-        }
+//        if (token == null || !token.startsWith("Bearer ")) {
+//            return null;
+//        }
 
         try {
             // 4. Use JJWT classes to read a token.
             Jws<Claims> jws = Jwts.parserBuilder()
-                    .requireIssuer(ISSUER)
-                    .setSigningKey(key)
+                    .requireIssuer(ISSUER) // Make sure ISSUER is correctly defined
+                    .setSigningKey(key) // Make sure key is correctly initialized
                     .build()
                     .parseClaimsJws(token.substring(7));
 
             String username = jws.getBody().getSubject();
             String authStr = (String) jws.getBody().get("authorities");
-            List<GrantedAuthority> authorities = Arrays.stream(authStr.split(","))
-                    .map(i -> new SimpleGrantedAuthority(i))
-                    .collect(Collectors.toList());
 
-            return new User(username, username, authorities);
+            // Ensure authStr is not null or empty before processing
+            if (authStr != null && !authStr.isEmpty()) {
+                List<GrantedAuthority> authorities = Arrays.stream(authStr.split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+                return new User(username, "", authorities); // Assuming password is not needed
+            }
 
         } catch (JwtException e) {
             // 5. JWT failures are modeled as exceptions.

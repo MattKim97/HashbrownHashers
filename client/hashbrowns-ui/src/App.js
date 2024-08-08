@@ -5,17 +5,36 @@ import AllRecipesList from "./components/AllRecipesList";
 import ViewRecipe from "./components/ViewRecipe";
 import AddRecipeForm from "./components/AddRecipeForm";
 import SearchRecipesList from "./components/SearchRecipeList";
+import Login from "./components/Login";
+import { useState } from "react";
+import ChefsChoice from "./components/ChefsChoice";
+import EditRecipeForm from "./components/EditRecipeForm";
+import SignUp from "./components/SignUp";
+import MyRecipesPage from "./components/MyRecipesPage";
 
 function App() {
+  const [loggedIn,setLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+  const [token,setToken] = useState('');
+
+
+
   return (
+
     <Router>
-      <NavBar/>
+      <NavBar loggedIn={loggedIn}/>
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/recipe" element={<AllRecipesList/>}/>
-        <Route path="/recipe/:id" element={<ViewRecipe/>}/>
-        <Route path="/recipe/new" element={<AddRecipeForm/>}/>
+        <Route path="/recipe/:id" element={<ViewRecipe user={user}/>}/>
+        <Route path="/recipe/new" element={<AddRecipeForm user={user} token={token}/> }/>
         <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
+        <Route path="/recipe/:recipeId/edit" element={<EditRecipeForm/>}/>
+        <Route path="/recipe/user/:id" element={<Home/>}/>
+        <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setUser={setUser} setToken={setToken}/>}/>
+        <Route path="/chefschoice" element={<ChefsChoice/>}/>
+        <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/my-recipes" element={<MyRecipesPage user={user}/>}/>
       </Routes>
     </Router>
   );
