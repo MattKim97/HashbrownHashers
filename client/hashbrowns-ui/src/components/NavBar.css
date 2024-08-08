@@ -19,6 +19,9 @@
 }
 
 .navbar {
+    position: fixed;
+    width: 100vw;
+    top: 0px;
     background-color: #80461B !important;
     min-height: 5vh;
 }

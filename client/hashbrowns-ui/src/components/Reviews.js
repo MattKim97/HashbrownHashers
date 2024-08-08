@@ -14,9 +14,11 @@ function Reviews(props) {
     const navigate = useNavigate();
 
     useEffect(() => {
+        review.recipeId = id;
+        review.userId = props.currentUser;
         fetch(`${url}/${id}`)
         .then(response => {
-            if(response === 200) {
+            if(response.status === 200) {
                 return response.json();
             } else {
                 return Promise.reject(`Unexpected Status Code:${response.status}`);
@@ -24,15 +26,14 @@ function Reviews(props) {
         })
         .then((data) => {
             if(data) {
+                console.log(props.currentUser);
                 setReviews(data);
-                setHasReviewed(reviews.filter(review => review.recipeId
-                    === id && review.userId === userId));
             } else {
                 setErrors(data);
             }
         })
         .catch(console.log);
-    })
+    }, [id])
 
     const handleAddReview = () => {
         const init = {
@@ -45,7 +46,7 @@ function Reviews(props) {
 
         fetch(url, init)
         .then(response => {
-            if(response === 200) {
+            if(response.status === 201) {
                 return response.json();
             } else {
                 return Promise.reject(`Unexpected Status Code:${response.status}`);
@@ -59,10 +60,9 @@ function Reviews(props) {
         })
     };
 
-    const handleDeleteReview = (deleteUserId) => {
-        const reviewhand = reviews.find(review => { return review.userId === deleteUserId && review.recipeId === id});
-        if(window.confirm(`Delete This Review: ${reviewhand.title}?`)) {
-            const reviewid = reviewhand.reviewId;
+    const handleDeleteReview = (rev) => {
+        if(window.confirm(`Delete This Review: ${rev.title}?`)) {
+            const reviewid = rev.reviewId;
             const init = {
                 method: 'DELETE'
             };
@@ -100,7 +100,7 @@ function Reviews(props) {
     return(<>
         <section className="container">
         <h2 className='mb-4'>Reviews</h2>
-            {(props.user != null && !(hasReviewed > 0)) &&
+            {(props.currentUser != null) &&
             (<form onSubmit={handleSubmit}>
             <fieldset className="form-group">
         <label htmlFor="title">Review Title</label>
@@ -144,9 +144,10 @@ function Reviews(props) {
                          <div className="card-body">
                             <span>{rev.rating}/5   {rev.title}</span>
                             <p>{rev.description}</p>
-                            {rev.userId === userId && (
-                                <button className="btn btn-danger" onClick={() => handleDeleteReview(rev.userId)}>Delete Review</button>
-                            )}
+                            {(props.currentUser != null && rev.userId == props.currentUser) ?
+                            (
+                                <button className="btn btn-danger" onClick={() => handleDeleteReview(rev)}>Delete Review</button>
+                            ) : null }
                     </div>
                     </div>
                     </div>
