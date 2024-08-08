@@ -35,7 +35,8 @@ function Reviews(props) {
         .catch(console.log);
     }, [id])
 
-    const handleAddReview = () => {
+    const handleAddReview = (event) => {
+        event.preventDefault();
         const init = {
             method: "POST",
             headers: {
@@ -52,12 +53,14 @@ function Reviews(props) {
                 return Promise.reject(`Unexpected Status Code:${response.status}`);
             }
         }).then(data => {
-            if(data.review_id) {
-                //Reloads the page
-                navigate(`/recipe/${id}`);
+            console.log(data);
+            if(data.reviewId) {
+                navigate(0);
             } else
                 setErrors(data);
+                
         })
+        
     };
 
     const handleDeleteReview = (rev) => {
@@ -89,12 +92,6 @@ function Reviews(props) {
         setReview(newReview);
     }
 
-    const handleSubmit = (event)  => {
-        event.preventDefault();
-        handleAddReview();
-
-    }
-
     const getStars = (rating) => {
         const stars = Math.max(1, Math.min(rating, 5));
         return '⭐'.repeat(stars);
@@ -106,7 +103,7 @@ function Reviews(props) {
         <section className="container">
         <h2 className='mb-4'>Reviews</h2>
             {(props.currentUser != null) &&
-            (<form onSubmit={handleSubmit}>
+            (<form onSubmit={handleAddReview}>
             <fieldset className="form-group">
         <label htmlFor="title">Review Title</label>
             <input
@@ -137,14 +134,14 @@ function Reviews(props) {
                 value={review.rating}
                 onChange={handleChange}/>
                 </fieldset>
-            <button type="submit" className="btn btn-outline-secondary mb-4" onClick={(event) => handleSubmit(event)}>
+            <button type="submit" className="btn btn-outline-secondary mb-4">
                 Add Review
             </button>
             </form>
             )}
              <section className="row">
-                {reviews.map(rev =>
-                    <div className="col-md">
+                {reviews.map((rev,index) =>
+                    <div className="col-md" key={index} >
                          <div className="card" id={rev.reviewId}>
                          <div className="card-body">
                             <h3>{rev.title}</h3>
