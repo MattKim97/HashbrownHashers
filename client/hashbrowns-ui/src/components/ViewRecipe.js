@@ -46,6 +46,7 @@ export default function ViewRecipe({user}) {
     }
     ,[id])
 
+
     const handleDelete = () => {
         if(window.confirm("Are you sure you want to delete this recipe?")){
             const init = {
@@ -69,7 +70,8 @@ export default function ViewRecipe({user}) {
     if(!recipe){
         return <p>Loading...</p>
     }
-    console.log("tags", recipe.tag)
+    console.log("tags", tags)
+    console.log("recipe tags", recipe.tags)
  
 
 
@@ -85,8 +87,8 @@ export default function ViewRecipe({user}) {
             <p>Spicyness: {recipe.spicyness}</p>
             <p>{recipe.text}</p>
             <ul>
-                {recipe.tag && recipe.tag.map((tag, index) => (
-                    <li key={index}>{tag}</li>
+                {tags && tags.map((tag, index) => (
+                    <li key={index}>{tag.tagName}</li>
                 ))}
             </ul>
             {currentUser != null && recipe.userId == currentUser ?     
