@@ -22,9 +22,7 @@ function Home(){
         })
         .then(data => {
             setRecipes(data)
-            
-            console.log(data);
-        
+                
         })
         .catch(console.log)
     },[])

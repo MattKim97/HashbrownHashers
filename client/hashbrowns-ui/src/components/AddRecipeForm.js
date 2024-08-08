@@ -151,7 +151,6 @@ function AddRecipeForm({user, token }){
         .catch(console.log);
 };
 
-console.log("tag", recipe.tag)
 
 const handleTags = (recipeId) => {
     const tagId = recipe.tag
@@ -184,7 +183,6 @@ const handleTags = (recipeId) => {
 
     }
 
-    console.log(recipe.imageUrl)
 
 
 
