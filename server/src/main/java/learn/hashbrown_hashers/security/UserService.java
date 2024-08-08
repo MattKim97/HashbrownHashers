@@ -26,14 +26,12 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("Attempting to load user by username: " + username);
 
         AppUser appUser = repository.findByUsername(username);
 
         if (appUser == null) {
             throw new UsernameNotFoundException("User with username " + username + " not found or not enabled.");
         }
-        System.out.println("User found: " + appUser.getUsername());
 
         return User.withUsername(appUser.getUsername())
                 .password(appUser.getPassword())
@@ -43,6 +41,16 @@ public class UserService implements UserDetailsService {
                 .credentialsExpired(false)
                 .disabled(false)
                 .build();
+    }
+
+    public AppUser findByUserName(String username) {
+
+        AppUser appUser = repository.findByUsername(username);
+
+        if (appUser == null) {
+            throw new UsernameNotFoundException("User with username " + username + " not found or not enabled.");
+        }
+        return appUser;
     }
 
     public AppUser create(String firstName, String lastName, String username, String password, String email) {

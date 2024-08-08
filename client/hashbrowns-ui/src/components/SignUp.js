@@ -73,7 +73,7 @@ const SignUp = (props) => {
     fetch(url,init)
     .then((response)=> response.json())
     .then((data)=>{
-        if(data.message === "success"){
+        if(data){
             navigate('/')
         }else{
             

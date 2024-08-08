@@ -23,30 +23,45 @@ const getFileUrl = (fileName) => {
   return `https://${S3_BUCKET_IMAGE}.s3.${REGION}.amazonaws.com/${fileName}`;
 };
 
-function AddRecipeForm(){
+function AddRecipeForm({username}){
   
+       // hardcoded user for now
+    const [currentUser, setCurrentUser] = useState();
+    
     const [file, setFile] = useState(null);
     const [fileUrl, setFileUrl] = useState('');
     const [errors, setErrors] = useState([]);
     const [recipe, setRecipe] = useState(RECIPE_DEFAULT);
     const [recipes, setRecipes] = useState([]);
-    const [currentUser, setCurrentUser] = useState(null);
     const url = "http://localhost:8080/recipe"
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        fetch(`http://localhost:8080/current-user`)
-        .then(response => {
-            if(response.status === 200){
-                return response.json()
-            } else {
-                return Promise.reject(`Unexpected status code: ${response.status}`);
-            }
+    console.log(username)
+
+    useEffect(() => {
+        if (username) {
+            const init = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username }),
+            };
+
+            fetch("http://localhost:8080/api/user/current-user", init)
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.json();
+                    } else {
+                        return Promise.reject(`Unexpected status code: ${response.status}`);
+                    }
+                })
+                .then(data => setCurrentUser(data))
+                .catch(console.log);
         }
-        )
-        .then(data => setCurrentUser(data))
-        .catch(console.log)
-    },[])
+    }, [username]);
+
+    console.log(currentUser)
 
 
     const handleFileChange = (e) => {
