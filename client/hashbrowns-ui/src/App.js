@@ -10,6 +10,7 @@ import { useState } from "react";
 import ChefsChoice from "./components/ChefsChoice";
 import EditRecipeForm from "./components/EditRecipeForm";
 import SignUp from "./components/SignUp";
+import MyRecipesPage from "./components/MyRecipesPage";
 
 function App() {
   const [loggedIn,setLoggedIn] = useState(false);
@@ -33,6 +34,7 @@ function App() {
         <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setUser={setUser} setToken={setToken}/>}/>
         <Route path="/chefschoice" element={<ChefsChoice/>}/>
         <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/my-recipes" element={<MyRecipesPage user={user}/>}/>
       </Routes>
     </Router>
   );
