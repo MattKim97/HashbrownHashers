@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const CREDENTIALS_DEFAULT = {
-  username: "",
-  password: "",
+  username: '',
+  password: '',
 };
 
 const Login = (props) => {
@@ -12,7 +12,7 @@ const Login = (props) => {
   const [userError, setUserError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const url = "http://localhost:8080/api/user/authenticate";
+  const url = "http://localhost:8080/api/user/authenticate"
 
   const navigate = useNavigate();
 
@@ -40,9 +40,9 @@ const Login = (props) => {
     //else passworderror.set(invalid username/password. please try again.)
 
     const init = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(credentials),
     };
