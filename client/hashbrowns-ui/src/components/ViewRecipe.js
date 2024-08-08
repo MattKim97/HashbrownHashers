@@ -41,7 +41,12 @@ export default function ViewRecipe({user}) {
                 return Promise.reject(`Unexpected status code: ${response.status}`);
             }
         })
-        .then(data => setTags(data))
+        .then(data => {
+            setTags(data)
+            console.log(data);
+        
+        
+        })
         .catch(console.log)
     }
     ,[id])
@@ -85,8 +90,8 @@ export default function ViewRecipe({user}) {
             <p>Spicyness: {recipe.spicyness}</p>
             <p>{recipe.text}</p>
             <ul>
-                {recipe.tag && recipe.tag.map((tag, index) => (
-                    <li key={index}>{tag}</li>
+                {tags.map((tag, index) => (
+                    <li key={index}>{tag.tagName}</li>
                 ))}
             </ul>
             {currentUser != null && recipe.userId == currentUser ?     
