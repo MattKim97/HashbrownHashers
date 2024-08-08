@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
@@ -15,6 +15,19 @@ const Login = (props) => {
   const url = "http://localhost:8080/api/user/authenticate"
 
   const navigate = useNavigate();
+
+
+    useEffect(()=>{
+        
+        if(props.loggedIn === true){
+            props.setLoggedIn(false);
+            props.setUser(null);
+            localStorage.clear();
+        }
+
+
+
+    },[]);
 
   const handleSubmit = (event) => {
     setUserError("");
