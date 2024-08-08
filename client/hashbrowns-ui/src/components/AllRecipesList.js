@@ -1,7 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import {Link} from "react-router-dom"
-import './AllRecipesList.css'
 export default function AllRecipesList() {
 
     const [recipes, setRecipes] = useState([]);
