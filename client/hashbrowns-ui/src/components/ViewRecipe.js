@@ -85,7 +85,7 @@ export default function ViewRecipe({user}) {
     <>
         <section className="container viewRecipe">
             <h1>{recipe.recipeName}</h1>
-            <img src={recipe.imageUrl} alt={recipe.recipeName} />
+            <img className= "viewRecipeImage" src={recipe.imageUrl} alt={recipe.recipeName} />
             <p>{recipe.description}</p>
             <p>Prep Time: {recipe.prepTime} minutes</p>
             <p>Difficulty: {recipe.difficulty}</p>

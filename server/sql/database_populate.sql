@@ -52,7 +52,7 @@
 	insert into recipes 
     (recipe_name, difficulty, spiciness, prep_time, image_link, recipe_desc, recipe_text, user_id, time_posted, time_updated)
     values 
-    ('Spaghetti with Turkey Meatballs', 2, 1, 20, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgwVpUy9Qf6fP-_Dv8M3lemjPPzjngQ67tIw&s', 'This spaghetti and meatballs recipe is sure to be a winner with your family. Because it’s made healthier with whole wheat spaghetti and turkey meatballs, 
+    ('Spaghetti with Turkey Meatballs', 2, 1, 20, 'https://static01.nyt.com/images/2017/04/05/dining/05COOKING-NIGMEATBALLS2/05COOKING-NIGMEATBALLS2-superJumbo.jpg', 'This spaghetti and meatballs recipe is sure to be a winner with your family. Because it’s made healthier with whole wheat spaghetti and turkey meatballs, 
     you’ll feel good knowing it’s good for them too. Making it all in the Instant Pot is certainly a dinner game changer. The Instant Pot makes spaghetti and meatballs super easy!', 
     'I initially tried sautéing the meatballs first, but this resulted in extra time and work. Plus, the meatballs tend to stick to the pot. Also, I was trying to avoid the dreaded IP “burn” error on newer models. To prevent the burn message, I skipped the browning step and plopped them right into my sauce, which helped with cooking times and ultimately made for juicer meatballs.
     Building a sauce with garlic and canned tomatoes (rather than starting with a jarred sauce) gave me more control of the amount of oil used in the recipe. Here are some helpful tips for success:
@@ -78,7 +78,7 @@
 
     Meanwhile, heat tortillas. Preheat an 8-inch cast iron skillet over medium-high heat until hot. Working one tortilla at a time, dip tortilla in bowl filled with water. Transfer to hot skillet and cook until water evaporates from first side and tortilla is browned in spots, about 30 seconds. Flip and cook until dry, about 15 seconds longer. Transfer tortilla to a tortilla warmer, or wrap in a clean dish towel. Repeat with remaining tortillas.
     Dipping tortillas in water, then heating them up in a cast iron skillet.', 3, '2024-06-23 18:40:22', '2024-07-25 22:16:10'),
-    ('BBQ Chicken Sammies', 1, 4, 200, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mHfRDG8UwHIWgm4Oqu3no-0mi08-y6uXug&s',"A chicken sandwich that the whole family will love!", 'Ingredients
+    ('BBQ Chicken Sammies', 1, 4, 200, 'https://www.theanthonykitchen.com/wp-content/uploads/2017/03/Barbecue-Chicken-Sandwich-5.jpg',"A chicken sandwich that the whole family will love!", 'Ingredients
 1 cup chicken stock
 
 1 bottle Mexican beer
@@ -120,7 +120,7 @@ tap here
     '1. In a large skillet, cook beef strips in butter until browned. 2. Remove beef and set aside. 3. In the same skillet, sauté onions and mushrooms until tender. 4. Stir in flour, then gradually add beef broth and sour cream. 5. Return beef to skillet, simmer until thickened. 6. Serve over noodles or rice.', 
     1, '2024-08-01 12:00:00', '2024-08-01 12:00:00'),
 
-    ('Vegetarian Chili', 2, 2, 45, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-zMUbwUK05q4RRXi79SyntPW7zM5N7kzjVg&s', 
+    ('Vegetarian Chili', 2, 2, 45, 'https://www.allrecipes.com/thmb/IBOMtUsQutvqdCWXrXjEZNZsNFk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/215311-hearty-vegan-slow-cooker-chili-ddmfs-3X4-0131-245669e46ac7445497b40814197724a8.jpg', 
     'A hearty and flavorful chili packed with beans and vegetables, perfect for a satisfying meal.', 
     '1. Heat olive oil in a large pot. 2. Add onions, garlic, and bell peppers, cook until softened. 3. Stir in spices, tomatoes, beans, and vegetable broth. 4. Simmer for 30 minutes, stirring occasionally. 5. Serve with your favorite chili toppings.', 
     1, '2024-08-02 14:00:00', '2024-08-02 14:00:00'),
@@ -135,12 +135,12 @@ tap here
     '1. Cook fettuccine according to package instructions. 2. In a skillet, cook chicken until golden and cooked through. 3. Remove chicken and set aside. 4. In the same skillet, make Alfredo sauce by combining butter, cream, and Parmesan cheese. 5. Toss pasta and chicken in the sauce. 6. Serve with additional Parmesan and parsley.', 
     2, '2024-08-04 18:00:00', '2024-08-04 18:00:00'),
 
-    ('Beef Tacos', 1, 1, 25, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCZZ2CyIz6hiwMuudloMFOPFsmKkmhqO-WJw&s', 
+    ('Beef Tacos', 1, 1, 25, 'https://iamhomesteader.com/wp-content/uploads/2022/04/birria-taco-2.jpg', 
     'Flavorful beef tacos with all the traditional toppings.', 
     '1. Cook ground beef with taco seasoning until browned. 2. Warm taco shells. 3. Fill shells with beef and top with lettuce, cheese, salsa, and sour cream.', 
     1, '2024-08-05 20:00:00', '2024-08-05 20:00:00'),
 
-    ('Greek Salad', 1, 0, 15, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1IZMowX4SqkttttSUqXyUk_FZJRgjGd4w0A&s', 
+    ('Greek Salad', 1, 0, 15, 'https://hips.hearstapps.com/hmg-prod/images/greek-salad-index-642f292397bbf.jpg?crop=0.888888888888889xw:1xh;center,top&resize=1200:*', 
     'A refreshing salad with tomatoes, cucumbers, olives, and feta cheese, dressed with a lemon-oregano vinaigrette.', 
     '1. Combine tomatoes, cucumbers, red onion, olives, and feta in a bowl. 2. Whisk together olive oil, lemon juice, oregano, salt, and pepper. 3. Toss salad with dressing and serve.', 
     1, '2024-08-06 22:00:00', '2024-08-06 22:00:00'),
@@ -155,12 +155,12 @@ tap here
     '1. Slice tomatoes and mozzarella. 2. Arrange on a plate, alternating slices. 3. Top with fresh basil leaves. 4. Drizzle with olive oil and balsamic glaze.', 
     2, '2024-08-08 12:00:00', '2024-08-08 12:00:00'),
 
-    ('Vegetable Stir-Fry', 2, 1, 25, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgzhGx6kwwdbUrOl-t81xROsDl_nPYbNZ_Jw&s', 
+    ('Vegetable Stir-Fry', 2, 1, 25, 'https://www.onceuponachef.com/images/2017/02/Asian-Vegetable-Stir-Fry-3.jpg', 
     'A colorful and healthy vegetable stir-fry served with rice or noodles.', 
     '1. Heat oil in a wok or large skillet. 2. Add sliced vegetables and cook until tender-crisp. 3. Stir in sauce (soy sauce, garlic, ginger, etc.). 4. Serve over rice or noodles.', 
     1, '2024-08-09 14:00:00', '2024-08-09 14:00:00'),
 
-    ('Apple Pie', 3, 0, 90, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXuy3PDN-1LBlsy_GEZUA6MpstN4orZBF9VQ&s', 
+    ('Apple Pie', 3, 0, 90, 'https://www.inspiredtaste.net/wp-content/uploads/2022/11/Apple-Pie-Recipe-Video.jpg', 
     'Classic apple pie with a flaky crust and a sweet, spiced apple filling.', 
     '1. Prepare pie crust and place in a pie dish. 2. Toss sliced apples with sugar, cinnamon, and flour. 3. Fill pie crust with apple mixture. 4. Top with another crust or lattice pattern. 5. Bake at 375°F (190°C) for 50-60 minutes.', 
     2, '2024-08-10 16:00:00', '2024-08-10 16:00:00'),
