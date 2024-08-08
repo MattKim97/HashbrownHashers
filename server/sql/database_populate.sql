@@ -78,7 +78,7 @@
 
     Meanwhile, heat tortillas. Preheat an 8-inch cast iron skillet over medium-high heat until hot. Working one tortilla at a time, dip tortilla in bowl filled with water. Transfer to hot skillet and cook until water evaporates from first side and tortilla is browned in spots, about 30 seconds. Flip and cook until dry, about 15 seconds longer. Transfer tortilla to a tortilla warmer, or wrap in a clean dish towel. Repeat with remaining tortillas.
     Dipping tortillas in water, then heating them up in a cast iron skillet.', 3, '2024-06-23 18:40:22', '2024-07-25 22:16:10'),
-    ('BBQ Chicken Sammies', 1, 4, 200, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mHfRDG8UwHIWgm4Oqu3no-0mi08-y6uXug&s', 'Ingredients
+    ('BBQ Chicken Sammies', 1, 4, 200, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mHfRDG8UwHIWgm4Oqu3no-0mi08-y6uXug&s',"A chicken sandwich that the whole family will love!", 'Ingredients
 1 cup chicken stock
 
 1 bottle Mexican beer
@@ -108,7 +108,7 @@ tap here
 
 6 to 8 slices sweet bread and butter pickles, chopped
 
-6 soft sammy buns, such as soft burger rolls, split', 'Bring liquids to a simmer in a small to medium skillet and slide in the chicken breast meat. Gently poach the chicken 10 minutes, turning once about after 5 minutes.
+6 soft sammy buns, such as soft burger rolls, split Bring liquids to a simmer in a small to medium skillet and slide in the chicken breast meat. Gently poach the chicken 10 minutes, turning once about after 5 minutes.
     While chicken poaches, heat a second medium skillet over medium low heat. To hot skillet, add extra-virgin olive oil and garlic and onion and gently saute until chicken is ready to come out of poaching liquids. 
     Combine the next 5 ingredients in a medium bowl and reserve. 
     When the chicken has cooked through, add 2 ladles of the cooking liquid to the bowl, combining with the sauces, spices, brown sugar and tomato paste. 
