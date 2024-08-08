@@ -41,3 +41,18 @@
     font-size: medium;
     resize: none;
 }
+
+.formButton{
+    width: 30%;
+    height: 50px;
+    font-size: large;
+}
+
+.buttonsFormContainer{
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+    align-items: center;
+    width: 100%;
+
+}

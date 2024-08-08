@@ -238,13 +238,15 @@ const handleTags = (recipeId) => {
                     <label>Text</label>
                     <textarea className="form-control textRecipe" id="text" name="text" placeholder="Text" value={recipe.text} onChange={handleChange}/>
                 </fieldset>
-                <button type="submit" className="btn btn-outline-primary">Submit</button>
-                <button className="btn btn-outline-secondary" onClick={() => navigate("/")}>cancel</button>
+                <div className="buttonsFormContainer">
+                <button type="submit" className="btn btn-outline-primary formButton">Submit</button>
+                <button className="btn btn-outline-secondary formButton" onClick={() => navigate("/")}>Cancel</button>
+                </div>
             </form>
         </section> : 
         <section className="container loginForm">
             <h2>Log in to add a recipe</h2>
-            <div className="mt-3">
+            <div className="mt-3 ">
                     <p>You need to be logged in to add a recipe.</p>
                     <button className="btn btn-outline-info loginBtn" onClick={() => navigate('/login')}>Log In</button>
             </div>
