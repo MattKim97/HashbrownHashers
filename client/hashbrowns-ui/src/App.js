@@ -39,7 +39,7 @@ function App() {
         <Route path="/recipe/search/:text" element={<SearchRecipesList/>}/>
         <Route path="/recipe/:recipeId/edit" element={<EditRecipeForm user={user}/>}/>
         <Route path="/recipe/user/:id" element={<Home/>}/>
-        <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setUser={setUser} setToken={setToken}/>}/>
+        <Route path="/login" element={<Login setLoggedIn={setLoggedIn} loggedIn={loggedIn} setUser={setUser} setToken={setToken}/>}/>
         <Route path="/chefschoice" element={<ChefsChoice/>}/>
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/my-recipes" element={<MyRecipesPage user={user}/>}/>

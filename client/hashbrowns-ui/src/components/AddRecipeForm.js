@@ -27,7 +27,7 @@ const getFileUrl = (fileName) => {
 function AddRecipeForm({user, token }){
   
        // hardcoded user for now
-    const [currentUser, setCurrentUser] = useState(user);
+    const [currentUser, setCurrentUser] = useState(localStorage.getItem('user_id'));
     const tagurl = "http://localhost:8080/api/recipe_tags"
     const [file, setFile] = useState(null);
     const [fileUrl, setFileUrl] = useState('');
