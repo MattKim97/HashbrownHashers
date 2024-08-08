@@ -31,6 +31,7 @@ text-align: center;
         
 .recipe-item {
  margin-bottom: 20px;
+ cursor: pointer;
 }
         
 .recipe-item img {

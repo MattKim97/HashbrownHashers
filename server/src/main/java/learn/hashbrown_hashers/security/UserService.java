@@ -35,7 +35,7 @@ public class UserService implements UserDetailsService {
 
         return User.withUsername(appUser.getUsername())
                 .password(appUser.getPassword())
-                .authorities("ROLE_USER")
+                .authorities("ROLE_ADMIN")
                 .accountExpired(false)
                 .accountLocked(false)
                 .credentialsExpired(false)

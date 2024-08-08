@@ -2,27 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MyRecipesPage.css';
 
-const MyRecipesPage = () => {
+const MyRecipesPage = ({user}) => {
   const [recipes, setRecipes] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(user);
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    fetch('http://localhost:8080/current-user')
-      .then(response => {
-        if (response.status === 200) {
-          return response.json();
-        } else {
-          return Promise.reject(`Unexpected status code: ${response.status}`);
-        }
-      })
-      .then(data => setCurrentUser(data))
-      .catch(console.log);
-  }, []);
+
+  console.log(currentUser);
+
 
   useEffect(() => {
     if (currentUser) {
-      fetch(`http://localhost:8080/recipe/user/${currentUser.userId}`)
+      fetch(`http://localhost:8080/recipe/user/${currentUser}`)
         .then(response => {
           if (response.status === 200) {
             return response.json();
@@ -35,6 +25,8 @@ const MyRecipesPage = () => {
     }
   }, [currentUser]);
 
+
+
   return (
     <section className="container my-recipes">
       {currentUser ? (
@@ -43,7 +35,7 @@ const MyRecipesPage = () => {
           {recipes.length > 0 ? (
             <ul>
               {recipes.sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate)).map((recipe) => (
-                <li key={recipe.recipeId} className="recipe-item">
+                <li key={recipe.recipeId} className="recipe-item" onClick={() => navigate(`/recipe/${recipe.recipeId}`)}>
                   <h3>{recipe.recipeName}</h3>
                   <img src={recipe.imageUrl} alt={recipe.recipeName} />
                   <p>{recipe.description}</p>
