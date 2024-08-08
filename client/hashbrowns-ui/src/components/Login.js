@@ -52,12 +52,14 @@ const Login = (props) => {
         setPasswordError("Incorrect username/password.");
         return;
       } else {
-        response.json().then((data) => {
+        response.json().
+        then((data) => {
           console.log(data);
           props.setToken(data.jwt_token);
           localStorage.setItem('token',data.jwt_token);
+          localStorage.setItem('user_id',data.user_id);
           props.setLoggedIn(true);
-          props.setUser(credentials.username);
+          props.setUser(data.user_id);
           navigate("/");
         });
       }
