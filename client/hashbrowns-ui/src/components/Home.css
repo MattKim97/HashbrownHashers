@@ -1,0 +1,38 @@
+
+.landingPage{
+    margin-right: 18%;
+    margin-left: 18%;
+}
+.centeredHeader{
+   margin: auto;
+}
+
+
+.homeHeaderSm{
+    text-align: center;
+    letter-spacing: 2px;
+    width: 20%;
+    margin-top: 4rem;
+    border-radius: 5px;
+    border-style: solid;
+}
+
+.recipes{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 1.5rem;
+    .recipe-item{
+        position: relative;
+        border-radius: 20px;
+    }
+    img{
+        width: 50vh;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+}
+.recipe-title{
+    color: black;
+   
+}
