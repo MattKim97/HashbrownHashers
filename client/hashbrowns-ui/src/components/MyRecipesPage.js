@@ -25,6 +25,8 @@ const MyRecipesPage = ({user}) => {
     }
   }, [currentUser]);
 
+
+
   return (
     <section className="container my-recipes">
       {currentUser ? (
@@ -33,7 +35,7 @@ const MyRecipesPage = ({user}) => {
           {recipes.length > 0 ? (
             <ul>
               {recipes.sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate)).map((recipe) => (
-                <li key={recipe.recipeId} className="recipe-item">
+                <li key={recipe.recipeId} className="recipe-item" onClick={() => navigate(`/recipe/${recipe.recipeId}`)}>
                   <h3>{recipe.recipeName}</h3>
                   <img src={recipe.imageUrl} alt={recipe.recipeName} />
                   <p>{recipe.description}</p>
