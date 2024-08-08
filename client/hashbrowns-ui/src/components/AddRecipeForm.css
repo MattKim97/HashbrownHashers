@@ -18,3 +18,26 @@
     cursor: pointer;
     font-size: large;
 }
+
+.inputForm > input{
+    height: 40px;
+    font-size: medium;
+}
+
+
+.descriptionRecipe{
+    height: 300px;
+    font-size: medium;
+    resize: none;
+}
+
+.tagsSelect{
+    height: 40px;
+    font-size: medium;
+}
+
+.textRecipe{
+    height: 500px;
+    font-size: medium;
+    resize: none;
+}

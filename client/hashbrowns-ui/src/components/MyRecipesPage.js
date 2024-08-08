@@ -4,10 +4,8 @@ import './MyRecipesPage.css';
 
 const MyRecipesPage = ({user}) => {
   const [recipes, setRecipes] = useState([]);
-  const [currentUser, setCurrentUser] = useState(user);
+  const [currentUser, setCurrentUser] = useState(localStorage.getItem('user_id'));
   const navigate = useNavigate();
-
-  console.log(currentUser);
 
 
   useEffect(() => {

@@ -22,9 +22,7 @@ function Home(){
         })
         .then(data => {
             setRecipes(data)
-            
-            console.log(data);
-        
+                
         })
         .catch(console.log)
     },[])
@@ -36,7 +34,7 @@ function Home(){
     
 
     return(
-    
+        <div className='landingPageContainer'>
         <section className="landingPage">
         <header>
             <h1 className="text-center">Welcome to Has#Browns!</h1>
@@ -71,10 +69,7 @@ function Home(){
 
 
         </section>
-
-
-       
-        
+        </div>
     )
 }
 
