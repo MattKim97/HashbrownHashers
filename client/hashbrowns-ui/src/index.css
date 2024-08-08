@@ -21,7 +21,7 @@ h1, h2, h3{
 }
 h1{
   font-size:4.5rem;
-  padding-top: 5rem;
+  padding-top: 7rem;
 }
 html{
   font-size:55.5%;
@@ -30,6 +30,7 @@ html{
 .container {
   margin-top: 60px;
   max-width: 70vw;
+  padding: 40px;
 }
 
 a {

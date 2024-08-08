@@ -19,12 +19,6 @@ cursor: pointer;
 font-size: large;
 }
         
-.container {
-max-width: 800px;
-margin: 0 auto;
-padding: 20px;
-}
-        
 .my-recipes {
 text-align: center;
 }
