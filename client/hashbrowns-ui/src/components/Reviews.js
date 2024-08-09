@@ -9,6 +9,11 @@ function Reviews(props) {
     const url = "http://localhost:8080/api/reviews"
     //this is recipeId
     const { id } = useParams();
+    const REVIEW_DEFAULT = {
+        title: "",
+        description: "",
+        rating: 0
+    }
 
     useEffect(() => {
         review.recipeId = id;
@@ -33,13 +38,17 @@ function Reviews(props) {
 
     const handleAddReview = (event) => {
         event.preventDefault();
+        if (review.rating < 1 || review.rating > 5) {
+            setErrors("Rating must be between 1 and 5.")
+            return;
+        }
+        setErrors("");
         const init = {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'},
                 body: JSON.stringify(review)
             }
-
 
         fetch(url, init)
         .then(response => {
@@ -50,10 +59,9 @@ function Reviews(props) {
             }
         }).then(data => {
             if(data.reviewId) {
-                console.log(data);
                 let newReviews = reviews.filter(a => a.reviewId > 0);
                 newReviews.push(data);
-                console.log(reviews.filter(rev => rev.userId === props.currentUser));
+                setReview(REVIEW_DEFAULT);
                 setReviews(newReviews);
 
             } else
@@ -102,6 +110,7 @@ function Reviews(props) {
     return(<>
         <section className="container">
         <h2 className='mb-4'>Reviews</h2>
+        <label className="error">{errors}</label>
             {(props.currentUser != null && (reviews.filter(rev => rev.userId == props.currentUser).length < 1)) ?
             (<form onSubmit={handleAddReview}>
             <div className="row"> 

@@ -5,6 +5,11 @@
   margin:0;
 }
 
+.error {
+  color: red;
+  font-size: 1.8rem;
+}
+
 body{
   font-family: "Oswald", sans-serif;
   font-size:1.8rem;
