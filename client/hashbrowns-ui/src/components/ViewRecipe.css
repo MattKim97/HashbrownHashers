@@ -20,6 +20,7 @@
 }
 
 .recipeButtonContainer{
+    width: 100%;
     display: flex;
     justify-content: center;
     gap: 5%;
@@ -65,7 +66,7 @@
     font-size: medium;
     border: 2px solid black;
     border-radius: 10px;
-    padding-left: 5px;
+    padding: 2px 5px;
 }
 
 .viewRecipeSpiciness {
@@ -87,5 +88,11 @@
 .viewRecipeText{
     margin-top: 1rem;
     font-size: large;
-    font-family: "Anton", sans-serif;
+    font-weight: bold;
+}
+
+.viewRecipePrepTime , .viewRecipeDifficulty, .viewRecipeSpiciness{
+    margin-top: 1rem;
+    font-size: medium;
+    font-weight: bold;
 }

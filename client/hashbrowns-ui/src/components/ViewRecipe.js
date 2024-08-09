@@ -101,14 +101,14 @@ export default function ViewRecipe({user}) {
             </div>
             <img className= "viewRecipeImage" src={recipe.imageUrl} alt={recipe.recipeName} />
             <p className='viewRecipeDesc'>{recipe.description}</p>
-            <p>Prep Time: {recipe.prepTime} minutes</p>
+            <p className='viewRecipePrepTime'>Prep Time: {recipe.prepTime} minutes</p>
             <p className='viewRecipeDifficulty'>Difficulty: {getDifficulty(recipe.difficulty)}</p>
             <p className='viewRecipeSpiciness'>Spiciness: {getPeppers(recipe.spicyness)}</p>
             <p className='viewRecipeText'>{recipe.text}</p>
             {currentUser != null && recipe.userId == currentUser ?     
-    <div>
-        <button onClick={() => navigate(`/recipe/${id}/edit`)}>Edit</button>
-        <button onClick={() => handleDelete()}>Delete</button>
+    <div className='recipeButtonContainer'>
+        <button className="btn btn-warning recipeButton" onClick={() => navigate(`/recipe/${id}/edit`)}>Edit</button>
+        <button className="btn btn-danger recipeButton" onClick={() => handleDelete()}>Delete</button>
     </div> 
     : null
 }   <Reviews currentUser={currentUser}/>
