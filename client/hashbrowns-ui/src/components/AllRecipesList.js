@@ -32,7 +32,7 @@ export default function AllRecipesList() {
                 <li key={index} className="recipeListElement" onClick={() =>  navigate(`/recipe/${recipe.recipeId}`)}>
                     <h2 className='allRecipesHeader'>{recipe.recipeName}</h2>
                     <p>{recipe.description}</p>
-                    <img className="listImages" src={recipe.imageUrl} alt={recipe.recipeName} />
+                    <img className="listImages" src={recipe.imageUrl ? recipe.imageUrl : "https://news.mit.edu/sites/default/files/images/202312/MIT_Food-Diabetes-01.jpg"} alt={recipe.recipeName} />
                 </li>
             ))}
         </ul>

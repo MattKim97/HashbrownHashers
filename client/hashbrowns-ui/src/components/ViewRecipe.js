@@ -99,7 +99,7 @@ export default function ViewRecipe({user}) {
                 ))}
             </ul>
             </div>
-            <img className= "viewRecipeImage" src={recipe.imageUrl} alt={recipe.recipeName} />
+            <img className= "viewRecipeImage" src={recipe.imageUrl ? recipe.imageUrl : "https://news.mit.edu/sites/default/files/images/202312/MIT_Food-Diabetes-01.jpg"} alt={recipe.recipeName} />
             <p className='viewRecipeDesc'>{recipe.description}</p>
             <p className='viewRecipePrepTime'>Prep Time: {recipe.prepTime} minutes</p>
             <p className='viewRecipeDifficulty'>Difficulty: {getDifficulty(recipe.difficulty)}</p>
