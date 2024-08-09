@@ -74,25 +74,37 @@ export default function ViewRecipe({user}) {
         return <p>Loading...</p>
     }
 
+    const getPeppers = (spicyness) => {
+        const pepper = Math.max(1, Math.min(spicyness, 5));
+        return '🌶️'.repeat(pepper);
+    };
+
+    
+    const getDifficulty = (difficulty) => {
+        const muscle = Math.max(1, Math.min(difficulty, 5));
+        return '💪'.repeat(muscle);
+    };
+
 
 
   return (
     <>
         <section className="container viewRecipe">
             <h1>{recipe.recipeName}</h1>
-            <img className= "viewRecipeImage" src={recipe.imageUrl} alt={recipe.recipeName} />
-            <p>{recipe.description}</p>
-            <p>Prep Time: {recipe.prepTime} minutes</p>
-            <p>Difficulty: {recipe.difficulty}</p>
-            <p>Spicyness: {recipe.spicyness}</p>
-            <p>{recipe.text}</p>
+            <div className='viewRecipeHeader'>
             <ul>
-
+                Tags:
                 {tags && tags.map((tag, index) => (
-
                     <li key={index}>{tag.tagName}</li>
                 ))}
             </ul>
+            </div>
+            <img className= "viewRecipeImage" src={recipe.imageUrl} alt={recipe.recipeName} />
+            <p className='viewRecipeDesc'>{recipe.description}</p>
+            <p>Prep Time: {recipe.prepTime} minutes</p>
+            <p className='viewRecipeDifficulty'>Difficulty: {getDifficulty(recipe.difficulty)}</p>
+            <p className='viewRecipeSpiciness'>Spiciness: {getPeppers(recipe.spicyness)}</p>
+            <p className='viewRecipeText'>{recipe.text}</p>
             {currentUser != null && recipe.userId == currentUser ?     
     <div className='recipeButtonContainer'>
         <button className="btn btn-outline-warning recipeButton" onClick={() => navigate(`/recipe/${id}/edit`)}>Edit</button>

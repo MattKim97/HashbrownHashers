@@ -26,7 +26,6 @@ function Reviews(props) {
         })
         .then((data) => {
             if(data) {
-                console.log(props.currentUser);
                 setReviews(data);
             } else {
                 setErrors(data);
