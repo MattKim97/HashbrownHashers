@@ -7,7 +7,11 @@
 .recipeListElement{
   cursor: pointer;
   margin-top: 10%;
+  padding: 5px;
   transition: transform 1s ease;
+  border-radius: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .allRecipesHeader{
@@ -16,6 +20,8 @@
 
 .recipeListElement:hover {
   transform: scale(1.05);
+  margin: 2px solid black;
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.6);
 }
 
 .recipesList{

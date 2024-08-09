@@ -153,22 +153,22 @@ tap here
     ('Caprese Salad', 1, 0, 10, 'https://whatsgabycooking.com/wp-content/uploads/2023/06/Dinner-Party-__-Traditional-Caprese-1-1200x800-1.jpg', 
     'A simple salad of fresh tomatoes, mozzarella, and basil, drizzled with balsamic glaze.', 
     '1. Slice tomatoes and mozzarella. 2. Arrange on a plate, alternating slices. 3. Top with fresh basil leaves. 4. Drizzle with olive oil and balsamic glaze.', 
-    2, '2024-08-08 12:00:00', '2024-08-08 12:00:00'),
+    2, '2024-08-05 12:00:00', '2024-08-05 12:00:00'),
 
     ('Vegetable Stir-Fry', 2, 1, 25, 'https://www.onceuponachef.com/images/2017/02/Asian-Vegetable-Stir-Fry-3.jpg', 
     'A colorful and healthy vegetable stir-fry served with rice or noodles.', 
     '1. Heat oil in a wok or large skillet. 2. Add sliced vegetables and cook until tender-crisp. 3. Stir in sauce (soy sauce, garlic, ginger, etc.). 4. Serve over rice or noodles.', 
-    1, '2024-08-09 14:00:00', '2024-08-09 14:00:00'),
+    1, '2024-08-06 14:00:00', '2024-08-06 14:00:00'),
 
     ('Apple Pie', 3, 0, 90, 'https://www.inspiredtaste.net/wp-content/uploads/2022/11/Apple-Pie-Recipe-Video.jpg', 
     'Classic apple pie with a flaky crust and a sweet, spiced apple filling.', 
     '1. Prepare pie crust and place in a pie dish. 2. Toss sliced apples with sugar, cinnamon, and flour. 3. Fill pie crust with apple mixture. 4. Top with another crust or lattice pattern. 5. Bake at 375°F (190°C) for 50-60 minutes.', 
-    2, '2024-08-10 16:00:00', '2024-08-10 16:00:00'),
+    2, '2024-08-07 16:00:00', '2024-08-07 16:00:00'),
 
     ('Chocolate Chip Cookies', 1, 0, 30, 'https://sallysbakingaddiction.com/wp-content/uploads/2013/05/classic-chocolate-chip-cookies.jpg', 
     'Soft and chewy chocolate chip cookies that are always a hit.', 
     '1. Cream together butter and sugars. 2. Add eggs and vanilla, then mix in flour, baking soda, and salt. 3. Stir in chocolate chips. 4. Drop spoonfuls of dough onto a baking sheet and bake at 350°F (175°C) for 10-12 minutes.', 
-    1, '2024-08-11 18:00:00', '2024-08-11 18:00:00');
+    1, '2024-08-8 18:00:00', '2024-08-8 18:00:00');
 	
     insert into recipe_tags 
 		(recipe_id, tag_id) 
