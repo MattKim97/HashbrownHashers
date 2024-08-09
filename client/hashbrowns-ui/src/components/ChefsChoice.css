@@ -4,27 +4,39 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 200px;
-    margin-top: 15rem;
+    height: 300px;
+    margin-top: 8rem;
+    transition: .5s ease-in-out;
   }
 
   .chefsButton {
     border: none;
     background: rgb(60, 109, 201);
     color: white;
-    
-    font-size: 24px;
+    height: fit-content;
+    font-size: 40px;
     border-radius: 8px;
     cursor: pointer;
     box-shadow: #ADCFFF 0 -12px 6px inset;
+    width: 200px;
+    
     
   }
   
-  .chefsButton:hover {
-    
-    box-shadow: #cd70ef 0 -6px 8px inset;
+  .chefButtonContainer:hover{
+    transform: scale(1.1);
   }
 
+  h2{
+    border-radius: 5px;
+    border-style: solid;
+  }
+  .chefHeader{
+    padding-top: 7rem;
+    margin-left: 20%;
+    margin-right: 20%;
+
+  }
 
 
 
