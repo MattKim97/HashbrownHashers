@@ -1,52 +1,55 @@
+.chefButtonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin-top: 0;
+  position: relative;
+}
 
-  .chefButtonContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 300px;
-    margin-top: 8rem;
-    transition: .5s ease-in-out;
-  }
+.chefTitle {
+  font-size: 4.5rem;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+  margin-bottom: 150px; 
+  padding: 3px 5px; 
+}
 
-  .chefsButton {
-    border: none;
-    background: rgb(60, 109, 201);
-    color: white;
-    height: fit-content;
-    font-size: 40px;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: #ADCFFF 0 -12px 6px inset;
-    width: 200px;
-    
-    
-  }
-  
-  .chefButtonContainer:hover{
-    transform: scale(1.1);
-  }
+.chefsButton {
+  border: none;
+  background: rgb(60, 109, 201);
+  color: white;
+  font-size: 2.4rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: #ADCFFF 0 -12px 6px inset;
+  padding: 15px 30px;
+  margin-bottom: 130px; 
+}
 
-  h2{
-    border-radius: 5px;
-    border-style: solid;
-  }
-  .chefHeader{
-    padding-top: 7rem;
-    margin-left: 20%;
-    margin-right: 20%;
+.chefsButton:hover {
+  box-shadow: #cd70ef 0 -6px 8px inset;
+}
 
-  }
+.chefsButton:active {
+  transform: scale(1.525);
+}
 
+.chefDescription {
+  font-size: 2.5rem;
+  color: black;
+  text-align: center;
+  padding: 20px;
+  max-width: 800px;
+  margin-bottom: 70px;
+  border: 2px solid black;
+  border-radius: 10px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.3s ease-in-out;
+}
 
-
-
-
-  .chefsButton:active {
-    transform: scale(1.525);
-  }
-
-
-
-
-
+.chefDescription:hover {
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.6);
+}
