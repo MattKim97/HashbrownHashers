@@ -244,12 +244,14 @@ const handleTags = (recipeId) => {
                 </div>
             </form>
         </section> : 
-        <section className="container loginForm">
+        <section className="container">
+        <div className="container loginForm">
             <h2>Log in to add a recipe</h2>
             <div className="mt-3 ">
                     <p>You need to be logged in to add a recipe.</p>
                     <button className="btn btn-outline-info loginBtn" onClick={() => navigate('/login')}>Log In</button>
             </div>
+        </div>
         </section>
         }
         </>
