@@ -62,7 +62,7 @@ function Home(){
                 {sorted.slice(0,3).map((recipe, index) => (
                     <div key={index} className='recipe-item'>
                         <Link to={`/recipe/${recipe.recipeId}`}>
-                        <img src={recipe.imageUrl} alt={recipe.recipeName} />
+                        <img src={recipe.imageUrl ? recipe.imageUrl : "https://news.mit.edu/sites/default/files/images/202312/MIT_Food-Diabetes-01.jpg"} alt={recipe.recipeName} />
                         <p className='recipe-title'>{recipe.recipeName}</p>
                         </Link>
                     </div>
