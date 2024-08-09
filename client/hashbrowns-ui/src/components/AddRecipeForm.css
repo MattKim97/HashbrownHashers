@@ -56,3 +56,7 @@
     width: 100%;
 
 }
+
+#difficulty, #spicyness, #prepTime {
+     width: 70px;
+}
