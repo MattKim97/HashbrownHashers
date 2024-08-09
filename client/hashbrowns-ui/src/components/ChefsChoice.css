@@ -11,13 +11,13 @@
 
   .chefsButton {
     border: none;
-    background: rgb(60, 109, 201);
+    background: #653815;
     color: white;
     height: fit-content;
     font-size: 40px;
     border-radius: 8px;
     cursor: pointer;
-    box-shadow: #ADCFFF 0 -12px 6px inset;
+    box-shadow: #af2f00 0 -12px 6px inset;
     width: 200px;
     
     
