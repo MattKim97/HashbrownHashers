@@ -32,6 +32,16 @@ h1{
   padding-top: 7rem;
 }
 
+.inputForm > input {
+  height: 40px;
+  font-size: medium;
+}
+
+.inputForm > textarea {
+  max-width: 97.5%;
+  font-size: medium;
+}
+
 label {
   font-size: 2.4rem;
 }
@@ -77,4 +87,15 @@ ul{
   list-style-type: none;
 }
 
+.formButton {
+  width: 30%;
+  height: 50px;
+  font-size: large;
+}
+
+.btn.btn-danger {
+  width:50%;
+  height: 40px;
+  font-size: large;
+}
 

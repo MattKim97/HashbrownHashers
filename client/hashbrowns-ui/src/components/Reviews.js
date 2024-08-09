@@ -1,12 +1,11 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import {useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 function Reviews(props) {
     const [reviews, setReviews] = useState([]);
     const [review, setReview] = useState([]);
     const [errors, setErrors] = useState([]);
-    const [hasReviewed, setHasReviewed] = useState([]);
     const url = "http://localhost:8080/api/reviews"
     //this is recipeId
     const { id } = useParams();
@@ -54,6 +53,7 @@ function Reviews(props) {
                 console.log(data);
                 let newReviews = reviews.filter(a => a.reviewId > 0);
                 newReviews.push(data);
+                console.log(reviews.filter(rev => rev.userId === props.currentUser));
                 setReviews(newReviews);
 
             } else
@@ -102,11 +102,11 @@ function Reviews(props) {
     return(<>
         <section className="container">
         <h2 className='mb-4'>Reviews</h2>
-            {(props.currentUser != null && (reviews.find(rev => rev.userId === props.currentUser) === undefined)) ?
+            {(props.currentUser != null && (reviews.filter(rev => rev.userId == props.currentUser).length < 1)) ?
             (<form onSubmit={handleAddReview}>
             <div className="row"> 
             <div className="col-9">
-            <fieldset className="form-group">
+            <fieldset className="form-group inputForm">
         <label htmlFor="title">Review Title</label>
             <input
                 id="title"
@@ -118,7 +118,7 @@ function Reviews(props) {
                 </fieldset>
                 </div>
                 <div className="col-3">
-                <fieldset className="form-group">
+                <fieldset className="form-group inputForm">
 
         <label htmlFor="rating">Review Rating</label>
             <input
@@ -131,7 +131,7 @@ function Reviews(props) {
                 </fieldset>
                 </div>
                 </div>
-                <fieldset className="form-group">
+                <fieldset className="form-group inputForm">
         <label htmlFor="description">Review</label>
             <textarea
                 id="description"
@@ -143,7 +143,7 @@ function Reviews(props) {
                 onChange={handleChange}/>
                 </fieldset>
 
-            <button type="submit" className="btn btn-outline-secondary mb-4">
+            <button type="submit" className="btn btn-primary formButton mb-4">
                 Add Review
             </button>
             </form>
@@ -158,7 +158,7 @@ function Reviews(props) {
                             <p>{rev.description}</p>
                             {(props.currentUser != null && rev.userId == props.currentUser) ?
                             (
-                                <button className="btn btn-danger" onClick={() => handleDeleteReview(rev)}>Delete Review</button>
+                                <button className="btn btn-danger formButton" onClick={() => handleDeleteReview(rev)}>Delete Review</button>
                             ) : null }
                     </div>
                     </div>

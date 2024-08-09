@@ -111,7 +111,7 @@ export default function ViewRecipe({user}) {
         <button className="btn btn-danger recipeButton" onClick={() => handleDelete()}>Delete</button>
     </div> 
     : null
-}   <Reviews currentUser={currentUser}/>
+}   <Reviews currentUser={user}/>
         </section> 
     </>
   )
