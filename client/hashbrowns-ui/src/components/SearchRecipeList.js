@@ -1,13 +1,15 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import {Link, useParams} from "react-router-dom"
+import {Link, useParams, useNavigate} from "react-router-dom"
 
 export default function SearchRecipesList() {
 
     const [recipes, setRecipes] = useState([]);
     const url = "http://localhost:8080/recipe/search"
     const {text} = useParams();
-    
+    const navigate = useNavigate();
+
+
     useEffect(()=>{
         
         fetch(`${url}/${text}`)
@@ -28,11 +30,11 @@ export default function SearchRecipesList() {
         <h2>Recipe Results</h2>
         <ul>
             {recipes.map((recipe, index) => (
-                <li key={index}>
-                    <Link to={`/recipe/${recipe.recipeId}`}>{recipe.recipeName}</Link>
-                    <p>{recipe.description}</p>
-                    <img src={recipe.imageUrl} alt={recipe.recipeName} />
-                </li>
+             <li key={index} className="recipeListElement" onClick={() =>  navigate(`/recipe/${recipe.recipeId}`)}>
+             <h2 className='allRecipesHeader'>{recipe.recipeName}</h2>
+             <p>{recipe.description}</p>
+             <img className="listImages" src={recipe.imageUrl ? recipe.imageUrl : "https://news.mit.edu/sites/default/files/images/202312/MIT_Food-Diabetes-01.jpg"} alt={recipe.recipeName} />
+         </li>
             ))}
         </ul>
       </section>
