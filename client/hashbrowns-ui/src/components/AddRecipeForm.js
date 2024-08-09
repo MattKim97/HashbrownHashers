@@ -220,7 +220,7 @@ const handleTags = (recipeId) => {
                 </div>
                 <div className="col-md">
                 <fieldset className="form-group inputForm">
-                    <label>Prep Time</label>
+                    <label>Prep Time (in Minutes)</label>
                     <input type="number" className="form-control" id="prepTime" name="prepTime" placeholder="Prep Time" value={recipe.prepTime} min="1" onChange={handleChange}/>
                 </fieldset>
                 </div>
