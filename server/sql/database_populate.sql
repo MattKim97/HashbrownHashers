@@ -168,7 +168,7 @@ tap here
     ('Chocolate Chip Cookies', 1, 0, 30, 'https://sallysbakingaddiction.com/wp-content/uploads/2013/05/classic-chocolate-chip-cookies.jpg', 
     'Soft and chewy chocolate chip cookies that are always a hit.', 
     '1. Cream together butter and sugars. 2. Add eggs and vanilla, then mix in flour, baking soda, and salt. 3. Stir in chocolate chips. 4. Drop spoonfuls of dough onto a baking sheet and bake at 350°F (175°C) for 10-12 minutes.', 
-    1, '2024-08-8 18:00:00', '2024-08-8 18:00:00');
+    1, '2024-08-08 18:00:00', '2024-08-8 18:00:00');
 	
     insert into recipe_tags 
 		(recipe_id, tag_id) 
