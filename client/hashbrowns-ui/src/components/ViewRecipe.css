@@ -4,9 +4,6 @@
     height: 500px;
     object-fit: cover;
   }
-.container{
-    padding: 0%;
-}
 
 .recipeButton{
     font-size: large;
