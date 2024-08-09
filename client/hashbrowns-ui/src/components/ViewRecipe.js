@@ -86,6 +86,28 @@ export default function ViewRecipe({user}) {
     };
 
 
+    const convertPreptime = (prep) => {
+        const min = prep % 60;
+        const hour = Math.trunc((prep / 60))
+        let mintext = '';
+        let hourtext = '';
+        let connect = '';
+        if (hour > 1) {
+            hourtext = `${hour} hours `;
+        } else if (hour > 0) {
+            hourtext = `${hour} hour `;
+        } 
+
+        if (min > 1) {
+            mintext = `${min} minutes `;
+        } else if (hour > 0) {
+            mintext = `${min} minute `;
+        }
+        if(mintext != '' && hourtext != '') {
+            connect = 'and '
+        } 
+        return 'Prep Time: ' + hourtext + connect + mintext;
+    }
 
   return (
     <>
@@ -101,7 +123,7 @@ export default function ViewRecipe({user}) {
             </div>
             <img className= "viewRecipeImage" src={recipe.imageUrl ? recipe.imageUrl : "https://news.mit.edu/sites/default/files/images/202312/MIT_Food-Diabetes-01.jpg"} alt={recipe.recipeName} />
             <p className='viewRecipeDesc'>{recipe.description}</p>
-            <p className='viewRecipePrepTime'>Prep Time: {recipe.prepTime} minutes</p>
+            <p className='viewRecipePrepTime'>{convertPreptime(recipe.prepTime)}</p>
             <p className='viewRecipeDifficulty'>Difficulty: {getDifficulty(recipe.difficulty)}</p>
             <p className='viewRecipeSpiciness'>Spiciness: {getPeppers(recipe.spicyness)}</p>
             <p className='viewRecipeText'>{recipe.text}</p>

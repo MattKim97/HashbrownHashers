@@ -49,7 +49,7 @@ export default function ChefsChoice() {
       </div>
       <div ref={container} className="chefButtonContainer">
         <button className="chefsButton box" onClick={handleClick}>
-          See what the chef is cookin'
+          See what the Chef is Cookin'!
         </button>
       </div>
       <div className="chefDescription">
