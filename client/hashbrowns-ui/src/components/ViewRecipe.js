@@ -94,9 +94,9 @@ export default function ViewRecipe({user}) {
                 ))}
             </ul>
             {currentUser != null && recipe.userId == currentUser ?     
-    <div className='recipeButtonContainer'>
-        <button className="btn btn-outline-warning recipeButton" onClick={() => navigate(`/recipe/${id}/edit`)}>Edit</button>
-        <button className="btn btn-outline-danger recipeButton" onClick={() => handleDelete()}>Delete</button>
+    <div>
+        <button onClick={() => navigate(`/recipe/${id}/edit`)}>Edit</button>
+        <button onClick={() => handleDelete()}>Delete</button>
     </div> 
     : null
 }   <Reviews currentUser={currentUser}/>

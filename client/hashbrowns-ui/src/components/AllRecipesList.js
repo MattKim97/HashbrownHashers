@@ -26,7 +26,7 @@ export default function AllRecipesList() {
   return (
     <>
       <section className="container recipesList">
-        <h1 >All Recipes</h1>
+        <h2>All Recipes</h2>
         <ul>
             {recipes.map((recipe, index) => (
                 <li key={index} className="recipeListElement" onClick={() =>  navigate(`/recipe/${recipe.recipeId}`)}>
