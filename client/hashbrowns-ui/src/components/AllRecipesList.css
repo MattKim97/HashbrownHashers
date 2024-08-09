@@ -7,7 +7,7 @@
 .recipeListElement{
   cursor: pointer;
   margin-top: 10%;
-  transition: transform 2s ease;
+  transition: transform 1s ease;
 }
 
 .allRecipesHeader{
@@ -15,5 +15,5 @@
 }
 
 .recipeListElement:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
