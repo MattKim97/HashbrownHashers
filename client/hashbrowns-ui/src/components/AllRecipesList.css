@@ -17,3 +17,7 @@
 .recipeListElement:hover {
   transform: scale(1.05);
 }
+
+.recipesList{
+  text-align: center;
+}
