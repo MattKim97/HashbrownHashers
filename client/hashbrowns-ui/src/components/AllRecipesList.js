@@ -1,10 +1,13 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
+import './AllRecipesList.css'
+
 export default function AllRecipesList() {
 
     const [recipes, setRecipes] = useState([]);
     const url = "http://localhost:8080/recipe"
+    const navigate = useNavigate();
     
     useEffect(()=>{
         
@@ -23,13 +26,13 @@ export default function AllRecipesList() {
   return (
     <>
       <section className="container recipesList">
-        <h2>All Recipes</h2>
+        <h1 >All Recipes</h1>
         <ul>
             {recipes.map((recipe, index) => (
-                <li key={index}>
-                    <Link to={`/recipe/${recipe.recipeId}`}>{recipe.recipeName}</Link>
+                <li key={index} className="recipeListElement" onClick={() =>  navigate(`/recipe/${recipe.recipeId}`)}>
+                    <h2 className='allRecipesHeader'>{recipe.recipeName}</h2>
                     <p>{recipe.description}</p>
-                    <img src={recipe.imageUrl} alt={recipe.recipeName} />
+                    <img className="listImages" src={recipe.imageUrl} alt={recipe.recipeName} />
                 </li>
             ))}
         </ul>
