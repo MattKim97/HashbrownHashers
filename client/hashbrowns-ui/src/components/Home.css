@@ -27,7 +27,7 @@
     .recipe-item{
         position: relative;
         border-radius: 20px;
-        transition: transform 1s ease;
+        transition: transform 1s ease , box-shadow 1s ease;
     }
     .recipe-item:hover {
         transform: scale(1.05);
