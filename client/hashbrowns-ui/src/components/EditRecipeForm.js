@@ -122,6 +122,7 @@ export default function EditRecipeForm({user}) {
                     <label>Text</label>
                     <textarea className="form-control textRecipe" id="text" name="text" placeholder="Text" value={recipe.text} onChange={handleChange}/>
                 </fieldset>
+                <div></div>
                 <div className='buttonsFormContainer'>
                 <button type="submit" className="btn btn-primary formButton">Submit</button>
                 <button className="btn btn-secondary formButton" onClick={() => navigate(`/recipe/${recipeId}`)}>Cancel</button>
