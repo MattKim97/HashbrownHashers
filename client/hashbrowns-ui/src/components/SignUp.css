@@ -37,11 +37,6 @@
   justify-content: center;
 }
 
-.inputContainer > .error {
-  color: red;
-  font-size: 12px;
-}
-
 .inputHolder {
   height: 48px;
   width: 400px;

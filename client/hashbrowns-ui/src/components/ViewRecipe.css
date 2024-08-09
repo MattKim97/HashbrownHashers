@@ -1,13 +1,98 @@
-.viewRecipe{
-    padding: 0 !important;
-}
 
 .viewRecipeImage{
     width: 100%;
     height: 500px;
     object-fit: cover;
+    border: 5px solid #333; 
+    border-radius: 10px; 
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3); 
+    transition: box-shadow 0.3s ease-in-out;
   }
 
-.container{
-    padding: 0%;
+.viewRecipeImage:hover {
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.6);
+  }
+
+.recipeButton{
+    font-size: large;
+    width: 20%;
+    height: 50px;
+}
+
+.recipeButtonContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 5%;
+    margin-top: 10px;
+}
+
+.viewRecipe{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.viewRecipeHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.viewRecipeHeader ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: large;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 25px;
+    padding: 3px 5px;
+}
+
+.viewRecipeHeader li {
+    margin-left: 10px;
+}
+
+.viewRecipeDesc{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    font-size: medium;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 2px 5px;
+}
+
+.viewRecipeSpiciness {
+    transition: text-shadow 0.5s ease-in-out; 
+}
+
+.viewRecipeSpiciness:hover {
+    text-shadow: 0 0 10px red;
+}
+
+.viewRecipeDifficulty{
+    transition: text-shadow 0.5s ease-in-out; 
+}
+
+.viewRecipeDifficulty:hover {
+    text-shadow: 0 0 10px yellow;
+}
+
+.viewRecipeText{
+    margin-top: 1rem;
+    font-size: large;
+}
+
+.viewRecipePrepTime , .viewRecipeDifficulty, .viewRecipeSpiciness{
+    margin-top: 1rem;
+    font-size: medium;
+    font-weight: bold;
 }

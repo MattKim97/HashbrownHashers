@@ -8,6 +8,7 @@ function Home(){
 
     const [recipes, setRecipes] = useState([]);
     const [popularRecipes, setPopularRecipes] = useState([]);
+    const [random, setRandom] = useState(0);
     const url = "http://localhost:8080/recipe"
     
     useEffect(()=>{
@@ -22,9 +23,8 @@ function Home(){
         })
         .then(data => {
             setRecipes(data)
-            
-            console.log(data);
-        
+            setRandom(Math.floor(Math.random() * (data.length-2)))
+                
         })
         .catch(console.log)
     },[])
@@ -36,7 +36,7 @@ function Home(){
     
 
     return(
-    
+        <div className='landingPageContainer'>
         <section className="landingPage">
         <header>
             <h1 className="text-center">Welcome to Has#Browns!</h1>
@@ -45,7 +45,7 @@ function Home(){
             <h3 className="homeHeaderSm">Recipes for You!</h3>
         </div>
         <div className="recipes">
-                {recipes.slice(0,3).map((recipe, index) => (
+                {recipes.slice(random,random+3).map((recipe, index) => (
                     <div key={index} className='recipe-item'>
                         <Link to={`/recipe/${recipe.recipeId}`}>
                         <img src={recipe.imageUrl} alt={recipe.recipeName} />
@@ -71,10 +71,7 @@ function Home(){
 
 
         </section>
-
-
-       
-        
+        </div>
     )
 }
 

@@ -18,3 +18,42 @@
     cursor: pointer;
     font-size: large;
 }
+
+
+
+
+.descriptionRecipe{
+    height: 300px;
+    font-size: medium;
+    resize: none;
+}
+
+.tagsSelect{
+    height: 40px;
+    font-size: medium;
+}
+
+.textRecipe{
+    height: 500px;
+    font-size: medium;
+    resize: none;
+}
+
+.formButton{
+    width: 30%;
+    height: 50px;
+    font-size: large;
+}
+
+.buttonsFormContainer{
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+    align-items: center;
+    width: 100%;
+
+}
+
+#difficulty, #spicyness, #prepTime {
+     width: 70px;
+}

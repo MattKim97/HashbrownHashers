@@ -27,7 +27,7 @@ const getFileUrl = (fileName) => {
 function AddRecipeForm({user, token }){
   
        // hardcoded user for now
-    const [currentUser, setCurrentUser] = useState(user);
+    const [currentUser, setCurrentUser] = useState(localStorage.getItem('user_id'));
     const tagurl = "http://localhost:8080/api/recipe_tags"
     const [file, setFile] = useState(null);
     const [fileUrl, setFileUrl] = useState('');
@@ -151,7 +151,6 @@ function AddRecipeForm({user, token }){
         .catch(console.log);
 };
 
-console.log("tag", recipe.tag)
 
 const handleTags = (recipeId) => {
     const tagId = recipe.tag
@@ -184,7 +183,6 @@ const handleTags = (recipeId) => {
 
     }
 
-    console.log(recipe.imageUrl)
 
 
 
@@ -203,33 +201,41 @@ const handleTags = (recipeId) => {
                 </div>
             )}
             <form onSubmit={handleSubmit}>
-                <fieldset className="form-group">
+                <fieldset className="form-group inputForm">
                     <label>Recipe Name</label>
                     <input type="text" className="form-control" id="recipeName"  name="recipeName" placeholder="Recipe Name" value={recipe.recipeName} onChange={handleChange}/>
                 </fieldset>
-                <fieldset className="form-group">
-                    <label>Difficulty</label>
-                    <input type="number" className="form-control" id="difficulty" name="difficulty" placeholder="Difficulty" min="1" max="5" value={recipe.difficulty} onChange={handleChange}/>
-                </fieldset>
-                <fieldset className="form-group">
+                <div className="row">
+                    <div className="col-md">
+                        <fieldset className="form-group inputForm">
+                            <label>Difficulty</label>
+                            <input type="number" className="form-control" id="difficulty" name="difficulty" placeholder="Difficulty" min="1" max="5" value={recipe.difficulty} onChange={handleChange}/>
+                        </fieldset>
+                        </div>
+                        <div className="col-md">
+                        <fieldset className="form-group inputForm">
                     <label>Spiciness</label>
                     <input type="number" className="form-control" id="spicyness" name="spicyness" placeholder="Spiciness" min="1" max="5" value={recipe.spicyness} onChange={handleChange}/>
                 </fieldset>
-                <fieldset className="form-group">
-                    <label>Prep Time</label>
+                </div>
+                <div className="col-md">
+                <fieldset className="form-group inputForm">
+                    <label>Prep Time (in Minutes)</label>
                     <input type="number" className="form-control" id="prepTime" name="prepTime" placeholder="Prep Time" value={recipe.prepTime} min="1" onChange={handleChange}/>
                 </fieldset>
-                <fieldset className="form-group">
+                </div>
+                </div>
+                <fieldset className="form-group inputForm">
                     <label>Image</label>
                     <input type="file" className="form-control" id="image" onChange={handleFileChange}/>
                 </fieldset>
-                <fieldset className="form-group">
+                <fieldset className="form-group ">
                     <label>Description</label>
-                    <textarea className="form-control" id="description" name="description" placeholder="Description" value={recipe.description} onChange={handleChange}/>
+                    <textarea className="form-control descriptionRecipe" rows="2" id="description" name="description" placeholder="Description" value={recipe.description} onChange={handleChange}/>
                 </fieldset>
-                <fieldset className="form-group">
+                <fieldset className="form-group ">
                     <label>Tags</label>
-                    <select className="form-control" id="tag" name="tag" value={recipe.tag} onChange={handleChange}>
+                    <select className="form-control tagsSelect" id="tag" name="tag" value={recipe.tag} onChange={handleChange}>
                         <option value="">Select a Tag</option>
                         {tags.map((tag, index) => (
                             <option key={index} value={tag.tagId}>{tag.tagName}</option>
@@ -238,18 +244,22 @@ const handleTags = (recipeId) => {
                 </fieldset>
                 <fieldset className="form-group">
                     <label>Text</label>
-                    <textarea className="form-control" id="text" name="text" placeholder="Text" value={recipe.text} onChange={handleChange}/>
+                    <textarea className="form-control textRecipe" id="text" name="text" placeholder="Text" rows="4" value={recipe.text} onChange={handleChange}/>
                 </fieldset>
-                <button type="submit" className="btn btn-outline-primary">Submit</button>
-                <button className="btn btn-outline-secondary" onClick={() => navigate("/")}>cancel</button>
+                <div className="buttonsFormContainer">
+                <button type="submit" className="btn btn-primary formButton">Submit</button>
+                <button className="btn btn-secondary formButton" onClick={() => navigate("/")}>Cancel</button>
+                </div>
             </form>
         </section> : 
-        <section className="container loginForm">
+        <section className="container">
+        <div className="container loginForm">
             <h2>Log in to add a recipe</h2>
-            <div className="mt-3">
+            <div className="mt-3 ">
                     <p>You need to be logged in to add a recipe.</p>
                     <button className="btn btn-outline-info loginBtn" onClick={() => navigate('/login')}>Log In</button>
             </div>
+        </div>
         </section>
         }
         </>
