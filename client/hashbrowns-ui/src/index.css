@@ -4,6 +4,7 @@
   padding: 0;
   margin:0;
 }
+
 body{
   font-family: "Oswald", sans-serif;
   font-size:1.8rem;
@@ -75,3 +76,5 @@ a:hover{
 ul{
   list-style-type: none;
 }
+
+
