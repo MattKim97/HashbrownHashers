@@ -45,10 +45,12 @@ const MyRecipesPage = ({user}) => {
           )}
         </>
       ) : (
-        <div className="login-prompt">
+        <div className="container loginForm">
           <h2>Log in to view your recipes</h2>
+          <div className="mt-3">
           <p>You need to be logged in to see your recipes and manage them.</p>
-          <button className="btn btn-outline-info" onClick={() => navigate('/login')}>Log In</button>
+          <button className="btn btn-outline-info loginBtn" onClick={() => navigate('/login')}>Log In</button>
+          </div>
         </div>
       )}
     </section>
