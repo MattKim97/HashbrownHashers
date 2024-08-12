@@ -6,10 +6,7 @@ import Reviews from './Reviews';
 
 export default function ViewRecipe({user}) {
 
-    // STILL NEED TO IMPLEMENT CURRENT USER TO RESTRICT EDIT/DELETE
-
-    // hardcoded user for now
-    const [currentUser, setCurrentUser] = useState(user);
+    const [currentUser, setCurrentUser] = useState(localStorage.getItem('user_id'));
     const [recipe, setRecipe] = useState(null);
     const [tags, setTags] = useState([]);
     const tagurl = "http://localhost:8080/api/recipe_tags"
